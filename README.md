@@ -31,7 +31,9 @@ Run ccmake
   $ ccmake ../VTK
 ```
 2. ccmake has a simple terminal based interface that allows you to customize the VTK build to your particular machine and
-with the desired options. Once you run CMake using ccmake, you will be presented with a list of options that can be modified to customize the VTK build. CMake will be able to set most of these options to reasonable default values. Hit the 'c' key to configure. (Note: If you are initally seeing a blank interface, hit the 'c' key.) Keep hitting the 'c' key until the generate option is available (g key), and then hit the 'g' key. 
+with the desired options. Once you run CMake using ccmake, you will be presented with a list of options that can be modified to customize the VTK build. CMake will be able to set most of these options to reasonable default values. 
+    - Hit the 'c' key to configure. (Note: If you are initally seeing a blank interface, hit the 'c' key.) 
+    - Keep hitting the 'c' key until the generate option is available (g key), and then hit the 'g' key. 
 3. Once VTK has been successfully configured, the interface should quit itself. The last step is to build VTK:
 ```
 $ cd /path/to/VTK-build
