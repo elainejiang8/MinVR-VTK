@@ -2,12 +2,12 @@
 MinVR-enabled VTK programs
 ## Installing VTK
 To compile VTK, you will first need to install CMake. An installer for CMake is
-available from http://www.cmake.org/download/. If you already have CMake, you can skip this step. Once you have installed CMake, run the following command in your terminal so you can run CMake through your terminal:
+available from http://www.cmake.org/download/. If you already have CMake, you can skip this step. Once you have installed CMake, run the following command in your terminal in order to run CMake through your terminal:
 ```
 sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
 ```
 
-Next, you need to download the VTK source code. You can either download a zip/tar file [here](http://www.vtk.org/download/) or download using git:
+Next, you'll need to download the VTK source code. You can either download a zip/tar file [here](http://www.vtk.org/download/) or download using git:
 ```
 Prepare directory for download
  $ mkdir projects
