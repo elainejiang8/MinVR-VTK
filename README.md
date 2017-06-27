@@ -41,3 +41,18 @@ $ make
 ```
 ### To install on Windows:
 idk yet
+
+## Run Example
+Run the MinIntensityRendering example:
+```
+Cd into example directory
+  $ cd /path/to/MinVR-VTK/examples/MinIntensityRendering
+Cmake and build project
+  $ mkdir build
+  $ cd build
+  $ cmake -DVTK_DIR:PATH=/path/to/vtk_build ..
+  $ make
+Run project
+  $ cd MinIntensityRendering.app/Content/MacOS/MinIntensityRendering ../../../data/ironProt.vtk
+```
+Running the other examples is a similar process, but be sure to use the correct data set (you can see which data set to use in a project's cxx file comments). 
