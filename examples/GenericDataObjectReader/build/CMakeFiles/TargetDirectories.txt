@@ -1,0 +1,3 @@
+/Users/elaine/YURT/MinVR-VTK/examples/GenericDataObjectReader/build/CMakeFiles/rebuild_cache.dir
+/Users/elaine/YURT/MinVR-VTK/examples/GenericDataObjectReader/build/CMakeFiles/edit_cache.dir
+/Users/elaine/YURT/MinVR-VTK/examples/GenericDataObjectReader/build/CMakeFiles/GenericDataObjectReader.dir
