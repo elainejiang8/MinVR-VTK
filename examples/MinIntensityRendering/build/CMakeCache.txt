@@ -179,6 +179,9 @@ CMAKE_STRIP:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//No help, variable specified on the command line.
+MINVR_INSTALL_DIR:UNINITIALIZED=/Users/Elaine/YURT/MinVR/build/install
+
 //Value Computed by CMake
 MinIntensityRendering_BINARY_DIR:STATIC=/Users/elaine/YURT/MinVR-VTK/examples/MinIntensityRendering/build
 
