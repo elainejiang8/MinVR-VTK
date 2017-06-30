@@ -53,6 +53,6 @@ Cmake and build project
   $ cmake -DVTK_DIR:PATH=/path/to/vtk_build ..
   $ make
 Run project
-  $ bin/demo ../../../data/ironProt.vtk
+  $ bin/demo ../data/ironProt.vtk
 ```
 Running the other examples is a similar process, but be sure to use the correct data set (you can see which data set to use in a project's cxx file comments). 
