@@ -1,31 +1,75 @@
 # Use this file for compiling the examples
 
-include_directories(${MINVR_INCLUDE_DIR})
+include_directories(${MINVR_INCLUDE_DIR} 
+		    ${OPENGL_INCLUDE_DIR}
+		    ${FREEGLUT_INCLUDE_DIR}
+		    ${GLEW_LIBRARY}
+)
 
 
 add_executable(MinIntensityRendering MinIntensityRendering.cxx)
 
-target_link_libraries(MinIntensityRendering ${VTK_LIBRARIES})
+target_link_libraries(MinIntensityRendering 
+	${VTK_LIBRARIES}
+)
 
 
 add_executable(SmartVolumeMapper SmartVolumeMapper.cxx)
 
-target_link_libraries(SmartVolumeMapper ${VTK_LIBRARIES})
+target_link_libraries(SmartVolumeMapper 
+	${VTK_LIBRARIES}
+)
 
 
 add_executable(MinVRIntensityRendering MinVRIntensityRendering.cxx)
 
-target_link_libraries(MinVRIntensityRendering ${VTK_LIBRARIES} ${MINVR_LIBRARY})
+target_link_libraries(MinVRIntensityRendering 
+	${VTK_LIBRARIES} 
+	${MINVR_LIBRARY}
+)
 
 
 add_executable(demo demo.cxx)
 
-target_link_libraries(demo ${VTK_LIBRARIES})
+target_link_libraries(demo 
+	${VTK_LIBRARIES}
+)
 
 
-# add_executable(RenderInExistingContext RenderInExistingContext.cxx)
+add_executable(demo2 demo2.cxx)
 
-# target_link_libraries(RenderInExistingContext ${VTK_LIBRARIES})
+target_link_libraries(demo2 
+	${VTK_LIBRARIES}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
 
 
+add_executable(RenderInExistingContext RenderInExistingContext.cxx)
+
+target_link_libraries(RenderInExistingContext 
+	${VTK_LIBRARIES}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
+
+add_executable(ExternalRenderWindowDemo ExternalRenderWindowDemo.cxx) 
+
+target_link_libraries(ExternalRenderWindowDemo 
+	${VTK_LIBRARIES} 
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
+
+add_executable(vtkglut MACOSX_BUNDLE vtkglut.cxx )
+
+target_link_libraries(vtkglut 
+	${VTK_LIBRARIES}
+	${FREEGLUT_LIBRARY}
+)
   

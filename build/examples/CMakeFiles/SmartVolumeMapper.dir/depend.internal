@@ -15,10 +15,10 @@ examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o
  /Users/elaine/VTK-build/Imaging/Core/vtkImagingCoreModule.h
  /Users/elaine/VTK-build/Imaging/Hybrid/vtkImagingHybridModule.h
  /Users/elaine/VTK-build/Rendering/Core/vtkRenderingCoreModule.h
- /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
- /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
+ /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLConfigure.h
+ /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLModule.h
  /Users/elaine/VTK-build/Rendering/Volume/vtkRenderingVolumeModule.h
- /Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingVolumeOpenGL2Module.h
+ /Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingVolumeOpenGLModule.h
  /Users/elaine/VTK-build/Utilities/KWIML/vtk_kwiml.h
  /Users/elaine/VTK/Common/Core/vtkABI.h
  /Users/elaine/VTK/Common/Core/vtkAbstractArray.h
@@ -98,7 +98,7 @@ examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o
  /Users/elaine/VTK/Rendering/Core/vtkVolumeCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkVolumeProperty.h
  /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
- /Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkSmartVolumeMapper.h
+ /Users/elaine/VTK/Rendering/VolumeOpenGL/vtkSmartVolumeMapper.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/int.h

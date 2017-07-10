@@ -1,374 +1,281 @@
-#ifdef WIN32
-#include <windows.h>
-#include <vtkWin32OpenGLRenderWindow.h>
-#elif __APPLE__
-#include <vtkCocoaRenderWindow.h>
-#else
-#include <vtkXOpenGLRenderWindow.h>
+
+#include <GL/glut.h>
+#include <GL/freeglut.h>
+
+#include "vtkConeSource.h"
+#include "vtkPolyDataMapper.h"
+#include "vtkRenderWindow.h"
+#include "vtkCamera.h"
+#include "vtkActor.h"
+#include "vtkRenderer.h"
+#include "vtkNew.h"
+#include "vtkOpenGLRenderer.h"
+#include "vtkMatrix4x4.h"
+#include "vtkEarthSource.h"
+#include "vtkTransform.h"
+#include "vtkOpenGLProperty.h"
+#include "vtkLightCollection.h"
+#include "vtkLight.h"
+#include <vtkExternalOpenGLRenderWindow.h>
+#include <ExternalVTKWidget.h>
+#include <vtkSmartPointer.h>
+
+vtkNew<ExternalVTKWidget> externalVTKWidget;
+vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
+vtkNew<vtkExternalOpenGLRenderWindow> renWin;
+vtkNew<vtkActor> coneActor;
+
+
+vtkNew<vtkTransform> transform;
+//transform->Identity();
+
+int press_x, press_y;
+int release_x, release_y;
+float x_angle = 0.0;
+float y_angle = 0.0;
+float scale_size = 1;
+int xform_mode = 0;
+#define XFORM_NONE    0
+#define XFORM_ROTATE  1
+#define XFORM_SCALE 2
+
+void initGlut()
+{
+    glEnable(GL_DEPTH_TEST);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(120, 1, .1, 1000);
+
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+}
+
+void Reshape( int width, int height )
+{
+  renWin->SetSize( width, height );
+}
+
+void opengl_draw()
+{
+    glutWireTeapot(.5);
+}
+
+void Draw()
+{
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+    
+#if 0
+    double f[16];
+    glLoadIdentity();
+    glGetDoublev(GL_MODELVIEW_MATRIX, f);
+    ren->GetActiveCamera()->SetModelTransformMatrix(f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0,0,5,0,0,0,0,1,0);
+    glRotatef(x_angle, 0, 1,0);
+    glRotatef(y_angle, 1,0,0);
+    glScalef(scale_size, scale_size, scale_size);//
+#elif 1
+    // vtk camera -> set opengl modelview matrix
+    // problem: rotation
+    vtkCamera *camera = ren->GetActiveCamera();
+    double eyein[3] = {0,0,5};
+    double upin[3] = {0, 1, 0};
+    //double focal[3] = {0,0,0};
+#if 1 // light follow camera
+    camera->SetPosition(transform->TransformVector(eyein));
+    camera->SetViewUp(transform->TransformVector(upin));
+#else // static light
+    camera->SetModelTransformMatrix(transform->GetMatrix());
+    camera->SetPosition(eyein);
+    vtkLightCollection *lights =  ren->GetLights();
+    lights->InitTraversal();
+    vtkLight *l;
+    while( (l = lights->GetNextItem())!=NULL)
+    {
+        vtkNew<vtkMatrix4x4> m;
+        m->Identity();
+        l->SetPosition(1, 0,0);
+        //l->SetTransformMatrix(m.GetPointer());
+    }
+    camera->SetViewUp(0,1,0);
 #endif
- 
-#include <cassert>
- 
-#include <vtkPolyData.h>
-#include <vtkPoints.h>
-#include <vtkCellArray.h>
-#include <vtkPointData.h>
-#include <vtkSphereSource.h>
-#include <vtkOutlineSource.h>
-#include <vtkActor.h>
-#include <vtkDataSetMapper.h>
-#include <vtkCamera.h>
-#include <vtkLight.h>
-#include <vtkProperty.h>
- 
-#include <vtkRenderer.h>
-#include <vtkOpenGLRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
- 
-#include <vtkVolume16Reader.h>
- 
-#include <vtkTransform.h>
-#include <vtkVolume.h>
-#include <vtkVolumeRayCastMapper.h>
-#include <vtkVolumeRayCastCompositeFunction.h>
-#include <vtkVolumeProperty.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkPiecewiseFunction.h>
-#include <vtkCommand.h>
- 
-#include <vtkRenderState.h>
-#include <vtkRenderPass.h>
-#include <vtkCameraPass.h>
-#include <vtkLightsPass.h>
-#include <vtkOpaquePass.h>
-#include <vtkDepthPeelingPass.h>
-#include <vtkTranslucentPass.h>
-#include <vtkOverlayPass.h>
-#include <vtkVolumetricPass.h>
-#include <vtkRenderPassCollection.h>
-#include <vtkSequencePass.h>
- 
- 
-#include "vtkSmartPointer.h"
-#define vtkNew(type,name) vtkSmartPointer<type> name = vtkSmartPointer<type>::New()
- 
- 
-class CRenderCommand : public vtkCommand
-{
-public:
-	static CRenderCommand *New() { return new CRenderCommand; }
-	void SetRenderPass(vtkRenderPass* p, vtkRenderState * s, std::vector<vtkProp*> &props)
-	{
-		renderPass = p;
-		renderState = s;
-		renderProps = props;
-	}
- 
-	// This gets executed when the Renderer completes the rendering
-	// (but before exiting UpdateGeometry()
-	virtual void Execute(vtkObject *caller, unsigned long, void*)
-	{
-		vtkRenderer *renderer = vtkRenderer::SafeDownCast(caller);
-		vtkRenderWindow* rw = renderer->GetRenderWindow();
- 
-		renderState->GetRenderer()->GetRenderWindow()->SetSize(rw->GetSize());
- 
-		vtkCamera* cam = renderer->GetActiveCamera();
-		vtkCamera* cam2 = renderState->GetRenderer()->GetActiveCamera();		
- 
-		cam2->SetFocalPoint(cam->GetFocalPoint());
-		cam2->SetPosition(cam->GetPosition());
-		cam2->SetViewUp(cam->GetViewUp());
-		cam2->SetParallelScale(cam->GetParallelScale());
-		cam2->SetParallelProjection(cam->GetParallelProjection());
-		cam2->SetClippingRange(cam->GetClippingRange());
- 
- 
-		renderState->SetPropArrayAndCount(&renderProps[0], renderProps.size());
- 
-		renderPass->Render(renderState);
-	}
-	vtkRenderPass *renderPass;
-	vtkRenderState *renderState;
-	std::vector<vtkProp*> renderProps;
-};
- 
-vtkVolume *CreateVolume(const char * prefix);
-vtkActor  *CreateActor(double opacity = 1.0);
-vtkActor  *CreateOutline(double *bb);
-void MergeBounds(double *bounds, const double *b);
- 
- 
-int main (int argc, char **argv)
-{
-	std::string fileName = "PATH/TO/vtkdata-5.6.1/Data/headsq/quarter";
-	double opacity = 1.0;
-	int UseCamera = 1;
-	int UseLights = 1;
- 
-	// Create main renderer and render window
-	vtkNew(vtkRenderer, ren1);
-	ren1->SetBackground(0.5,0.5,0.5);
-	vtkNew(vtkLight,light);
-	ren1->AddLight(light);
-	vtkNew(vtkRenderWindow, renWin1);
-	renWin1->SetAlphaBitPlanes(1);
-	renWin1->SetMultiSamples(0);
-	renWin1->SetSize(500,500);
-	renWin1->Render();// force render window to create context
-	renWin1->AddRenderer(ren1);
-	vtkNew(vtkRenderWindowInteractor, iren);
-	iren->SetRenderWindow(renWin1);
- 
- 
-	// Create another renderer, and dummy render window with same context as first
-	vtkNew(vtkRenderer, ren2);
-	ren2->EraseOff();
-	ren2->AddLight(light);
-	vtkNew(vtkRenderWindow, renWin2);
-	renWin2->EraseOff();
-	renWin2->SetAlphaBitPlanes(1);
-	renWin2->SetMultiSamples(0);
-	renWin2->DoubleBufferOn();
-	renWin2->SwapBuffersOff();
-	renWin2->AddRenderer(ren2);
-#ifdef WIN32
-	vtkWin32OpenGLRenderWindow * rw1 = vtkWin32OpenGLRenderWindow::SafeDownCast(renWin1);
-	vtkWin32OpenGLRenderWindow * rw2 = vtkWin32OpenGLRenderWindow::SafeDownCast(renWin2);
-	rw2->SetWindowId(rw1->GetWindowId());
-	rw2->SetParentId(rw1->GetGenericParentId());
-	rw2->SetDeviceContext((HDC)renWin1->GetGenericContext());
-	rw2->SetContextId((HGLRC)renWin1->GetGenericDisplayId());
-#elif __APPLE__
-	// Assumes vtkCocoaRenderWindow
-	vtkCocoaRenderWindow * rw1 = vtkCocoaRenderWindow::SafeDownCast(renWin1);
-	vtkCocoaRenderWindow * rw2 = vtkCocoaRenderWindow::SafeDownCast(renWin2);
-	rw2->SetWindowId(rw1->GetWindowId());
-	rw2->SetParentId(rw1->GetParentId());
-	rw2->SetContextId(rw1->GetContextId());
-	rw2->SetRootWindow(rw1->GetRootWindow());
+    camera->SetFocalPoint(0,0,0);
+    // get modelview matrix
+    vtkMatrix4x4 *m = camera->GetModelViewTransformMatrix();
+    double *f = &m->Element[0][0];
+    // opengl
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glMultTransposeMatrixd(f);
+    // draw
+    opengl_draw();
+#elif 0
+    // opengl modelview -> vtk camera
+    //problem: light does not follow camera
+    // camera - vtk
+    vtkCamera *camera = ren->GetActiveCamera();
+    camera->SetPosition(0,0,-5);
+    camera->SetFocalPoint(0,0,0);
+    camera->SetViewUp(0,1,0);
+    // camera - opengl
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0,0,-5,0,0,0,0,1,0);
+    double f[16];
+    // geometry - opengl
+    glPushMatrix();
+    {
+        glLoadIdentity();
+        glRotatef(x_angle, 0, 1,0);
+        glRotatef(y_angle, 1,0,0);
+        glScalef(scale_size, scale_size, scale_size);//
+        glGetDoublev(GL_MODELVIEW_MATRIX, f);
+        // transpose
+        double g[16];
+        g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
+        g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
+        g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
+        g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
+        ren->GetActiveCamera()->SetModelTransformMatrix(g);
+    }
+    glPopMatrix();
+    glMultMatrixd(f);
+    // draw
+    opengl_draw();
 #else
-	// Untested !!
-	vtkXOpenGLRenderWindow * rw1 = vtkXOpenGLRenderWindow::SafeDownCast(renWin1);
-	vtkXOpenGLRenderWindow * rw2 = vtkXOpenGLRenderWindow::SafeDownCast(renWin2);
-	rw2->SetDisplayId(rw1->GetDisplayId());
-	rw2->SetWindowId(rw1->GetWindowId());
+    // rotate on actor
+    //vtkMatrix4x4 m;
+
+    //coneActor->SetUserMatrix();
+
+    // camera - vtk
+    vtkCamera *camera = ren->GetActiveCamera();
+    camera->SetPosition(0,0,-5);
+    camera->SetFocalPoint(0,0,0);
+    camera->SetViewUp(0,1,0);
+
+    // transpose - vtk
+    coneActor->SetOrientation(0,1,0);
+    coneActor->RotateX(y_angle);
+    coneActor->RotateY(x_angle);
+    coneActor->SetScale(scale_size);
+
+    // camera - opengl
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0,0,-5,0,0,0,0,1,0);
+
+    // transpose - opengl
+    double f[16];
+    coneActor->GetMatrix(f);
+    // transpose
+    double g[16];
+    g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
+    g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
+    g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
+    g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
+    glMultMatrixd(g);
+
+    // draw
+    opengl_draw();
+
+
 #endif
- 
- 
-	// Create actors & volumes
-	vtkVolume * volume = NULL;
-	if(fileName.empty())
-		volume = CreateVolume();
-	else
-		volume = CreateVolume(fileName.c_str());
-	vtkActor  * actor = CreateActor(opacity);
- 
-	// Create bounding box actor
-	double bounds[6];
-	actor->GetBounds(bounds);
-	MergeBounds(bounds, volume->GetBounds());
-	vtkActor * outline = CreateOutline(bounds);
-	ren1->AddActor(outline);
-	ren1->AddActor(actor);
- 
- 
-	// Create render passes and state
-	vtkNew(vtkCameraPass,cameraPass);
-	vtkNew(vtkLightsPass,lightsPass);
-	vtkNew(vtkOpaquePass, opaquePass);
-	vtkNew(vtkDepthPeelingPass, peelingPass);
-	vtkNew(vtkVolumetricPass, volumetricPass);
-	vtkNew(vtkOverlayPass, overlayPass);
- 
-	vtkNew(vtkTranslucentPass,translucent);
-	peelingPass->SetTranslucentPass(translucent);
- 
-	vtkNew(vtkRenderPassCollection, passes);
-	if(UseLights) passes->AddItem(lightsPass);
-	passes->AddItem(opaquePass);
-	passes->AddItem(peelingPass);
-	passes->AddItem(volumetricPass);
-	passes->AddItem(overlayPass);
- 
-	vtkNew(vtkSequencePass, renderPass);
-	renderPass->SetPasses(passes);
- 
-	cameraPass->SetDelegatePass(renderPass);
- 
-	vtkRenderState *renderState = new vtkRenderState(ren2);
- 
-	// Add Actors and Volumes to a array of vtkProp pointers
-	std::vector<vtkProp*> props;
-	//props.push_back(actor);
-	props.push_back(volume);
- 
- 
-	// Add callback function, which is called when first renderer finishes
-	CRenderCommand * pCallback = CRenderCommand::New();
-	if(UseCamera) pCallback->SetRenderPass(cameraPass, renderState, props);
-	else pCallback->SetRenderPass(renderPass, renderState, props);
-	ren1->AddObserver(vtkCommand::EndEvent, pCallback);
-	pCallback->Delete();
- 
- 
-	// Render an image (lights and cameras are created automatically)
-	renWin1->Render();
- 
-	// Begin mouse interaction
-	iren->Start();
- 
-	// Cleanup actors
-	volume->Delete();
-	actor->Delete();
-	outline->Delete();
- 
-	if(peelingPass->GetLastRenderingUsedDepthPeeling())
-		cout << "Used depth peeling" << endl;
-	else
-		cout << "Used alpha blending" << endl;
- 
-	return 0;
+
+
+    glLoadIdentity();
+    renWin->Render();
+
+
+
+
+    glutSwapBuffers();
 }
- 
- 
-void MergeBounds(double *bounds, const double *b)
+
+
+void MouseButton(int button, int state, int x, int y)
 {
-	for(int i=0; i<3; i++)
-	{
-		if(b[2*i]   < bounds[2*i])   bounds[2*i]   = b[2*i];
-		if(b[2*i+1] > bounds[2*i+1]) bounds[2*i+1] = b[2*i+1];
-	}
+    if (state == GLUT_DOWN) {
+      press_x = x; press_y = y;
+      if (button == GLUT_LEFT_BUTTON)
+        xform_mode = XFORM_ROTATE;
+       else if (button == GLUT_RIGHT_BUTTON)
+        xform_mode = XFORM_SCALE;
+    }
+    else if (state == GLUT_UP) {
+        xform_mode = XFORM_NONE;
+    }
 }
- 
-vtkActor  *CreateOutline(double *bb)
+
+
+void MouseMotion(int x, int y)
 {
-	vtkNew(vtkOutlineSource,source);
-	source->SetBounds(bb);
-	source->SetBoxTypeToAxisAligned();
- 
-	vtkNew(vtkDataSetMapper,mapper);
-	mapper->SetInput(source->GetOutput());
- 
-	vtkActor * actor = vtkActor::New();
-	actor->SetMapper(mapper);
-	actor->GetProperty()->SetLineWidth(3.0);
-	return actor;
+    if (xform_mode==XFORM_ROTATE) {
+      x_angle = (x - press_x)/2;
+      //if (x_angle > 180) x_angle -= 360;
+      //else if (x_angle <-180) x_angle += 360;
+
+      y_angle = (y - press_y)/2;
+      //if (y_angle > 90) y_angle = 90;
+      //else if (y_angle <-90) y_angle = -90;
+
+      double axis[3];
+      axis[0] = -y_angle;
+      axis[1] = -x_angle;
+      axis[2] = 0;
+      double mag = (y_angle*y_angle+x_angle*x_angle);
+      transform->RotateWXYZ(mag, axis);
+    }
+    else if (xform_mode == XFORM_SCALE){
+      float old_size = scale_size;
+      scale_size = (1 - (y - press_y)/120.0);
+      if (scale_size <0) scale_size = old_size;
+
+      transform->Scale(scale_size, scale_size, scale_size);
+    }
+    press_x = x;
+    press_y = y;
+    glutPostRedisplay();
 }
- 
-vtkVolume *CreateVolume(const char * prefix)
+
+
+int main( int argc, char **argv )
 {
-	// The following reader is used to read a series of 2D slices (images)
-	// that compose the volume. The slice dimensions are set, and the
-	// pixel spacing. The data Endianness must also be specified. The reader
-	// uses the FilePrefix in combination with the slice number to construct
-	// filenames using the format FilePrefix.%d. (In this case the FilePrefix
-	// is the root name of the file: quarter.)
-	vtkVolume16Reader * v16 = vtkVolume16Reader::New();
-	v16->SetDataDimensions(64, 64);
-	v16->SetImageRange(1, 93);
-	v16->SetDataByteOrderToLittleEndian();
-	v16->SetFilePrefix(prefix);
-	v16->SetDataSpacing(3.2, 3.2, 1.5);
-	//v16->SetDataSpacing(0.32, 0.32, 0.15);
- 
-	// The volume will be displayed by ray-cast alpha compositing.
-	// A ray-cast mapper is needed to do the ray-casting, and a
-	// compositing function is needed to do the compositing along the ray. 
-	vtkVolumeRayCastCompositeFunction * rayCastFunction = vtkVolumeRayCastCompositeFunction::New();
- 
-	vtkVolumeRayCastMapper * volumeMapper = vtkVolumeRayCastMapper::New();
-	volumeMapper->SetInput(v16->GetOutput());
-	volumeMapper->SetVolumeRayCastFunction(rayCastFunction);
- 
-	// The color transfer function maps voxel intensities to colors.
-	// It is modality-specific, and often anatomy-specific as well.
-	// The goal is to one color for flesh (between 500 and 1000) 
-	// and another color for bone (1150 and over).
-	vtkColorTransferFunction * volumeColor = vtkColorTransferFunction::New();
-	volumeColor->AddRGBPoint(0,    0.0, 0.0, 0.0);
-	volumeColor->AddRGBPoint(500,  1.0, 0.5, 0.3);
-	volumeColor->AddRGBPoint(1000, 1.0, 0.5, 0.3);
-	volumeColor->AddRGBPoint(1150, 1.0, 1.0, 0.9);
- 
-	// The opacity transfer function is used to control the opacity
-	// of different tissue types.
-	vtkPiecewiseFunction * volumeScalarOpacity = vtkPiecewiseFunction::New();
-	volumeScalarOpacity->AddPoint(0,    0.00);
-	volumeScalarOpacity->AddPoint(500,  0.15);
-	volumeScalarOpacity->AddPoint(1000, 0.15);
-	volumeScalarOpacity->AddPoint(1150, 0.85);
- 
-	// The gradient opacity function is used to decrease the opacity
-	// in the "flat" regions of the volume while maintaining the opacity
-	// at the boundaries between tissue types.  The gradient is measured
-	// as the amount by which the intensity changes over unit distance.
-	// For most medical data, the unit distance is 1mm.
-	vtkPiecewiseFunction * volumeGradientOpacity = vtkPiecewiseFunction::New();
-	volumeGradientOpacity->AddPoint(0,   0.0);
-	volumeGradientOpacity->AddPoint(90,  0.5);
-	volumeGradientOpacity->AddPoint(100, 1.0);
- 
-	// The VolumeProperty attaches the color and opacity functions to the
-	// volume, and sets other volume properties.  The interpolation should
-	// be set to linear to do a high-quality rendering.  The ShadeOn option
-	// turns on directional lighting, which will usually enhance the
-	// appearance of the volume and make it look more "3D".  However,
-	// the quality of the shading depends on how accurately the gradient
-	// of the volume can be calculated, and for noisy data the gradient
-	// estimation will be very poor.  The impact of the shading can be
-	// decreased by increasing the Ambient coefficient while decreasing
-	// the Diffuse and Specular coefficient.  To increase the impact
-	// of shading, decrease the Ambient and increase the Diffuse and Specular.  
-	vtkVolumeProperty * volumeProperty = vtkVolumeProperty::New();
-	volumeProperty->SetColor(volumeColor);
-	volumeProperty->SetScalarOpacity(volumeScalarOpacity);
-	volumeProperty->SetGradientOpacity(volumeGradientOpacity);
-	volumeProperty->SetInterpolationTypeToLinear();
-	volumeProperty->ShadeOn();
-	volumeProperty->SetAmbient(0.4);
-	volumeProperty->SetDiffuse(0.6);
-	volumeProperty->SetSpecular(0.2);
- 
-	// The vtkVolume is a vtkProp3D (like a vtkActor) and controls the position
-	// and orientation of the volume in world coordinates.
-	vtkVolume * vol = vtkVolume::New();
-	vol->SetMapper(volumeMapper);
-	vol->SetProperty(volumeProperty);
- 
-	v16->Delete();
-	rayCastFunction->Delete();
-	volumeMapper->Delete();
-	volumeColor->Delete();
-	volumeScalarOpacity->Delete();
-	volumeGradientOpacity->Delete();
-	volumeProperty->Delete();
- 
-	return vol;
-}
- 
-vtkActor * CreateActor(double opacity)
-{
-	vtkSphereSource * source = vtkSphereSource::New();
-	source->SetRadius(30.0);
-	source->SetCenter(20,20,20);
-	source->Update();
-	vtkPolyData * pd = vtkPolyData::New();
-	pd->DeepCopy(source->GetOutput());
-	pd->GetPointData()->RemoveArray("Normals");
- 
-	vtkDataSetMapper *mapper = vtkDataSetMapper::New();
-	mapper->SetInput(pd);
- 
-	vtkActor * actor = vtkActor::New();
-	actor->SetMapper(mapper);
-	actor->GetProperty()->SetColor(0,0,1);
-	actor->GetProperty()->EdgeVisibilityOn();
-	actor->GetProperty()->SetOpacity(opacity);
- 
-	source->Delete();
-	pd->Delete();
-	mapper->Delete();
- 
-	return actor;
+  // GLUT initialization
+  glutInit( &argc, argv );
+  glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+  glutCreateWindow( "VTK-GLUT Example") ;
+  glutReshapeFunc( Reshape );
+  glutDisplayFunc( Draw );
+  glutMouseFunc(MouseButton);
+  glutMotionFunc(MouseMotion);
+
+  // Creation of a simple VTK pipeline
+  vtkNew<vtkConeSource> cone;
+
+  vtkNew<vtkPolyDataMapper> coneMapper;
+  coneMapper->SetInputConnection( cone->GetOutputPort() );
+
+  coneActor->SetMapper( coneMapper.GetPointer() );
+    
+  
+
+  ren->AddActor( coneActor.GetPointer() );
+  renWin->AddRenderer( ren.GetPointer() );
+
+  initGlut();
+  // Here is the trick: we ask the RenderWindow to join the current OpenGL context created by GLUT
+  //renWin->InitializeFromCurrentContext();
+  //ren->EraseOff(); // important!
+  ren->LightFollowCameraOn();
+  ren->TwoSidedLightingOn();
+
+
+  // Let's start the main GLUT rendering loop
+  glutMainLoop();
+
+  return EXIT_SUCCESS;
 }

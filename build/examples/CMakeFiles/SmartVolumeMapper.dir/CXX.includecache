@@ -60,17 +60,19 @@ vtkFiltersCoreModule.h
 vtkAutoInit.h
 /Users/elaine/VTK-build/Rendering/Core/vtkAutoInit.h
 
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
-vtkRenderingOpenGLConfigure.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
-vtkRenderingCoreModule.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingCoreModule.h
-vtkRenderingCoreModule.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingCoreModule.h
-vtkAutoInit.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkAutoInit.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLConfigure.h
 
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLModule.h
+vtkRenderingOpenGLConfigure.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLConfigure.h
+vtkFiltersCoreModule.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkFiltersCoreModule.h
+vtkRenderingCoreModule.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingCoreModule.h
+vtkRenderingCoreModule.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingCoreModule.h
+vtkAutoInit.h
+/Users/elaine/VTK-build/Rendering/OpenGL/vtkAutoInit.h
 
 /Users/elaine/VTK-build/Rendering/Volume/vtkRenderingVolumeModule.h
 vtkRenderingCoreModule.h
@@ -78,17 +80,15 @@ vtkRenderingCoreModule.h
 vtkAutoInit.h
 /Users/elaine/VTK-build/Rendering/Volume/vtkAutoInit.h
 
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingVolumeOpenGL2Module.h
-vtkRenderingCoreModule.h
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingCoreModule.h
-vtkRenderingOpenGL2Module.h
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingOpenGL2Module.h
+/Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingVolumeOpenGLModule.h
+vtkRenderingOpenGLModule.h
+/Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingOpenGLModule.h
 vtkRenderingVolumeModule.h
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingVolumeModule.h
+/Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingVolumeModule.h
 vtkRenderingVolumeModule.h
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingVolumeModule.h
+/Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingVolumeModule.h
 vtkAutoInit.h
-/Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkAutoInit.h
+/Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkAutoInit.h
 
 /Users/elaine/VTK-build/Utilities/KWIML/vtk_kwiml.h
 vtkkwiml/abi.h
@@ -644,13 +644,13 @@ vtkRenderingVolumeModule.h
 vtkAbstractVolumeMapper.h
 /Users/elaine/VTK/Rendering/Volume/vtkAbstractVolumeMapper.h
 
-/Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkSmartVolumeMapper.h
-vtkRenderingVolumeOpenGL2Module.h
-/Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkRenderingVolumeOpenGL2Module.h
+/Users/elaine/VTK/Rendering/VolumeOpenGL/vtkSmartVolumeMapper.h
+vtkRenderingVolumeOpenGLModule.h
+/Users/elaine/VTK/Rendering/VolumeOpenGL/vtkRenderingVolumeOpenGLModule.h
 vtkVolumeMapper.h
-/Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkVolumeMapper.h
+/Users/elaine/VTK/Rendering/VolumeOpenGL/vtkVolumeMapper.h
 vtkImageReslice.h
-/Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkImageReslice.h
+/Users/elaine/VTK/Rendering/VolumeOpenGL/vtkImageReslice.h
 
 /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
 include/kwiml/abi.h

@@ -12,12 +12,12 @@ examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
  /Users/elaine/VTK-build/Common/Math/vtkCommonMathModule.h
  /Users/elaine/VTK-build/Common/Transforms/vtkCommonTransformsModule.h
  /Users/elaine/VTK-build/Filters/Core/vtkFiltersCoreModule.h
+ /Users/elaine/VTK-build/Filters/Hybrid/vtkFiltersHybridModule.h
  /Users/elaine/VTK-build/Filters/Sources/vtkFiltersSourcesModule.h
- /Users/elaine/VTK-build/IO/Image/vtkIOImageModule.h
  /Users/elaine/VTK-build/Rendering/Core/vtkRenderingCoreModule.h
- /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
- /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
- /Users/elaine/VTK-build/Rendering/Volume/vtkRenderingVolumeModule.h
+ /Users/elaine/VTK-build/Rendering/External/vtkRenderingExternalModule.h
+ /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLConfigure.h
+ /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLModule.h
  /Users/elaine/VTK-build/Utilities/KWIML/vtk_kwiml.h
  /Users/elaine/VTK/Common/Core/vtkABI.h
  /Users/elaine/VTK/Common/Core/vtkAOSDataArrayTemplate.h
@@ -27,7 +27,6 @@ examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
  /Users/elaine/VTK/Common/Core/vtkAutoInit.h
  /Users/elaine/VTK/Common/Core/vtkBuffer.h
  /Users/elaine/VTK/Common/Core/vtkCollection.h
- /Users/elaine/VTK/Common/Core/vtkCommand.h
  /Users/elaine/VTK/Common/Core/vtkDataArray.h
  /Users/elaine/VTK/Common/Core/vtkDebugLeaksManager.h
  /Users/elaine/VTK/Common/Core/vtkGenericDataArray.h
@@ -47,7 +46,6 @@ examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
  /Users/elaine/VTK/Common/Core/vtkObjectBase.h
  /Users/elaine/VTK/Common/Core/vtkObjectFactory.h
  /Users/elaine/VTK/Common/Core/vtkPoints.h
- /Users/elaine/VTK/Common/Core/vtkScalarsToColors.h
  /Users/elaine/VTK/Common/Core/vtkSetGet.h
  /Users/elaine/VTK/Common/Core/vtkSmartPointer.h
  /Users/elaine/VTK/Common/Core/vtkSmartPointerBase.h
@@ -74,10 +72,6 @@ examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
  /Users/elaine/VTK/Common/DataModel/vtkCellTypes.h
  /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
  /Users/elaine/VTK/Common/DataModel/vtkDataSet.h
- /Users/elaine/VTK/Common/DataModel/vtkDataSetAttributes.h
- /Users/elaine/VTK/Common/DataModel/vtkFieldData.h
- /Users/elaine/VTK/Common/DataModel/vtkPiecewiseFunction.h
- /Users/elaine/VTK/Common/DataModel/vtkPointData.h
  /Users/elaine/VTK/Common/DataModel/vtkPointSet.h
  /Users/elaine/VTK/Common/DataModel/vtkPolyData.h
  /Users/elaine/VTK/Common/DataModel/vtkRect.h
@@ -91,54 +85,41 @@ examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
  /Users/elaine/VTK/Common/Transforms/vtkHomogeneousTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkLinearTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkTransform.h
- /Users/elaine/VTK/Filters/Sources/vtkOutlineSource.h
- /Users/elaine/VTK/Filters/Sources/vtkSphereSource.h
- /Users/elaine/VTK/IO/Image/vtkVolume16Reader.h
- /Users/elaine/VTK/IO/Image/vtkVolumeReader.h
+ /Users/elaine/VTK/Filters/Hybrid/vtkEarthSource.h
+ /Users/elaine/VTK/Filters/Sources/vtkConeSource.h
  /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper.h
  /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper3D.h
- /Users/elaine/VTK/Rendering/Core/vtkAbstractVolumeMapper.h
  /Users/elaine/VTK/Rendering/Core/vtkActor.h
  /Users/elaine/VTK/Rendering/Core/vtkActorCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkCamera.h
- /Users/elaine/VTK/Rendering/Core/vtkColorTransferFunction.h
- /Users/elaine/VTK/Rendering/Core/vtkDataSetMapper.h
  /Users/elaine/VTK/Rendering/Core/vtkLight.h
+ /Users/elaine/VTK/Rendering/Core/vtkLightCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkMapper.h
+ /Users/elaine/VTK/Rendering/Core/vtkPolyDataMapper.h
  /Users/elaine/VTK/Rendering/Core/vtkProp.h
  /Users/elaine/VTK/Rendering/Core/vtkProp3D.h
  /Users/elaine/VTK/Rendering/Core/vtkPropCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkProperty.h
- /Users/elaine/VTK/Rendering/Core/vtkRenderPass.h
- /Users/elaine/VTK/Rendering/Core/vtkRenderState.h
  /Users/elaine/VTK/Rendering/Core/vtkRenderWindow.h
- /Users/elaine/VTK/Rendering/Core/vtkRenderWindowInteractor.h
  /Users/elaine/VTK/Rendering/Core/vtkRenderer.h
+ /Users/elaine/VTK/Rendering/Core/vtkTexture.h
  /Users/elaine/VTK/Rendering/Core/vtkViewport.h
  /Users/elaine/VTK/Rendering/Core/vtkVolume.h
  /Users/elaine/VTK/Rendering/Core/vtkVolumeCollection.h
- /Users/elaine/VTK/Rendering/Core/vtkVolumeProperty.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkCameraPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkCocoaRenderWindow.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkDefaultPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkDepthPeelingPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkLightsPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkOpaquePass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkOpenGLRenderPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkOverlayPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkRenderPassCollection.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkSequencePass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkTranslucentPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkVolumetricPass.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkWin32OpenGLRenderWindow.h
- /Users/elaine/VTK/Rendering/OpenGL2/vtkXOpenGLRenderWindow.h
- /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
- /Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastCompositeFunction.h
- /Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastFunction.h
- /Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastMapper.h
+ /Users/elaine/VTK/Rendering/External/ExternalVTKWidget.h
+ /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderWindow.h
+ /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderer.h
+ /Users/elaine/VTK/Rendering/OpenGL/vtkGenericOpenGLRenderWindow.h
+ /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGL.h
+ /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLProperty.h
+ /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderWindow.h
+ /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderer.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/int.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/int.h
  /Users/elaine/YURT/MinVR-VTK/examples/RenderInExistingContext.cxx
+ /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h
+ /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut_ext.h
+ /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut_std.h
+ /usr/local/Cellar/freeglut/3.0.0/include/GL/glut.h

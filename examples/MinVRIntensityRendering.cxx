@@ -18,6 +18,50 @@
 class ExampleVTKApp: public MinVR::VRApp {
     private:
         // variables that were orginally global go here
+//        void _checkContext() {
+//    
+//            // There is one more graphics library used here, called GLEW.  This
+//            // library sorts through the various OpenGL updates and changes and
+//            // allows a user to pretend that it's all a consistent and simple
+//            // system.  The 'core profile' refers to some modern OpenGL
+//            // enhancements that are not so modern as of 2017.  Set this to true
+//            // to get those enhancements.
+//            glewExperimental = true; // Needed for core profile
+//            if (glewInit() != GLEW_OK) {
+//              throw std::runtime_error("Failed to initialize GLEW");
+//            }
+//
+//            // Now that we have a graphics context, let's look at what's inside.
+//            std::cout << "Hardware check: "
+//                      << glGetString(GL_RENDERER)  // e.g. Intel 3000 OpenGL Engine
+//                      << " / "
+//                      << glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
+//                      << std::endl;
+//
+//            if (glewIsSupported("GL_VERSION_2_1")) {
+//              std::cout << "Software check: Ready for OpenGL 2.1." << std::endl;
+//            } else {
+//              throw std::runtime_error("Software check: OpenGL 2.1 not supported.");
+//            }
+//
+//            // This is the background color of the viewport.
+//            glClearColor(0.1 , 0.0, 0.4, 1.0);
+//
+//            // Now we're ready to start issuing OpenGL calls.  Start by enabling
+//            // the modes we want.  The DEPTH_TEST is how you get hidden faces.
+//            glEnable(GL_DEPTH_TEST);
+//
+//            if (glIsEnabled(GL_DEPTH_TEST)) {
+//              std::cout << "Depth test enabled" << std::endl;
+//            } else {
+//              std::cout << "No depth test enabled" << std::endl;
+//            }
+//
+//            // This is just a performance enhancement that allows OpenGL to
+//            // ignore faces that are facing away from the camera.
+//            glEnable(GL_CULL_FACE);
+//
+//        }
     
     public:
       ExampleVTKApp(int argc, char** argv):

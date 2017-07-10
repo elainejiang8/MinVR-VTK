@@ -23,6 +23,21 @@ endif()
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 
+find_package(OpenGL REQUIRED)
+message("-- OpenGL includes:  " ${OPENGL_INCLUDE_DIR})
+message("-- OpenGL library:   " ${OPENGL_LIBRARY})
+
+find_package(GLEW REQUIRED)
+message("-- GLEW library:     " ${GLEW_LIBRARY})
+message("-- GLEW includes:    " ${GLEW_INCLUDE_DIRS})
+
+set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/glm-0.9.7.1)
+message("-- GLM includes:     " ${GLM_INCLUDE_DIR})
+
+find_package(FreeGLUT REQUIRED)
+message("-- FreeGLUT includes:" ${FREEGLUT_INCLUDE_DIR})
+message("-- FreeGLUT library: " ${FREEGLUT_LIBRARY})
+
 find_package(MinVR MODULE)
 message("-- MinVR includes:   " ${MINVR_INCLUDE_DIR})
 message("-- MinVR library:    " ${MINVR_LIBRARY})

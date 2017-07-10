@@ -14,10 +14,10 @@ examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Imaging/Core/vtkImagingCoreModule.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Imaging/Hybrid/vtkImagingHybridModule.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/Core/vtkRenderingCoreModule.h
-examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
-examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
+examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLConfigure.h
+examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/OpenGL/vtkRenderingOpenGLModule.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/Volume/vtkRenderingVolumeModule.h
-examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/VolumeOpenGL2/vtkRenderingVolumeOpenGL2Module.h
+examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Rendering/VolumeOpenGL/vtkRenderingVolumeOpenGLModule.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK-build/Utilities/KWIML/vtk_kwiml.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Common/Core/vtkABI.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Common/Core/vtkAbstractArray.h
@@ -97,7 +97,7 @@ examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkVolumeCollection.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkVolumeProperty.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
-examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Rendering/VolumeOpenGL2/vtkSmartVolumeMapper.h
+examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Rendering/VolumeOpenGL/vtkSmartVolumeMapper.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/abi.h
 examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o: /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/int.h

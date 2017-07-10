@@ -28,12 +28,6 @@ libkern/OSAtomic.h
 vtkVersionMacros.h
 /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
 
-/Users/elaine/VTK-build/Common/Core/vtkMathConfigure.h
-cmath
--
-float.h
--
-
 /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
 
 /Users/elaine/VTK-build/Common/DataModel/vtkCommonDataModelModule.h
@@ -59,18 +53,6 @@ vtkFiltersCoreModule.h
 /Users/elaine/VTK-build/Rendering/Core/vtkFiltersCoreModule.h
 vtkAutoInit.h
 /Users/elaine/VTK-build/Rendering/Core/vtkAutoInit.h
-
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
-vtkRenderingOpenGLConfigure.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
-vtkRenderingCoreModule.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingCoreModule.h
-vtkRenderingCoreModule.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingCoreModule.h
-vtkAutoInit.h
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkAutoInit.h
-
-/Users/elaine/VTK-build/Rendering/OpenGL2/vtkRenderingOpenGLConfigure.h
 
 /Users/elaine/VTK-build/Rendering/Volume/vtkRenderingVolumeModule.h
 vtkRenderingCoreModule.h
@@ -143,20 +125,6 @@ vtkCommonCoreModule.h
 /Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
 vtkSystemIncludes.h
 /Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
-
-/Users/elaine/VTK/Common/Core/vtkMath.h
-vtkCommonCoreModule.h
-/Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
-vtkObject.h
-/Users/elaine/VTK/Common/Core/vtkObject.h
-vtkTypeTraits.h
-/Users/elaine/VTK/Common/Core/vtkTypeTraits.h
-vtkSmartPointer.h
-/Users/elaine/VTK/Common/Core/vtkSmartPointer.h
-vtkMathConfigure.h
-/Users/elaine/VTK/Common/Core/vtkMathConfigure.h
-cassert
--
 
 /Users/elaine/VTK/Common/Core/vtkNew.h
 vtkIOStream.h
@@ -274,10 +242,6 @@ vtk_kwiml.h
 stdbool.h
 /Users/elaine/VTK/Common/Core/stdbool.h
 
-/Users/elaine/VTK/Common/Core/vtkTypeTraits.h
-vtkSystemIncludes.h
-/Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
-
 /Users/elaine/VTK/Common/Core/vtkUnicodeString.h
 vtkCommonCoreModule.h
 /Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
@@ -342,37 +306,11 @@ vtkCommonDataModelModule.h
 vtkDataObject.h
 /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
 
-/Users/elaine/VTK/Common/DataModel/vtkRect.h
-vtkVector.h
-/Users/elaine/VTK/Common/DataModel/vtkVector.h
-vtkMath.h
-/Users/elaine/VTK/Common/DataModel/vtkMath.h
-
-/Users/elaine/VTK/Common/DataModel/vtkVector.h
-vtkTuple.h
-/Users/elaine/VTK/Common/DataModel/vtkTuple.h
-vtkObject.h
-/Users/elaine/VTK/Common/DataModel/vtkObject.h
-cmath
--
-
 /Users/elaine/VTK/Common/ExecutionModel/vtkAlgorithm.h
 vtkCommonExecutionModelModule.h
 /Users/elaine/VTK/Common/ExecutionModel/vtkCommonExecutionModelModule.h
 vtkObject.h
 /Users/elaine/VTK/Common/ExecutionModel/vtkObject.h
-
-/Users/elaine/VTK/Common/Math/vtkTuple.h
-vtkIOStream.h
-/Users/elaine/VTK/Common/Math/vtkIOStream.h
-vtkSystemIncludes.h
-/Users/elaine/VTK/Common/Math/vtkSystemIncludes.h
-cassert
--
-cstdlib
--
-cmath
--
 
 /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
 vtkIOLegacyModule.h
@@ -516,53 +454,17 @@ vtkRenderingCoreModule.h
 vtkObject.h
 /Users/elaine/VTK/Rendering/Core/vtkObject.h
 
-/Users/elaine/VTK/Rendering/OpenGL2/vtkGenericOpenGLRenderWindow.h
-vtkRenderingOpenGL2Module.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
-vtkOpenGLRenderWindow.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.h
-
-/Users/elaine/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.h
-vtkRect.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkRect.h
-vtkRenderWindow.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkRenderWindow.h
-vtkRenderingOpenGL2Module.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkRenderingOpenGL2Module.h
-vtkType.h
-/Users/elaine/VTK/Rendering/OpenGL2/vtkType.h
-map
--
-set
--
-string
--
+/Users/elaine/VTK/Rendering/Volume/vtkFixedPointVolumeRayCastMapper.h
+vtkRenderingVolumeModule.h
+/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
+vtkVolumeMapper.h
+/Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
 
 /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
 vtkRenderingVolumeModule.h
 /Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
 vtkAbstractVolumeMapper.h
 /Users/elaine/VTK/Rendering/Volume/vtkAbstractVolumeMapper.h
-
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastCompositeFunction.h
-vtkRenderingVolumeModule.h
-/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
-vtkVolumeRayCastFunction.h
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastFunction.h
-
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastFunction.h
-vtkRenderingVolumeModule.h
-/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
-vtkObject.h
-/Users/elaine/VTK/Rendering/Volume/vtkObject.h
-
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastMapper.h
-vtkRenderingVolumeModule.h
-/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
-vtkVolumeMapper.h
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
-vtkVolumeRayCastFunction.h
-/Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastFunction.h
 
 /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
 include/kwiml/abi.h
@@ -589,8 +491,6 @@ vtkRenderer.h
 -
 vtkRenderWindow.h
 -
-vtkGenericOpenGLRenderWindow.h
--
 vtkRenderWindowInteractor.h
 -
 vtkStructuredPointsReader.h
@@ -601,9 +501,7 @@ vtkColorTransferFunction.h
 -
 vtkVolumeProperty.h
 -
-vtkVolumeRayCastCompositeFunction.h
--
-vtkVolumeRayCastMapper.h
+vtkFixedPointVolumeRayCastMapper.h
 -
 vtkVolume.h
 -
