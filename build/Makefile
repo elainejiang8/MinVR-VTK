@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named vtkglut
-
-# Build rule for target.
-vtkglut: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vtkglut
-.PHONY : vtkglut
-
-# fast build rule for target.
-vtkglut/fast:
-	$(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/build
-.PHONY : vtkglut/fast
-
-#=============================================================================
 # Target rules for targets named ExternalRenderWindowDemo
 
 # Build rule for target.
@@ -135,6 +122,19 @@ ExternalRenderWindowDemo: cmake_check_build_system
 ExternalRenderWindowDemo/fast:
 	$(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/build
 .PHONY : ExternalRenderWindowDemo/fast
+
+#=============================================================================
+# Target rules for targets named demo3
+
+# Build rule for target.
+demo3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo3
+.PHONY : demo3
+
+# fast build rule for target.
+demo3/fast:
+	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
+.PHONY : demo3/fast
 
 #=============================================================================
 # Target rules for targets named MinIntensityRendering
@@ -222,8 +222,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... vtkglut"
 	@echo "... ExternalRenderWindowDemo"
+	@echo "... demo3"
 	@echo "... MinIntensityRendering"
 	@echo "... demo"
 	@echo "... RenderInExistingContext"

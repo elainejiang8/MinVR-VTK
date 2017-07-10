@@ -25,12 +25,6 @@
 #include <vtkCamera.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkCallbackCommand.h>
-
-#include <vtkSmartPointer.h>
-#include <vtkCamera.h>
-#include <vtkFiniteDifferenceGradientEstimator.h>
-#include <vtkImageClip.h>
-#include <vtkStructuredPoints.h>
 #include <vtkTransform.h>
 
 vtkNew<ExternalVTKWidget> externalVTKWidget;
@@ -85,26 +79,10 @@ class KeyPressInteractorStyle: public vtkInteractorStyleTrackballCamera {
 vtkStandardNewMacro(KeyPressInteractorStyle);
 
 
-static void MakeCurrentCallback(vtkObject* vtkNotUsed(caller),
-                                long unsigned int vtkNotUsed(eventId),
-                                void * vtkNotUsed(clientData),
-                                void * vtkNotUsed(callData)) {
-  if (initialized)
-  {
-    glutSetWindow(windowId);
-  }
-}
-
-
-
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
-    
-     vtkNew<vtkCallbackCommand> callback;
-    callback->SetCallback(MakeCurrentCallback);
-    renWin->AddObserver(vtkCommand::WindowMakeCurrentEvent,
-                        callback.GetPointer());
+
     vtkNew<vtkPolyDataMapper> mapper;
     actor->SetMapper(mapper.GetPointer());
     
@@ -115,8 +93,12 @@ void initialize() {
 //    
 //    // create transfer mapping scalar value to opacity
 //    vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
-//    opacityTransferFunction->AddPoint(20, 0.0);
-//    opacityTransferFunction->AddPoint(255, 0.2);
+////    opacityTransferFunction->AddPoint(20, 0.0);
+////    opacityTransferFunction->AddPoint(255, 0.2);
+//    opacityTransferFunction->AddPoint(0.0,0.0);
+//  opacityTransferFunction->AddPoint(80.0,1.0);
+//  opacityTransferFunction->AddPoint(80.1,0.0);
+//  opacityTransferFunction->AddPoint(255.0,0.0);
 //    
 //    // create transfer mapping scalar value to color
 //    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
@@ -128,27 +110,25 @@ void initialize() {
 //    
 //    // the property describes how the data will look
 //    vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
-//    //volumeProperty->SetColor(colorTransferFunction);
-//    //volumeProperty->SetScalarOpacity(opacityTransferFunction);
+//    volumeProperty->SetColor(colorTransferFunction);
+//    volumeProperty->SetScalarOpacity(opacityTransferFunction);
 //    volumeProperty->ShadeOn();
 //    volumeProperty->SetInterpolationTypeToLinear();
 //    
 //    // the mapper knows how to render the data
-//    vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
+//    vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 //    volumeMapper->SetInputConnection(reader->GetOutputPort());
 //    
 //    // the volume holds the mapper and the property and can be used to position/orient the volume
 //    //vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
 //    volume->SetMapper(volumeMapper);
 //    volume->SetProperty(volumeProperty);
-//    
-//    
-//    // a keypress interactor
-////    vtkSmartPointer<KeyPressInteractorStyle> style = vtkSmartPointer<KeyPressInteractorStyle>::New();
-////    //iren->SetInteractorStyle(style);
-////    style->SetCurrentRenderer(ren);
-//    volume->SetPosition(0, -1, 0);
-//    ren->AddVolume(volume.GetPointer());
+//
+//    volume->SetPosition(0, 0, 0);
+//    //ren->AddVolume(volume.GetPointer());
+//    ren->AddViewProp(volume.GetPointer());
+//    ren->ResetCamera();
+//    volumeMapper->SetRequestedRenderModeToRayCast();
     
     ren->AddActor(actor.GetPointer());
     vtkNew<vtkCubeSource> cs;
@@ -156,11 +136,7 @@ void initialize() {
     actor->RotateX(45.0);
     actor->RotateY(45.0);
     ren->ResetCamera();
-    //ren->SetBackground(1, 1, 1);
-    //renWin->SetSize(600, 600);
-    //renWin->Render();
-    //iren->Start();
-    
+
     initialized = true;
 }
 
@@ -190,7 +166,7 @@ void display() {
     // no shading
 //    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
 //    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-    // color
+   // color
     GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
@@ -200,16 +176,18 @@ void display() {
 
 
     vtkCamera *camera = ren->GetActiveCamera();
-    camera->SetPosition(1,1,1);
-    camera->SetFocalPoint(0,0,0); // initial direction
-    camera->SetViewUp(0,1,0); // controls "up" direction for camera
+//    camera->SetPosition(0,0,0);
+//    camera->SetFocalPoint(0,0,0); // initial direction
+//    camera->SetViewUp(0,1,0); // controls "up" direction for camera
+    //camera->Azimuth(150);
+    //camera->Elevation(60);
     ren->ResetCamera();
 
     // transpose - vtk
-    actor->SetOrientation(0,1,0);
-    actor->RotateX(y_angle);
-    actor->RotateY(x_angle);
-    actor->SetScale(scale_size);
+    volume->SetOrientation(0,1,0);
+    volume->RotateX(y_angle);
+    volume->RotateY(x_angle);
+    volume->SetScale(scale_size);
 
     // camera - opengl
     //glMatrixMode(GL_MODELVIEW);
@@ -218,7 +196,7 @@ void display() {
 
     // transpose - opengl
     double f[16];
-    actor->GetMatrix(f);
+    volume->GetMatrix(f);
     
     // transpose
     double g[16];
@@ -305,9 +283,6 @@ int main(int argc, char *argv[]) {
     //matexit(onexit);  // Register callback to uninitialize on exit
     glewInit();
     
-    //ren->EraseOff(); // important!
-    //ren->LightFollowCameraOn();
-    //ren->TwoSidedLightingOn();
     glutMainLoop();  // Enter the infinitely event-processing loop
     
     return EXIT_SUCCESS;

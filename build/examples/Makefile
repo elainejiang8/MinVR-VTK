@@ -111,21 +111,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-examples/CMakeFiles/vtkglut.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/vtkglut.dir/rule
-.PHONY : examples/CMakeFiles/vtkglut.dir/rule
-
-# Convenience name for target.
-vtkglut: examples/CMakeFiles/vtkglut.dir/rule
-
-.PHONY : vtkglut
-
-# fast build rule for target.
-vtkglut/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/build
-.PHONY : vtkglut/fast
-
-# Convenience name for target.
 examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
 .PHONY : examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
@@ -139,6 +124,21 @@ ExternalRenderWindowDemo: examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
 ExternalRenderWindowDemo/fast:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/build
 .PHONY : ExternalRenderWindowDemo/fast
+
+# Convenience name for target.
+examples/CMakeFiles/demo3.dir/rule:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/rule
+.PHONY : examples/CMakeFiles/demo3.dir/rule
+
+# Convenience name for target.
+demo3: examples/CMakeFiles/demo3.dir/rule
+
+.PHONY : demo3
+
+# fast build rule for target.
+demo3/fast:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
+.PHONY : demo3/fast
 
 # Convenience name for target.
 examples/CMakeFiles/MinIntensityRendering.dir/rule:
@@ -419,32 +419,32 @@ demo2.cxx.s:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/demo2.cxx.s
 .PHONY : demo2.cxx.s
 
-vtkglut.o: vtkglut.cxx.o
+demo3.o: demo3.cxx.o
 
-.PHONY : vtkglut.o
+.PHONY : demo3.o
 
 # target to build an object file
-vtkglut.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/vtkglut.cxx.o
-.PHONY : vtkglut.cxx.o
+demo3.cxx.o:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.o
+.PHONY : demo3.cxx.o
 
-vtkglut.i: vtkglut.cxx.i
+demo3.i: demo3.cxx.i
 
-.PHONY : vtkglut.i
+.PHONY : demo3.i
 
 # target to preprocess a source file
-vtkglut.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/vtkglut.cxx.i
-.PHONY : vtkglut.cxx.i
+demo3.cxx.i:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.i
+.PHONY : demo3.cxx.i
 
-vtkglut.s: vtkglut.cxx.s
+demo3.s: demo3.cxx.s
 
-.PHONY : vtkglut.s
+.PHONY : demo3.s
 
 # target to generate assembly for a file
-vtkglut.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/vtkglut.cxx.s
-.PHONY : vtkglut.cxx.s
+demo3.cxx.s:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.s
+.PHONY : demo3.cxx.s
 
 # Help Target
 help:
@@ -454,8 +454,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... vtkglut"
 	@echo "... ExternalRenderWindowDemo"
+	@echo "... demo3"
 	@echo "... MinIntensityRendering"
 	@echo "... demo"
 	@echo "... RenderInExistingContext"
@@ -483,9 +483,9 @@ help:
 	@echo "... demo2.o"
 	@echo "... demo2.i"
 	@echo "... demo2.s"
-	@echo "... vtkglut.o"
-	@echo "... vtkglut.i"
-	@echo "... vtkglut.s"
+	@echo "... demo3.o"
+	@echo "... demo3.i"
+	@echo "... demo3.s"
 .PHONY : help
 
 

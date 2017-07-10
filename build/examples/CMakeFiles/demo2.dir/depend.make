@@ -13,7 +13,6 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Common/Transf
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Filters/Core/vtkFiltersCoreModule.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Filters/Sources/vtkFiltersSourcesModule.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/IO/Legacy/vtkIOLegacyModule.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Imaging/Core/vtkImagingCoreModule.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Interaction/Style/vtkInteractionStyleModule.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Rendering/Core/vtkRenderingCoreModule.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK-build/Rendering/External/vtkRenderingExternalModule.h
@@ -77,13 +76,10 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vt
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkCellTypes.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkDataSet.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkImageData.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkPiecewiseFunction.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkPointSet.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkPolyData.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkRect.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkStructuredData.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkStructuredPoints.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkVector.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/ExecutionModel/vtkAlgorithm.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/ExecutionModel/vtkImageAlgorithm.h
@@ -97,7 +93,6 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/Transforms/v
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Filters/Sources/vtkCubeSource.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Imaging/Core/vtkImageClip.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper3D.h
@@ -128,8 +123,6 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vt
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGL.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderWindow.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderer.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkEncodedGradientEstimator.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkFiniteDifferenceGradientEstimator.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkFixedPointVolumeRayCastMapper.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkVolumeRayCastCompositeFunction.h

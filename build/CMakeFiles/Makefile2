@@ -63,8 +63,8 @@ CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
 # Directory level rules for directory examples
 
 # Convenience name for "all" pass in the directory.
-examples/all: examples/CMakeFiles/vtkglut.dir/all
 examples/all: examples/CMakeFiles/ExternalRenderWindowDemo.dir/all
+examples/all: examples/CMakeFiles/demo3.dir/all
 examples/all: examples/CMakeFiles/MinIntensityRendering.dir/all
 examples/all: examples/CMakeFiles/demo.dir/all
 examples/all: examples/CMakeFiles/RenderInExistingContext.dir/all
@@ -75,8 +75,8 @@ examples/all: examples/CMakeFiles/demo2.dir/all
 .PHONY : examples/all
 
 # Convenience name for "clean" pass in the directory.
-examples/clean: examples/CMakeFiles/vtkglut.dir/clean
 examples/clean: examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
+examples/clean: examples/CMakeFiles/demo3.dir/clean
 examples/clean: examples/CMakeFiles/MinIntensityRendering.dir/clean
 examples/clean: examples/CMakeFiles/demo.dir/clean
 examples/clean: examples/CMakeFiles/RenderInExistingContext.dir/clean
@@ -90,43 +90,6 @@ examples/clean: examples/CMakeFiles/demo2.dir/clean
 examples/preinstall:
 
 .PHONY : examples/preinstall
-
-#=============================================================================
-# Target rules for target examples/CMakeFiles/vtkglut.dir
-
-# All Build rule for target.
-examples/CMakeFiles/vtkglut.dir/all:
-	$(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/depend
-	$(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=15,16 "Built target vtkglut"
-.PHONY : examples/CMakeFiles/vtkglut.dir/all
-
-# Include target in all.
-all: examples/CMakeFiles/vtkglut.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-examples/CMakeFiles/vtkglut.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/vtkglut.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
-.PHONY : examples/CMakeFiles/vtkglut.dir/rule
-
-# Convenience name for target.
-vtkglut: examples/CMakeFiles/vtkglut.dir/rule
-
-.PHONY : vtkglut
-
-# clean rule for target.
-examples/CMakeFiles/vtkglut.dir/clean:
-	$(MAKE) -f examples/CMakeFiles/vtkglut.dir/build.make examples/CMakeFiles/vtkglut.dir/clean
-.PHONY : examples/CMakeFiles/vtkglut.dir/clean
-
-# clean rule for target.
-clean: examples/CMakeFiles/vtkglut.dir/clean
-
-.PHONY : clean
 
 #=============================================================================
 # Target rules for target examples/CMakeFiles/ExternalRenderWindowDemo.dir
@@ -162,6 +125,43 @@ examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean:
 
 # clean rule for target.
 clean: examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target examples/CMakeFiles/demo3.dir
+
+# All Build rule for target.
+examples/CMakeFiles/demo3.dir/all:
+	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/depend
+	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=15,16 "Built target demo3"
+.PHONY : examples/CMakeFiles/demo3.dir/all
+
+# Include target in all.
+all: examples/CMakeFiles/demo3.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+examples/CMakeFiles/demo3.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
+.PHONY : examples/CMakeFiles/demo3.dir/rule
+
+# Convenience name for target.
+demo3: examples/CMakeFiles/demo3.dir/rule
+
+.PHONY : demo3
+
+# clean rule for target.
+examples/CMakeFiles/demo3.dir/clean:
+	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/clean
+.PHONY : examples/CMakeFiles/demo3.dir/clean
+
+# clean rule for target.
+clean: examples/CMakeFiles/demo3.dir/clean
 
 .PHONY : clean
 

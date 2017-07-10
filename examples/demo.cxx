@@ -6,7 +6,6 @@
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkVolumeProperty.h>
-//#include <vtkVolumeRayCastCompositeFunction.h>
 #include <vtkFixedPointVolumeRayCastMapper.h>
 #include <vtkVolume.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -96,9 +95,7 @@ int main(int argc, char *argv[]) {
     volumeProperty->SetInterpolationTypeToLinear();
     
     // the mapper/ray cast function knows how to render the data
-//    vtkSmartPointer<vtkVolumeRayCastCompositeFunction> compositeFunction = vtkSmartPointer<vtkVolumeRayCastCompositeFunction>::New();
     vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
-    //volumeMapper->SetVolumeRayCastFunction(compositeFunction);
     volumeMapper->SetInputConnection(reader->GetOutputPort());
     
     // the volume holds the mapper and the property and can be used to position/orient the volume

@@ -45,6 +45,16 @@ target_link_libraries(demo2
 	${GLEW_LIBRARY}
 )
 
+add_executable(demo3 demo3.cxx)
+
+target_link_libraries(demo3 
+	${VTK_LIBRARIES} 
+	${MINVR_LIBRARY}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
 
 add_executable(RenderInExistingContext RenderInExistingContext.cxx)
 
@@ -66,10 +76,4 @@ target_link_libraries(ExternalRenderWindowDemo
 )
 
 
-add_executable(vtkglut MACOSX_BUNDLE vtkglut.cxx )
-
-target_link_libraries(vtkglut 
-	${VTK_LIBRARIES}
-	${FREEGLUT_LIBRARY}
-)
   

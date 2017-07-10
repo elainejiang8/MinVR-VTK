@@ -6,6 +6,30 @@
 
 #IncludeRegexTransform: 
 
+/Users/Elaine/YURT/MinVR/build/install/include/api/MinVR.h
+VRApp.h
+/Users/Elaine/YURT/MinVR/build/install/include/api/VRApp.h
+VREvent.h
+/Users/Elaine/YURT/MinVR/build/install/include/api/VREvent.h
+VRGraphicsState.h
+/Users/Elaine/YURT/MinVR/build/install/include/api/VRGraphicsState.h
+
+/Users/Elaine/YURT/MinVR/build/install/include/api/VRApp.h
+VREvent.h
+/Users/Elaine/YURT/MinVR/build/install/include/api/VREvent.h
+VRGraphicsState.h
+/Users/Elaine/YURT/MinVR/build/install/include/api/VRGraphicsState.h
+api/MinVR.h
+-
+
+/Users/Elaine/YURT/MinVR/build/install/include/api/VREvent.h
+string
+-
+vector
+-
+
+/Users/Elaine/YURT/MinVR/build/install/include/api/VRGraphicsState.h
+
 /Users/elaine/VTK-build/Common/Core/vtkAtomic.h
 vtkCommonCoreModule.h
 /Users/elaine/VTK-build/Common/Core/vtkCommonCoreModule.h
@@ -896,15 +920,15 @@ inttypes.h
 include/kwiml/int.h
 /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/int.h
 
-/Users/elaine/YURT/MinVR-VTK/examples/demo2.cxx
+/Users/elaine/YURT/MinVR-VTK/examples/demo3.cxx
 GL/glew.h
 -
 GL/freeglut.h
 -
 GL/glut.h
 -
-../src/math_3d.h
-/Users/elaine/YURT/MinVR-VTK/src/math_3d.h
+api/MinVR.h
+-
 vtkSmartPointer.h
 -
 vtkRenderer.h
@@ -948,12 +972,6 @@ vtkPolyDataMapper.h
 vtkCallbackCommand.h
 -
 vtkTransform.h
--
-
-/Users/elaine/YURT/MinVR-VTK/src/math_3d.h
-stdio.h
--
-math.h
 -
 
 /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h
