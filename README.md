@@ -34,6 +34,7 @@ Run ccmake
 with the desired options. Once you run CMake using ccmake, you will be presented with a list of options that can be modified to customize the VTK build. CMake will be able to set most of these options to reasonable default values. 
     - Hit the 'c' key to configure. (Note: If you are initally seeing a blank interface, hit the 'c' key.) 
     - Keep hitting the 'c' key until the generate option is available (g key), and then hit the 'g' key. 
+    
 3. Once VTK has been successfully configured, the interface should quit itself. The last step is to build VTK:
 ```
 $ cd /path/to/VTK-build
@@ -42,8 +43,8 @@ $ make
 ### To install on Windows:
 idk yet
 
-## Run Example
-Run the demo example:
+## Run Examples
+#### Run the demo example:
 ```
 Cd into project directory
   $ cd /path/to/MinVR-VTK/
@@ -56,3 +57,16 @@ Run project
   $ bin/demo ../data/ironProt.vtk
 ```
 Running the other examples is a similar process, but be sure to use the correct data set (you can see which data set to use in a project's cxx file comments). 
+
+#### Run the demo2 example:
+1. Because demo2 is run on an external OpenGL window, make sure that Module_vtkRenderingExternal is ON (default is OFF). You can modify vtk's configurations by going to your VTK-build directory and running "ccmake /path/to/VTK". Then, find the row with Module_vtkRenderingExternal and hit the enter key to toggle the settings. Also make sure that OpenGL is set to its 2.1 version and not the newer 3.2. When everything is set correctly, hit the 'c' key until the 'g' key appears, and then hit the 'g' key to finish configuration. 
+
+2. If you do not have GLEW or FreeGLUT installed, install them using homebrew.
+
+3. After completing steps 1 and 2, you should be able to build and run demo2 the same way you built and ran the original demo.
+
+#### Run the demo3 example: 
+1. After building demo3, run with the following command:
+```
+  $ bin/demo3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml
+```
