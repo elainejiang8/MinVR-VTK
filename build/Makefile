@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ExternalRenderWindowDemo
+# Target rules for targets named RenderInExistingContext
 
 # Build rule for target.
-ExternalRenderWindowDemo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ExternalRenderWindowDemo
-.PHONY : ExternalRenderWindowDemo
+RenderInExistingContext: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RenderInExistingContext
+.PHONY : RenderInExistingContext
 
 # fast build rule for target.
-ExternalRenderWindowDemo/fast:
-	$(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/build
-.PHONY : ExternalRenderWindowDemo/fast
+RenderInExistingContext/fast:
+	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
+.PHONY : RenderInExistingContext/fast
 
 #=============================================================================
 # Target rules for targets named demo3
@@ -163,30 +163,17 @@ demo/fast:
 .PHONY : demo/fast
 
 #=============================================================================
-# Target rules for targets named RenderInExistingContext
+# Target rules for targets named demo2-cube
 
 # Build rule for target.
-RenderInExistingContext: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 RenderInExistingContext
-.PHONY : RenderInExistingContext
+demo2-cube: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo2-cube
+.PHONY : demo2-cube
 
 # fast build rule for target.
-RenderInExistingContext/fast:
-	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
-.PHONY : RenderInExistingContext/fast
-
-#=============================================================================
-# Target rules for targets named MinVRIntensityRendering
-
-# Build rule for target.
-MinVRIntensityRendering: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MinVRIntensityRendering
-.PHONY : MinVRIntensityRendering
-
-# fast build rule for target.
-MinVRIntensityRendering/fast:
-	$(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/build
-.PHONY : MinVRIntensityRendering/fast
+demo2-cube/fast:
+	$(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/build
+.PHONY : demo2-cube/fast
 
 #=============================================================================
 # Target rules for targets named SmartVolumeMapper
@@ -222,12 +209,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... ExternalRenderWindowDemo"
+	@echo "... RenderInExistingContext"
 	@echo "... demo3"
 	@echo "... MinIntensityRendering"
 	@echo "... demo"
-	@echo "... RenderInExistingContext"
-	@echo "... MinVRIntensityRendering"
+	@echo "... demo2-cube"
 	@echo "... SmartVolumeMapper"
 	@echo "... demo2"
 .PHONY : help

@@ -111,19 +111,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
-.PHONY : examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
+examples/CMakeFiles/RenderInExistingContext.dir/rule:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/RenderInExistingContext.dir/rule
+.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/rule
 
 # Convenience name for target.
-ExternalRenderWindowDemo: examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
+RenderInExistingContext: examples/CMakeFiles/RenderInExistingContext.dir/rule
 
-.PHONY : ExternalRenderWindowDemo
+.PHONY : RenderInExistingContext
 
 # fast build rule for target.
-ExternalRenderWindowDemo/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/build
-.PHONY : ExternalRenderWindowDemo/fast
+RenderInExistingContext/fast:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
+.PHONY : RenderInExistingContext/fast
 
 # Convenience name for target.
 examples/CMakeFiles/demo3.dir/rule:
@@ -171,34 +171,19 @@ demo/fast:
 .PHONY : demo/fast
 
 # Convenience name for target.
-examples/CMakeFiles/RenderInExistingContext.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/RenderInExistingContext.dir/rule
-.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/rule
+examples/CMakeFiles/demo2-cube.dir/rule:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo2-cube.dir/rule
+.PHONY : examples/CMakeFiles/demo2-cube.dir/rule
 
 # Convenience name for target.
-RenderInExistingContext: examples/CMakeFiles/RenderInExistingContext.dir/rule
+demo2-cube: examples/CMakeFiles/demo2-cube.dir/rule
 
-.PHONY : RenderInExistingContext
+.PHONY : demo2-cube
 
 # fast build rule for target.
-RenderInExistingContext/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
-.PHONY : RenderInExistingContext/fast
-
-# Convenience name for target.
-examples/CMakeFiles/MinVRIntensityRendering.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/MinVRIntensityRendering.dir/rule
-.PHONY : examples/CMakeFiles/MinVRIntensityRendering.dir/rule
-
-# Convenience name for target.
-MinVRIntensityRendering: examples/CMakeFiles/MinVRIntensityRendering.dir/rule
-
-.PHONY : MinVRIntensityRendering
-
-# fast build rule for target.
-MinVRIntensityRendering/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/build
-.PHONY : MinVRIntensityRendering/fast
+demo2-cube/fast:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/build
+.PHONY : demo2-cube/fast
 
 # Convenience name for target.
 examples/CMakeFiles/SmartVolumeMapper.dir/rule:
@@ -230,33 +215,6 @@ demo2/fast:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
 .PHONY : demo2/fast
 
-ExternalRenderWindowDemo.o: ExternalRenderWindowDemo.cxx.o
-
-.PHONY : ExternalRenderWindowDemo.o
-
-# target to build an object file
-ExternalRenderWindowDemo.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/ExternalRenderWindowDemo.cxx.o
-.PHONY : ExternalRenderWindowDemo.cxx.o
-
-ExternalRenderWindowDemo.i: ExternalRenderWindowDemo.cxx.i
-
-.PHONY : ExternalRenderWindowDemo.i
-
-# target to preprocess a source file
-ExternalRenderWindowDemo.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/ExternalRenderWindowDemo.cxx.i
-.PHONY : ExternalRenderWindowDemo.cxx.i
-
-ExternalRenderWindowDemo.s: ExternalRenderWindowDemo.cxx.s
-
-.PHONY : ExternalRenderWindowDemo.s
-
-# target to generate assembly for a file
-ExternalRenderWindowDemo.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/ExternalRenderWindowDemo.cxx.s
-.PHONY : ExternalRenderWindowDemo.cxx.s
-
 MinIntensityRendering.o: MinIntensityRendering.cxx.o
 
 .PHONY : MinIntensityRendering.o
@@ -283,33 +241,6 @@ MinIntensityRendering.s: MinIntensityRendering.cxx.s
 MinIntensityRendering.cxx.s:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/MinIntensityRendering.cxx.s
 .PHONY : MinIntensityRendering.cxx.s
-
-MinVRIntensityRendering.o: MinVRIntensityRendering.cxx.o
-
-.PHONY : MinVRIntensityRendering.o
-
-# target to build an object file
-MinVRIntensityRendering.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/MinVRIntensityRendering.cxx.o
-.PHONY : MinVRIntensityRendering.cxx.o
-
-MinVRIntensityRendering.i: MinVRIntensityRendering.cxx.i
-
-.PHONY : MinVRIntensityRendering.i
-
-# target to preprocess a source file
-MinVRIntensityRendering.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/MinVRIntensityRendering.cxx.i
-.PHONY : MinVRIntensityRendering.cxx.i
-
-MinVRIntensityRendering.s: MinVRIntensityRendering.cxx.s
-
-.PHONY : MinVRIntensityRendering.s
-
-# target to generate assembly for a file
-MinVRIntensityRendering.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/MinVRIntensityRendering.cxx.s
-.PHONY : MinVRIntensityRendering.cxx.s
 
 RenderInExistingContext.o: RenderInExistingContext.cxx.o
 
@@ -392,6 +323,33 @@ demo.cxx.s:
 	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.s
 .PHONY : demo.cxx.s
 
+demo2-cube.o: demo2-cube.cxx.o
+
+.PHONY : demo2-cube.o
+
+# target to build an object file
+demo2-cube.cxx.o:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.o
+.PHONY : demo2-cube.cxx.o
+
+demo2-cube.i: demo2-cube.cxx.i
+
+.PHONY : demo2-cube.i
+
+# target to preprocess a source file
+demo2-cube.cxx.i:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.i
+.PHONY : demo2-cube.cxx.i
+
+demo2-cube.s: demo2-cube.cxx.s
+
+.PHONY : demo2-cube.s
+
+# target to generate assembly for a file
+demo2-cube.cxx.s:
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.s
+.PHONY : demo2-cube.cxx.s
+
 demo2.o: demo2.cxx.o
 
 .PHONY : demo2.o
@@ -454,23 +412,16 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... ExternalRenderWindowDemo"
+	@echo "... RenderInExistingContext"
 	@echo "... demo3"
 	@echo "... MinIntensityRendering"
 	@echo "... demo"
-	@echo "... RenderInExistingContext"
-	@echo "... MinVRIntensityRendering"
+	@echo "... demo2-cube"
 	@echo "... SmartVolumeMapper"
 	@echo "... demo2"
-	@echo "... ExternalRenderWindowDemo.o"
-	@echo "... ExternalRenderWindowDemo.i"
-	@echo "... ExternalRenderWindowDemo.s"
 	@echo "... MinIntensityRendering.o"
 	@echo "... MinIntensityRendering.i"
 	@echo "... MinIntensityRendering.s"
-	@echo "... MinVRIntensityRendering.o"
-	@echo "... MinVRIntensityRendering.i"
-	@echo "... MinVRIntensityRendering.s"
 	@echo "... RenderInExistingContext.o"
 	@echo "... RenderInExistingContext.i"
 	@echo "... RenderInExistingContext.s"
@@ -480,6 +431,9 @@ help:
 	@echo "... demo.o"
 	@echo "... demo.i"
 	@echo "... demo.s"
+	@echo "... demo2-cube.o"
+	@echo "... demo2-cube.i"
+	@echo "... demo2-cube.s"
 	@echo "... demo2.o"
 	@echo "... demo2.i"
 	@echo "... demo2.s"

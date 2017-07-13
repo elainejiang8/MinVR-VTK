@@ -63,24 +63,22 @@ CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
 # Directory level rules for directory examples
 
 # Convenience name for "all" pass in the directory.
-examples/all: examples/CMakeFiles/ExternalRenderWindowDemo.dir/all
+examples/all: examples/CMakeFiles/RenderInExistingContext.dir/all
 examples/all: examples/CMakeFiles/demo3.dir/all
 examples/all: examples/CMakeFiles/MinIntensityRendering.dir/all
 examples/all: examples/CMakeFiles/demo.dir/all
-examples/all: examples/CMakeFiles/RenderInExistingContext.dir/all
-examples/all: examples/CMakeFiles/MinVRIntensityRendering.dir/all
+examples/all: examples/CMakeFiles/demo2-cube.dir/all
 examples/all: examples/CMakeFiles/SmartVolumeMapper.dir/all
 examples/all: examples/CMakeFiles/demo2.dir/all
 
 .PHONY : examples/all
 
 # Convenience name for "clean" pass in the directory.
-examples/clean: examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
+examples/clean: examples/CMakeFiles/RenderInExistingContext.dir/clean
 examples/clean: examples/CMakeFiles/demo3.dir/clean
 examples/clean: examples/CMakeFiles/MinIntensityRendering.dir/clean
 examples/clean: examples/CMakeFiles/demo.dir/clean
-examples/clean: examples/CMakeFiles/RenderInExistingContext.dir/clean
-examples/clean: examples/CMakeFiles/MinVRIntensityRendering.dir/clean
+examples/clean: examples/CMakeFiles/demo2-cube.dir/clean
 examples/clean: examples/CMakeFiles/SmartVolumeMapper.dir/clean
 examples/clean: examples/CMakeFiles/demo2.dir/clean
 
@@ -92,39 +90,39 @@ examples/preinstall:
 .PHONY : examples/preinstall
 
 #=============================================================================
-# Target rules for target examples/CMakeFiles/ExternalRenderWindowDemo.dir
+# Target rules for target examples/CMakeFiles/RenderInExistingContext.dir
 
 # All Build rule for target.
-examples/CMakeFiles/ExternalRenderWindowDemo.dir/all:
-	$(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/depend
-	$(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=1,2 "Built target ExternalRenderWindowDemo"
-.PHONY : examples/CMakeFiles/ExternalRenderWindowDemo.dir/all
+examples/CMakeFiles/RenderInExistingContext.dir/all:
+	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/depend
+	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=3,4 "Built target RenderInExistingContext"
+.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/all
 
 # Include target in all.
-all: examples/CMakeFiles/ExternalRenderWindowDemo.dir/all
+all: examples/CMakeFiles/RenderInExistingContext.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule: cmake_check_build_system
+examples/CMakeFiles/RenderInExistingContext.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/ExternalRenderWindowDemo.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/RenderInExistingContext.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
-.PHONY : examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
+.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/rule
 
 # Convenience name for target.
-ExternalRenderWindowDemo: examples/CMakeFiles/ExternalRenderWindowDemo.dir/rule
+RenderInExistingContext: examples/CMakeFiles/RenderInExistingContext.dir/rule
 
-.PHONY : ExternalRenderWindowDemo
-
-# clean rule for target.
-examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean:
-	$(MAKE) -f examples/CMakeFiles/ExternalRenderWindowDemo.dir/build.make examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
-.PHONY : examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
+.PHONY : RenderInExistingContext
 
 # clean rule for target.
-clean: examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
+examples/CMakeFiles/RenderInExistingContext.dir/clean:
+	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/clean
+.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/clean
+
+# clean rule for target.
+clean: examples/CMakeFiles/RenderInExistingContext.dir/clean
 
 .PHONY : clean
 
@@ -135,7 +133,7 @@ clean: examples/CMakeFiles/ExternalRenderWindowDemo.dir/clean
 examples/CMakeFiles/demo3.dir/all:
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=15,16 "Built target demo3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=13,14 "Built target demo3"
 .PHONY : examples/CMakeFiles/demo3.dir/all
 
 # Include target in all.
@@ -172,7 +170,7 @@ clean: examples/CMakeFiles/demo3.dir/clean
 examples/CMakeFiles/MinIntensityRendering.dir/all:
 	$(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/depend
 	$(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=3,4 "Built target MinIntensityRendering"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=1,2 "Built target MinIntensityRendering"
 .PHONY : examples/CMakeFiles/MinIntensityRendering.dir/all
 
 # Include target in all.
@@ -209,7 +207,7 @@ clean: examples/CMakeFiles/MinIntensityRendering.dir/clean
 examples/CMakeFiles/demo.dir/all:
 	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=11,12 "Built target demo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=7,8 "Built target demo"
 .PHONY : examples/CMakeFiles/demo.dir/all
 
 # Include target in all.
@@ -240,76 +238,39 @@ clean: examples/CMakeFiles/demo.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target examples/CMakeFiles/RenderInExistingContext.dir
+# Target rules for target examples/CMakeFiles/demo2-cube.dir
 
 # All Build rule for target.
-examples/CMakeFiles/RenderInExistingContext.dir/all:
-	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/depend
-	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=7,8 "Built target RenderInExistingContext"
-.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/all
+examples/CMakeFiles/demo2-cube.dir/all:
+	$(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/depend
+	$(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=11,12 "Built target demo2-cube"
+.PHONY : examples/CMakeFiles/demo2-cube.dir/all
 
 # Include target in all.
-all: examples/CMakeFiles/RenderInExistingContext.dir/all
+all: examples/CMakeFiles/demo2-cube.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-examples/CMakeFiles/RenderInExistingContext.dir/rule: cmake_check_build_system
+examples/CMakeFiles/demo2-cube.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/RenderInExistingContext.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo2-cube.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
-.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/rule
+.PHONY : examples/CMakeFiles/demo2-cube.dir/rule
 
 # Convenience name for target.
-RenderInExistingContext: examples/CMakeFiles/RenderInExistingContext.dir/rule
+demo2-cube: examples/CMakeFiles/demo2-cube.dir/rule
 
-.PHONY : RenderInExistingContext
-
-# clean rule for target.
-examples/CMakeFiles/RenderInExistingContext.dir/clean:
-	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/clean
-.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/clean
+.PHONY : demo2-cube
 
 # clean rule for target.
-clean: examples/CMakeFiles/RenderInExistingContext.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target examples/CMakeFiles/MinVRIntensityRendering.dir
-
-# All Build rule for target.
-examples/CMakeFiles/MinVRIntensityRendering.dir/all:
-	$(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/depend
-	$(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=5,6 "Built target MinVRIntensityRendering"
-.PHONY : examples/CMakeFiles/MinVRIntensityRendering.dir/all
-
-# Include target in all.
-all: examples/CMakeFiles/MinVRIntensityRendering.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-examples/CMakeFiles/MinVRIntensityRendering.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/MinVRIntensityRendering.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
-.PHONY : examples/CMakeFiles/MinVRIntensityRendering.dir/rule
-
-# Convenience name for target.
-MinVRIntensityRendering: examples/CMakeFiles/MinVRIntensityRendering.dir/rule
-
-.PHONY : MinVRIntensityRendering
+examples/CMakeFiles/demo2-cube.dir/clean:
+	$(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/clean
+.PHONY : examples/CMakeFiles/demo2-cube.dir/clean
 
 # clean rule for target.
-examples/CMakeFiles/MinVRIntensityRendering.dir/clean:
-	$(MAKE) -f examples/CMakeFiles/MinVRIntensityRendering.dir/build.make examples/CMakeFiles/MinVRIntensityRendering.dir/clean
-.PHONY : examples/CMakeFiles/MinVRIntensityRendering.dir/clean
-
-# clean rule for target.
-clean: examples/CMakeFiles/MinVRIntensityRendering.dir/clean
+clean: examples/CMakeFiles/demo2-cube.dir/clean
 
 .PHONY : clean
 
@@ -320,7 +281,7 @@ clean: examples/CMakeFiles/MinVRIntensityRendering.dir/clean
 examples/CMakeFiles/SmartVolumeMapper.dir/all:
 	$(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/depend
 	$(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=9,10 "Built target SmartVolumeMapper"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=5,6 "Built target SmartVolumeMapper"
 .PHONY : examples/CMakeFiles/SmartVolumeMapper.dir/all
 
 # Include target in all.
@@ -357,7 +318,7 @@ clean: examples/CMakeFiles/SmartVolumeMapper.dir/clean
 examples/CMakeFiles/demo2.dir/all:
 	$(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=13,14 "Built target demo2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=9,10 "Built target demo2"
 .PHONY : examples/CMakeFiles/demo2.dir/all
 
 # Include target in all.

@@ -5,31 +5,25 @@
 
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkStructuredPointsReader.h>
-#include <vtkPiecewiseFunction.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkVolumeProperty.h>
-#include <vtkVolumeRayCastCompositeFunction.h>
-#include <vtkFixedPointVolumeRayCastMapper.h>
-#include <vtkVolume.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
+#include <vtkActor.h>
+#include <vtkCubeSource.h>
 #include <vtkExternalOpenGLRenderWindow.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
 #include <vtkCamera.h>
+#include <vtkPolyDataMapper.h>
 #include <vtkTransform.h>
+#include <vtkExternalOpenGLCamera.h>
 
 vtkNew<ExternalVTKWidget> externalVTKWidget;
-vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
+static bool initialized = false;
 static int windowId = -1;
 static int windowH = 501;
 static int windowW = 500;
 std::string filename;
+vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
 vtkNew<vtkActor> actor;
-vtkNew<vtkVolume> volume;
 
 vtkNew<vtkTransform> transform;
 int press_x, press_y;
@@ -41,78 +35,24 @@ int xform_mode = 0;
 #define XFORM_NONE    0
 #define XFORM_ROTATE  1
 #define XFORM_SCALE 2
-
-// define an interaction style
-class KeyPressInteractorStyle: public vtkInteractorStyleTrackballCamera {
-    public:
-        static KeyPressInteractorStyle* New();
-        vtkTypeMacro(KeyPressInteractorStyle, vtkInteractorStyleTrackballCamera);
-    
-        
-        virtual void OnKeyPress() override {
-            // get the key press
-            vtkRenderWindowInteractor *rwi = this->Interactor;
-            std::string key = rwi->GetKeySym();
-            
-            // output the key that was pressed
-            std::cout << "Pressed " << key << std::endl;
-            
-            // handle an arrow key
-            if(key == "Up") {
-                std::cout << "The up arrow was pressed." << std::endl;
-            }
-            if(key == "a") {
-                std::cout << "The a key was pressed." << std::endl;
-            }
-            
-            // forward events
-            vtkInteractorStyleTrackballCamera::OnKeyPress();
-        }
-};
-vtkStandardNewMacro(KeyPressInteractorStyle);
+const float ASPECT = float(windowW)/windowH; 
 
 
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
-    
-    // read the data from a vtk file
-    vtkSmartPointer<vtkStructuredPointsReader> reader = vtkSmartPointer<vtkStructuredPointsReader>::New();
-    reader->SetFileName(filename.c_str());
-    reader->Update();
-    
-    // create transfer mapping scalar value to opacity
-    vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
-    opacityTransferFunction->AddPoint(20, 0.0);
-    opacityTransferFunction->AddPoint(255, 0.2);
-    
-    // create transfer mapping scalar value to color
-    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-    colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(64.0, 1.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(128.0, 0.0, 0.0, 1.0);
-    colorTransferFunction->AddRGBPoint(192.0, 0.0, 1.0, 0.0);
-    colorTransferFunction->AddRGBPoint(255.0, 0.0, 0.2, 0.0);
-    
-    // the property describes how the data will look
-    vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
-    volumeProperty->SetColor(colorTransferFunction);
-    volumeProperty->SetScalarOpacity(opacityTransferFunction);
-    volumeProperty->ShadeOn();
-    volumeProperty->SetInterpolationTypeToLinear();
-    
-    // the mapper knows how to render the data
-    vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
-    volumeMapper->SetInputConnection(reader->GetOutputPort());
-    
-    // the volume holds the mapper and the property and can be used to position/orient the volume
-    volume->SetMapper(volumeMapper);
-    volume->SetProperty(volumeProperty);
-    volume->SetPosition(0, 0, 0);
-
-    ren->AddVolume(volume.GetPointer());
+    vtkNew<vtkPolyDataMapper> mapper;
+    actor->SetMapper(mapper.GetPointer());
+        
+    ren->AddActor(actor.GetPointer());
+    vtkNew<vtkCubeSource> cs;
+    mapper->SetInputConnection(cs->GetOutputPort());
+    actor->RotateX(45.0);
+    actor->RotateY(45.0);
     ren->MakeCamera();
-    ren->ResetCamera();
+    //ren->ResetCamera();
+
+    initialized = true;
 }
 
 
@@ -132,15 +72,12 @@ void display() {
     glBegin(GL_TRIANGLES);
         glVertex3f(-1.5,-1.5,0.0);
         glVertex3f(1.5,0.0,0.0);
-        glVertex3f(0.0,1.5,1);
+        glVertex3f(0.0,1.5,1.0);
     glEnd();
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    // no shading
-//    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
-//    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
    // color
     GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
@@ -151,26 +88,24 @@ void display() {
 
 
     vtkCamera *camera = ren->GetActiveCamera();
-    //std::cerr << camera->GetPosition() << std::endl;
-    camera->SetPosition(0,0,0);
+    camera->SetPosition(20,0,0);
     camera->SetFocalPoint(0,0,0); // initial direction
     camera->SetViewUp(0,1,0); // controls "up" direction for camera
-    ren->ResetCamera();
 
     // transpose - vtk
-    volume->SetOrientation(0,0,0);
-    volume->RotateX(y_angle);
-    volume->RotateY(x_angle);
-    volume->SetScale(scale_size);
+    actor->SetOrientation(0,0,0);
+    actor->RotateX(y_angle);
+    actor->RotateY(x_angle);
+    actor->SetScale(scale_size);
 
     // camera - opengl
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    //GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+//    GLKMatrix4MakeLookAt(0,0,-5,0,5,0,0,1,0);
 
     // transpose - opengl
     double f[16];
-    volume->GetMatrix(f);
+    actor->GetMatrix(f);
     
     // transpose
     double g[16];
@@ -180,6 +115,7 @@ void display() {
     g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
     glMultMatrixd(g); // multiply current matrix with specified matrix
 
+    
     externalVTKWidget->GetRenderWindow()->Render();
     glutSwapBuffers();
 }
@@ -189,10 +125,8 @@ void MouseButton(int button, int state, int x, int y)
     if (state == GLUT_DOWN) {
       press_x = x; press_y = y;
       if (button == GLUT_LEFT_BUTTON) {
-        //std::cerr <<"Left" << std::endl;
         xform_mode = XFORM_ROTATE;
       } else if (button == GLUT_RIGHT_BUTTON) {
-        //std::cerr <<"Right" << std::endl;
         xform_mode = XFORM_SCALE;
       }
     }
@@ -236,9 +170,8 @@ void handleResize(int w, int h)
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
 
-    //GLKMatrix4MakePerspective(60, (GLfloat)w/(GLfloat)h, 1, 100);   // only the window is changing, not the camera
-    //glMatrixMode(GL_MODELVIEW);
-  
+    GLKMatrix4MakePerspective(60, (GLfloat)w/(GLfloat)h, 1, 100);   // only the window is changing, not the camera
+    glMatrixMode(GL_MODELVIEW);
     
     glutPostRedisplay();
 }
@@ -251,19 +184,17 @@ int main(int argc, char *argv[]) {
     
     filename = argv[1]; // "/Data/ironProt.vtk;
     
-    
     glutInit(&argc, argv);                 // Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL);
     glutInitWindowSize(windowW, windowH);   // Set the window's initial width & height
     glutInitWindowPosition(201, 201); // Position the window's initial top-left corner
-    windowId = glutCreateWindow("VTK External Window Test"); // Create a window with the given title
+    windowId = glutCreateWindow("VTK External Window Test - Cube"); // Create a window with the given title
     initialize();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
     glutIdleFunc(display); 
     glutReshapeFunc(handleResize); // Register resize callback handler for window resize
     glutMouseFunc(MouseButton);
     glutMotionFunc(MouseMotion);
-    //matexit(onexit);  // Register callback to uninitialize on exit
     glewInit();
     
     glutMainLoop();  // Enter the infinitely event-processing loop
