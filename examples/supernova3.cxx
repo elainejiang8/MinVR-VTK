@@ -255,45 +255,45 @@ private:
             
              // Second the load() step.  We let MinVR give us the projection
             // matrix from the render state argument to this method.
-//            const float* pm = renderState.getProjectionMatrix();
-//            glm::mat4 projMatrix = glm::mat4( pm[0],  pm[1], pm[2], pm[3],
-//                                            pm[4],  pm[5], pm[6], pm[7],
-//                                            pm[8],  pm[9],pm[10],pm[11],
-//                                            pm[12],pm[13],pm[14],pm[15]);
-//            //bsg::bsgUtils::printMat("proj", projMatrix);
-//
-//            // The draw step.  We let MinVR give us the view matrix.
-//            const float* vm = renderState.getViewMatrix();
-//            glm::mat4 viewMatrix = glm::mat4( vm[0],  vm[1], vm[2], vm[3],
-//                                            vm[4],  vm[5], vm[6], vm[7],
-//                                            vm[8],  vm[9],vm[10],vm[11],
-//                                            vm[12],vm[13],vm[14],vm[15]);
-//
-//
-//            viewMatrix = glm::transpose(viewMatrix);
-//
-//
-//            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
-//
-//            double view[16];
-//            for(int i = 0; i < 16; i++) {
-//                view[i] = glm::value_ptr(viewMatrix)[i];
-//                std::cout << view[i] << " ";
-//            }
-//            std::cout << std::endl;
-//
-//            camera->SetViewTransformMatrix(view);
-//
-//            double proj[16];
-//            for(int i = 0; i < 16; i++) {
-//                proj[i] = glm::value_ptr(projMatrix)[i];
-//            }
-//
-//            camera->SetProjectionTransformMatrix(proj);
+            const float* pm = renderState.getProjectionMatrix();
+            glm::mat4 projMatrix = glm::mat4( pm[0],  pm[1], pm[2], pm[3],
+                                            pm[4],  pm[5], pm[6], pm[7],
+                                            pm[8],  pm[9],pm[10],pm[11],
+                                            pm[12],pm[13],pm[14],pm[15]);
+            //bsg::bsgUtils::printMat("proj", projMatrix);
+
+            // The draw step.  We let MinVR give us the view matrix.
+            const float* vm = renderState.getViewMatrix();
+            glm::mat4 viewMatrix = glm::mat4( vm[0],  vm[1], vm[2], vm[3],
+                                            vm[4],  vm[5], vm[6], vm[7],
+                                            vm[8],  vm[9],vm[10],vm[11],
+                                            vm[12],vm[13],vm[14],vm[15]);
+
+
+            viewMatrix = glm::transpose(viewMatrix);
+
+
+            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
+
+            double view[16];
+            for(int i = 0; i < 16; i++) {
+                view[i] = glm::value_ptr(viewMatrix)[i];
+                std::cout << view[i] << " ";
+            }
+            std::cout << std::endl;
+
+            camera->SetViewTransformMatrix(view);
+
+            double proj[16];
+            for(int i = 0; i < 16; i++) {
+                proj[i] = glm::value_ptr(projMatrix)[i];
+            }
+
+            camera->SetProjectionTransformMatrix(proj);
             
-//            camera->SetPosition(0,0,-5);
-//            camera->SetFocalPoint(0,0,0); // initial direction
-//            camera->SetViewUp(0,1,0); // controls "up" direction for camera
+            camera->SetPosition(0,0,-5);
+            camera->SetFocalPoint(0,0,0); // initial direction
+            camera->SetViewUp(0,1,0); // controls "up" direction for camera
             //ren->ResetCamera();
 
             for(int i = 0; i < 7; i++) {

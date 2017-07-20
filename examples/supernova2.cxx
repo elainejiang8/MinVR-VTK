@@ -20,6 +20,7 @@
 
 #include <vtkObjectFactory.h>
 #include <vtkExternalOpenGLRenderWindow.h>
+#include <vtkExternalOpenGLCamera.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
 #include <vtkCamera.h>
@@ -29,7 +30,7 @@
 #include <vtkPolyDataReader.h>
 
 vtkNew<ExternalVTKWidget> externalVTKWidget;
-vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
+vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
 static int windowId = -1;
 static int windowH = 800;
 static int windowW = 800;
@@ -51,8 +52,7 @@ void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
     
-    vtkSmartPointer<vtkCamera> camera =
-    vtkSmartPointer<vtkCamera>::New();
+    renWin->AddRenderer(ren);
     
     /**********************************************************/
     
@@ -112,9 +112,7 @@ void initialize() {
     /**********************************************************/
     
     ren->SetBackground(0, 0, 0);
-    //ren->SetActiveCamera(camera);
-    //ren->ResetCamera();
-    renWin->AddRenderer(ren);
+    ren->ResetCamera();
 }
 
 
@@ -133,10 +131,6 @@ void display() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    // no shading
-//    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
-//    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-   // color
     GLfloat diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
@@ -145,31 +139,30 @@ void display() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
 
-//    vtkCamera *camera = ren->GetActiveCamera();
-////    camera->SetPosition(0,0,-100);
-//    camera->SetFocalPoint(0,0,0); // initial direction
-//    camera->SetViewUp(0,1,0); // controls "up" direction for camera
-//    ren->ResetCamera();
+//    vtkExternalOpenGLCamera *camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
+//    camera->SetPosition(0,0,-100);
+//    camera->SetFocalPoint(0,0,0); 
+//    camera->SetViewUp(0,1,0); 
 
     
     for(int i = 0; i < 7; i++) {
         // transpose - vtk
-        actors[i]->SetOrientation(0,0,0);
+        //actors[i]->SetOrientation(0,1,0);
         actors[i]->RotateX(y_angle);
         actors[i]->RotateY(x_angle);
         actors[i]->SetScale(scale_size);
         
-        // transpose - opengl
-        double f[16];
-        actors[i]->GetMatrix(f);
-
-        // transpose
-        double g[16];
-        g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-        g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-        g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-        g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-        glMultMatrixd(g); // multiply current matrix with specified matrix
+//        // transpose - opengl
+//        double f[16];
+//        actors[i]->GetMatrix(f);
+//
+//        // transpose
+//        double g[16];
+//        g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
+//        g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
+//        g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
+//        g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
+//        glMultMatrixd(g); // multiply current matrix with specified matrix
     }
 
     // camera - opengl
@@ -187,10 +180,8 @@ void MouseButton(int button, int state, int x, int y)
     if (state == GLUT_DOWN) {
       press_x = x; press_y = y;
       if (button == GLUT_LEFT_BUTTON) {
-        //std::cerr <<"Left" << std::endl;
         xform_mode = XFORM_ROTATE;
       } else if (button == GLUT_RIGHT_BUTTON) {
-        //std::cerr <<"Right" << std::endl;
         xform_mode = XFORM_SCALE;
       }
     }
@@ -233,10 +224,6 @@ void handleResize(int w, int h)
     glViewport( 0, 0, w, h );
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-
-    //GLKMatrix4MakePerspective(60, (GLfloat)w/(GLfloat)h, 1, 100);   // only the window is changing, not the camera
-    //glMatrixMode(GL_MODELVIEW);
-  
     
     glutPostRedisplay();
 }

@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
     
     std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
     
+    vtkSmartPointer<vtkActor> actors[7];
+    
     for(int i = 0; i < 7; i++) {
         vtkSmartPointer<vtkPolyDataReader> reader =
         vtkSmartPointer<vtkPolyDataReader>::New();
@@ -93,9 +95,19 @@ int main(int argc, char *argv[])
         vtkSmartPointer<vtkActor>::New();
         actor->SetMapper(mapper);
         actor->GetProperty()->SetInterpolationToFlat();
+        actor->GetProperty()->SetOpacity(0.8);
 
         ren->AddActor(actor);
+        actors[i] = actor;
     }
+    
+    actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
+    actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
+    actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
+    actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
+    actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
+    actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+
 
     /**********************************************************/
     
