@@ -124,6 +124,19 @@ RenderInExistingContext/fast:
 .PHONY : RenderInExistingContext/fast
 
 #=============================================================================
+# Target rules for targets named supernova3
+
+# Build rule for target.
+supernova3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 supernova3
+.PHONY : supernova3
+
+# fast build rule for target.
+supernova3/fast:
+	$(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
+.PHONY : supernova3/fast
+
+#=============================================================================
 # Target rules for targets named demo3
 
 # Build rule for target.
@@ -137,30 +150,30 @@ demo3/fast:
 .PHONY : demo3/fast
 
 #=============================================================================
-# Target rules for targets named MinIntensityRendering
+# Target rules for targets named demo2
 
 # Build rule for target.
-MinIntensityRendering: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MinIntensityRendering
-.PHONY : MinIntensityRendering
+demo2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo2
+.PHONY : demo2
 
 # fast build rule for target.
-MinIntensityRendering/fast:
-	$(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/build
-.PHONY : MinIntensityRendering/fast
+demo2/fast:
+	$(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
+.PHONY : demo2/fast
 
 #=============================================================================
-# Target rules for targets named demo
+# Target rules for targets named supernova2
 
 # Build rule for target.
-demo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo
-.PHONY : demo
+supernova2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 supernova2
+.PHONY : supernova2
 
 # fast build rule for target.
-demo/fast:
-	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+supernova2/fast:
+	$(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/build
+.PHONY : supernova2/fast
 
 #=============================================================================
 # Target rules for targets named demo2-cube
@@ -189,17 +202,43 @@ SmartVolumeMapper/fast:
 .PHONY : SmartVolumeMapper/fast
 
 #=============================================================================
-# Target rules for targets named demo2
+# Target rules for targets named supernova
 
 # Build rule for target.
-demo2: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo2
-.PHONY : demo2
+supernova: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 supernova
+.PHONY : supernova
 
 # fast build rule for target.
-demo2/fast:
-	$(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
-.PHONY : demo2/fast
+supernova/fast:
+	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
+.PHONY : supernova/fast
+
+#=============================================================================
+# Target rules for targets named MinIntensityRendering
+
+# Build rule for target.
+MinIntensityRendering: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 MinIntensityRendering
+.PHONY : MinIntensityRendering
+
+# fast build rule for target.
+MinIntensityRendering/fast:
+	$(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/build
+.PHONY : MinIntensityRendering/fast
+
+#=============================================================================
+# Target rules for targets named demo
+
+# Build rule for target.
+demo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo
+.PHONY : demo
+
+# fast build rule for target.
+demo/fast:
+	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
+.PHONY : demo/fast
 
 # Help Target
 help:
@@ -210,12 +249,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... RenderInExistingContext"
+	@echo "... supernova3"
 	@echo "... demo3"
-	@echo "... MinIntensityRendering"
-	@echo "... demo"
+	@echo "... demo2"
+	@echo "... supernova2"
 	@echo "... demo2-cube"
 	@echo "... SmartVolumeMapper"
-	@echo "... demo2"
+	@echo "... supernova"
+	@echo "... MinIntensityRendering"
+	@echo "... demo"
 .PHONY : help
 
 

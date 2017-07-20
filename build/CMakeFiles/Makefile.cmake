@@ -182,10 +182,13 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "examples/CMakeFiles/RenderInExistingContext.dir/DependInfo.cmake"
+  "examples/CMakeFiles/supernova3.dir/DependInfo.cmake"
   "examples/CMakeFiles/demo3.dir/DependInfo.cmake"
-  "examples/CMakeFiles/MinIntensityRendering.dir/DependInfo.cmake"
-  "examples/CMakeFiles/demo.dir/DependInfo.cmake"
+  "examples/CMakeFiles/demo2.dir/DependInfo.cmake"
+  "examples/CMakeFiles/supernova2.dir/DependInfo.cmake"
   "examples/CMakeFiles/demo2-cube.dir/DependInfo.cmake"
   "examples/CMakeFiles/SmartVolumeMapper.dir/DependInfo.cmake"
-  "examples/CMakeFiles/demo2.dir/DependInfo.cmake"
+  "examples/CMakeFiles/supernova.dir/DependInfo.cmake"
+  "examples/CMakeFiles/MinIntensityRendering.dir/DependInfo.cmake"
+  "examples/CMakeFiles/demo.dir/DependInfo.cmake"
   )

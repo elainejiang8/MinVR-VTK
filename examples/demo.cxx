@@ -102,6 +102,8 @@ int main(int argc, char *argv[]) {
     vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
     volume->SetMapper(volumeMapper);
     volume->SetProperty(volumeProperty);
+    volume->SetOrigin(0, 0, 0);
+    volume->SetPosition(0, 0, 0);
     
     // a keypress interactor
     vtkSmartPointer<KeyPressInteractorStyle> style = vtkSmartPointer<KeyPressInteractorStyle>::New();
@@ -109,6 +111,9 @@ int main(int argc, char *argv[]) {
     style->SetCurrentRenderer(ren);
     
     ren->AddVolume(volume);
+    ren->MakeCamera();
+    ren->ResetCamera();
+    
     ren->SetBackground(1, 1, 1);
     renWin->SetSize(600, 600);
     renWin->Render();

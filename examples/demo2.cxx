@@ -22,13 +22,17 @@
 #include <vtkCamera.h>
 #include <vtkTransform.h>
 
+#include <vtkSmartPointer.h>
+#include <vtkVersion.h>
+
+#include <vtkPolyDataReader.h>
+
 vtkNew<ExternalVTKWidget> externalVTKWidget;
 vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
 static int windowId = -1;
 static int windowH = 501;
 static int windowW = 500;
 std::string filename;
-vtkNew<vtkActor> actor;
 vtkNew<vtkVolume> volume;
 
 vtkNew<vtkTransform> transform;
@@ -109,6 +113,7 @@ void initialize() {
     volume->SetMapper(volumeMapper);
     volume->SetProperty(volumeProperty);
     volume->SetPosition(0, 0, 0);
+    volume->SetOrigin(0, 0, 0);
 
     ren->AddVolume(volume.GetPointer());
     ren->MakeCamera();
@@ -151,8 +156,7 @@ void display() {
 
 
     vtkCamera *camera = ren->GetActiveCamera();
-    //std::cerr << camera->GetPosition() << std::endl;
-    camera->SetPosition(0,0,0);
+//    camera->SetPosition(0,0,-100);
     camera->SetFocalPoint(0,0,0); // initial direction
     camera->SetViewUp(0,1,0); // controls "up" direction for camera
     ren->ResetCamera();
@@ -164,9 +168,9 @@ void display() {
     volume->SetScale(scale_size);
 
     // camera - opengl
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    //GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+//    GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
 
     // transpose - opengl
     double f[16];
@@ -259,7 +263,7 @@ int main(int argc, char *argv[]) {
     windowId = glutCreateWindow("VTK External Window Test"); // Create a window with the given title
     initialize();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
-    glutIdleFunc(display); 
+    //glutIdleFunc(display); 
     glutReshapeFunc(handleResize); // Register resize callback handler for window resize
     glutMouseFunc(MouseButton);
     glutMotionFunc(MouseMotion);

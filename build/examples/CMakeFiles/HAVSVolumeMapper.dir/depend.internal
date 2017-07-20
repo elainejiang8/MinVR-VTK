@@ -119,8 +119,10 @@ examples/CMakeFiles/HAVSVolumeMapper.dir/HAVSVolumeMapper.cxx.o
  /Users/elaine/VTK/Rendering/Core/vtkVolume.h
  /Users/elaine/VTK/Rendering/Core/vtkVolumeCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkVolumeProperty.h
+ /Users/elaine/VTK/Rendering/Volume/vtkFixedPointVolumeRayCastMapper.h
  /Users/elaine/VTK/Rendering/Volume/vtkHAVSVolumeMapper.h
  /Users/elaine/VTK/Rendering/Volume/vtkUnstructuredGridVolumeMapper.h
+ /Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/abi.h
  /Users/elaine/VTK/Utilities/KWIML/vtkkwiml/include/kwiml/int.h

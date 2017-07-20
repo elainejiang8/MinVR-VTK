@@ -41,6 +41,7 @@ const float ASPECT = float(windowW)/windowH;
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+    ren->SetViewport(-2, -2, 2, 2); // (xmin,ymin,xmax,ymax) 
     vtkNew<vtkPolyDataMapper> mapper;
     actor->SetMapper(mapper.GetPointer());
         
@@ -49,8 +50,10 @@ void initialize() {
     mapper->SetInputConnection(cs->GetOutputPort());
     actor->RotateX(45.0);
     actor->RotateY(45.0);
+    actor->SetPosition(0, 0, 0);
+    //actor->SetOrigin(1, 0, 0);
     ren->MakeCamera();
-    //ren->ResetCamera();
+    ren->ResetCamera();
 
     initialized = true;
 }
@@ -87,19 +90,20 @@ void display() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
 
-    vtkCamera *camera = ren->GetActiveCamera();
-    camera->SetPosition(20,0,0);
-    camera->SetFocalPoint(0,0,0); // initial direction
-    camera->SetViewUp(0,1,0); // controls "up" direction for camera
+//    vtkCamera *camera = ren->GetActiveCamera();
+//    camera->SetPosition(20,0,0);
+//    camera->SetFocalPoint(20,0,0); // initial direction
+//    camera->SetViewUp(0,1,0); // controls "up" direction for camera
 
     // transpose - vtk
-    actor->SetOrientation(0,0,0);
+    actor->SetOrientation(0,5,0);
     actor->RotateX(y_angle);
     actor->RotateY(x_angle);
     actor->SetScale(scale_size);
+    //actor->SetPosition(0, 1, 0);
 
     // camera - opengl
-//    glMatrixMode(GL_MODELVIEW);
+ //  glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
 //    GLKMatrix4MakeLookAt(0,0,-5,0,5,0,0,1,0);
 
@@ -115,8 +119,10 @@ void display() {
     g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
     glMultMatrixd(g); // multiply current matrix with specified matrix
 
-    
+
     externalVTKWidget->GetRenderWindow()->Render();
+
+
     glutSwapBuffers();
 }
 
@@ -191,7 +197,7 @@ int main(int argc, char *argv[]) {
     windowId = glutCreateWindow("VTK External Window Test - Cube"); // Create a window with the given title
     initialize();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
-    glutIdleFunc(display); 
+    //glutIdleFunc(display); 
     glutReshapeFunc(handleResize); // Register resize callback handler for window resize
     glutMouseFunc(MouseButton);
     glutMotionFunc(MouseMotion);

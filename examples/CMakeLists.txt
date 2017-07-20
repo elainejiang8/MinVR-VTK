@@ -4,6 +4,7 @@ include_directories(${MINVR_INCLUDE_DIR}
 		    ${OPENGL_INCLUDE_DIR}
 		    ${FREEGLUT_INCLUDE_DIR}
 		    ${GLEW_LIBRARY}
+	 	    ${GLM_INCLUDE_DIR}
 )
 
 
@@ -28,6 +29,13 @@ target_link_libraries(demo
 )
 
 
+add_executable(supernova supernova.cxx)
+
+target_link_libraries(supernova 
+	${VTK_LIBRARIES}
+)
+
+
 add_executable(demo2 demo2.cxx)
 
 target_link_libraries(demo2 
@@ -46,9 +54,29 @@ target_link_libraries(demo2-cube
 	${GLEW_LIBRARY}
 )
 
+add_executable(supernova2 supernova2.cxx)
+
+target_link_libraries(supernova2 
+	${VTK_LIBRARIES}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
 add_executable(demo3 demo3.cxx)
 
 target_link_libraries(demo3 
+	${VTK_LIBRARIES} 
+	${MINVR_LIBRARY}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
+
+add_executable(supernova3 supernova3.cxx)
+
+target_link_libraries(supernova3 
 	${VTK_LIBRARIES} 
 	${MINVR_LIBRARY}
 	${OPENGL_LIBRARY}

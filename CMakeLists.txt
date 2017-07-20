@@ -27,6 +27,9 @@ find_package(OpenGL REQUIRED)
 message("-- OpenGL includes:  " ${OPENGL_INCLUDE_DIR})
 message("-- OpenGL library:   " ${OPENGL_LIBRARY})
 
+set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/glm-0.9.7.1)
+message("-- GLM includes:     " ${GLM_INCLUDE_DIR})
+
 find_package(GLEW REQUIRED)
 message("-- GLEW library:     " ${GLEW_LIBRARY})
 message("-- GLEW includes:    " ${GLEW_INCLUDE_DIRS})

@@ -200,13 +200,13 @@ GLEW_INCLUDE_DIR:PATH=/usr/local/include
 GLEW_LIBRARY:FILEPATH=/usr/local/lib/libGLEW.dylib
 
 //Path to a file.
-MINVR_INCLUDE_DIR:PATH=/Users/Elaine/YURT/MinVR/build/install/include
+MINVR_INCLUDE_DIR:PATH=/Users/Elaine/YURT/headtracker/build/install/include
 
 //No help, variable specified on the command line.
 MINVR_INSTALL_DIR:UNINITIALIZED=/Users/Elaine/YURT/MinVR/build/install
 
 //Path to a library.
-MINVR_LIBRARY:FILEPATH=/Users/Elaine/YURT/MinVR/build/install/lib/libMinVR.a
+MINVR_LIBRARY:FILEPATH=/Users/Elaine/YURT/headtracker/build/install/lib/libMinVR.a
 
 //Value Computed by CMake
 MinVR-VTK_BINARY_DIR:STATIC=/Users/elaine/YURT/MinVR-VTK/build
@@ -368,13 +368,17 @@ FIND_PACKAGE_MESSAGE_DETAILS_FREEGLUT:INTERNAL=[/usr/local/lib/libglut.dylib][/u
 //Details about finding GLEW
 FIND_PACKAGE_MESSAGE_DETAILS_GLEW:INTERNAL=[/usr/local/include][/usr/local/lib/libGLEW.dylib][v()]
 //Details about finding MINVR
-FIND_PACKAGE_MESSAGE_DETAILS_MINVR:INTERNAL=[/Users/Elaine/YURT/MinVR/build/install/lib/libMinVR.a][/Users/Elaine/YURT/MinVR/build/install/include][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_MINVR:INTERNAL=[/Users/Elaine/YURT/headtracker/build/install/lib/libMinVR.a][/Users/Elaine/YURT/headtracker/build/install/include][v()]
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/System/Library/Frameworks/OpenGL.framework][/System/Library/Frameworks/OpenGL.framework][v()]
 //ADVANCED property for variable: GLEW_INCLUDE_DIR
 GLEW_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GLEW_LIBRARY
 GLEW_LIBRARY-ADVANCED:INTERNAL=1
+//MODIFIED property for variable: MINVR_INCLUDE_DIR
+MINVR_INCLUDE_DIR-MODIFIED:INTERNAL=ON
+//MODIFIED property for variable: MINVR_LIBRARY
+MINVR_LIBRARY-MODIFIED:INTERNAL=ON
 //ADVANCED property for variable: OPENGL_INCLUDE_DIR
 OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_gl_LIBRARY

@@ -320,6 +320,14 @@ vtkVariantInlineOperators.h
 climits
 -
 
+/Users/elaine/VTK/Common/Core/vtkVersion.h
+vtkCommonCoreModule.h
+/Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
+vtkObject.h
+/Users/elaine/VTK/Common/Core/vtkObject.h
+vtkVersionMacros.h
+/Users/elaine/VTK/Common/Core/vtkVersionMacros.h
+
 /Users/elaine/VTK/Common/Core/vtkWeakPointerBase.h
 vtkCommonCoreModule.h
 /Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
@@ -429,6 +437,12 @@ vtkAlgorithm.h
 /Users/elaine/VTK/IO/Legacy/vtkAlgorithm.h
 vtkStdString.h
 /Users/elaine/VTK/IO/Legacy/vtkStdString.h
+
+/Users/elaine/VTK/IO/Legacy/vtkPolyDataReader.h
+vtkIOLegacyModule.h
+/Users/elaine/VTK/IO/Legacy/vtkIOLegacyModule.h
+vtkDataReader.h
+/Users/elaine/VTK/IO/Legacy/vtkDataReader.h
 
 /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
 vtkIOLegacyModule.h
@@ -712,6 +726,12 @@ ExternalVTKWidget.h
 vtkCamera.h
 -
 vtkTransform.h
+-
+vtkSmartPointer.h
+-
+vtkVersion.h
+-
+vtkPolyDataReader.h
 -
 
 /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h

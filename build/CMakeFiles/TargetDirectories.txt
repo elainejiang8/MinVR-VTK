@@ -3,9 +3,12 @@
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/rebuild_cache.dir
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/edit_cache.dir
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/RenderInExistingContext.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/supernova3.dir
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo3.dir
-/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/MinIntensityRendering.dir
-/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo2.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/supernova2.dir
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo2-cube.dir
 /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/SmartVolumeMapper.dir
-/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo2.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/supernova.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/MinIntensityRendering.dir
+/Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo.dir

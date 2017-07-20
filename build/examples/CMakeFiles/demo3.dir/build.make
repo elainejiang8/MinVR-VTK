@@ -140,7 +140,7 @@ bin/demo3: /Users/elaine/VTK-build/lib/libvtkTestingIOSQL-8.1.1.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkTestingRendering-8.1.1.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkViewsContext2D-8.1.1.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkViewsInfovis-8.1.1.dylib
-bin/demo3: /Users/Elaine/YURT/MinVR/build/install/lib/libMinVR.a
+bin/demo3: /Users/Elaine/YURT/headtracker/build/install/lib/libMinVR.a
 bin/demo3: /usr/local/lib/libglut.dylib
 bin/demo3: /usr/local/lib/libGLEW.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersAMR-8.1.1.dylib

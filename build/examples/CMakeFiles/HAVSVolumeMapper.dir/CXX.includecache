@@ -818,6 +818,12 @@ vtkRenderingCoreModule.h
 vtkObject.h
 /Users/elaine/VTK/Rendering/Core/vtkObject.h
 
+/Users/elaine/VTK/Rendering/Volume/vtkFixedPointVolumeRayCastMapper.h
+vtkRenderingVolumeModule.h
+/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
+vtkVolumeMapper.h
+/Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
+
 /Users/elaine/VTK/Rendering/Volume/vtkHAVSVolumeMapper.h
 vtkRenderingVolumeModule.h
 /Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
@@ -825,6 +831,12 @@ vtkUnstructuredGridVolumeMapper.h
 /Users/elaine/VTK/Rendering/Volume/vtkUnstructuredGridVolumeMapper.h
 
 /Users/elaine/VTK/Rendering/Volume/vtkUnstructuredGridVolumeMapper.h
+vtkRenderingVolumeModule.h
+/Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
+vtkAbstractVolumeMapper.h
+/Users/elaine/VTK/Rendering/Volume/vtkAbstractVolumeMapper.h
+
+/Users/elaine/VTK/Rendering/Volume/vtkVolumeMapper.h
 vtkRenderingVolumeModule.h
 /Users/elaine/VTK/Rendering/Volume/vtkRenderingVolumeModule.h
 vtkAbstractVolumeMapper.h
@@ -892,5 +904,7 @@ vtkStdString.h
 vtkTextActor.h
 -
 vtkTextProperty.h
+-
+vtkFixedPointVolumeRayCastMapper.h
 -
 

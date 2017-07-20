@@ -49,6 +49,7 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o
  /Users/elaine/VTK/Common/Core/vtkUnicodeString.h
  /Users/elaine/VTK/Common/Core/vtkVariant.h
  /Users/elaine/VTK/Common/Core/vtkVariantInlineOperators.h
+ /Users/elaine/VTK/Common/Core/vtkVersion.h
  /Users/elaine/VTK/Common/Core/vtkWeakPointerBase.h
  /Users/elaine/VTK/Common/Core/vtkWin32Header.h
  /Users/elaine/VTK/Common/Core/vtkWindow.h
@@ -66,6 +67,7 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o
  /Users/elaine/VTK/Common/Transforms/vtkLinearTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkTransform.h
  /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
+ /Users/elaine/VTK/IO/Legacy/vtkPolyDataReader.h
  /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
  /Users/elaine/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h
  /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper.h
