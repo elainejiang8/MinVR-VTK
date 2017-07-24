@@ -8,7 +8,6 @@
 #include <vtkCleanPolyData.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkDataSetAttributes.h>
-
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkCamera.h>
@@ -61,12 +60,6 @@ int main(int argc, char *argv[])
         vtkSmartPointer<vtkCleanPolyData> clean =
         vtkSmartPointer<vtkCleanPolyData>::New();
         clean->SetInputData(inputPolyData);
-
-        // Generate normals
-//        vtkSmartPointer<vtkPolyDataNormals> normals =
-//        vtkSmartPointer<vtkPolyDataNormals>::New();
-//        normals->SetInputConnection(clean->GetOutputPort());
-//        normals->SplittingOff();
         
         vtkSmartPointer<vtkSmoothPolyDataFilter> smoothFilter =
         vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
@@ -111,7 +104,7 @@ int main(int argc, char *argv[])
 
     /**********************************************************/
     
-    ren->SetBackground(0, 0, 0);
+    ren->SetBackground(0.87, 0.88, 0.91);
     ren->SetActiveCamera(camera);
 
     ren->ResetCamera();

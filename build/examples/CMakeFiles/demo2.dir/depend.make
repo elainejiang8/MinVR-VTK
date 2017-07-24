@@ -66,7 +66,6 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/Transforms/v
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/Transforms/vtkLinearTransform.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Common/Transforms/vtkTransform.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
-examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkPolyDataReader.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkAbstractMapper.h
@@ -93,6 +92,7 @@ examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/External/
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderer.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkGenericOpenGLRenderWindow.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGL.h
+examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLCamera.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderWindow.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderer.h
 examples/CMakeFiles/demo2.dir/demo2.cxx.o: /Users/elaine/VTK/Rendering/Volume/vtkFixedPointVolumeRayCastMapper.h

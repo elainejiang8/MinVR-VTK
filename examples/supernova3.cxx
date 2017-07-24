@@ -9,41 +9,36 @@
 
 #include <api/MinVR.h>
 
-#include <vtkWarpVector.h>
-#include <vtkXMLPolyDataReader.h>
-#include <vtkSphereSource.h>
 #include <vtkPolyData.h>
 #include <vtkCleanPolyData.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkDataSetAttributes.h>
-
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkProperty.h>
 #include <vtkPolyDataReader.h>
 #include <vtkLookupTable.h>
-
 #include <vtkObjectFactory.h>
 #include <vtkExternalOpenGLRenderWindow.h>
-#include <vtkExternalOpenGLCamera.h>
+#include <vtkOpenGLCamera.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
 #include <vtkCamera.h>
 #include <vtkTransform.h>
 #include <vtkSmartPointer.h>
 #include <vtkVersion.h>
-#include <vtkPolyDataReader.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkSmoothPolyDataFilter.h>
 
 class DemoVRVTKApp: public MinVR::VRApp {
-  // Data values that were global in the demo2.cxx file are defined as
+  // Data values that were global in the supernova2.cxx file are defined as
   // private members of the VRApp.
 private:
 
     vtkNew<ExternalVTKWidget> externalVTKWidget;
-    bool initialized = false;
-    vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer(); 
-    vtkSmartPointer<vtkExternalOpenGLCamera> camera;
+    vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New(); 
+    vtkSmartPointer<vtkOpenGLCamera> camera;
     vtkSmartPointer<vtkActor> actors[7];
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 
@@ -119,21 +114,18 @@ private:
     void _initializeScene() {
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+        
+        renWin->AddRenderer(ren);
 
-        /**********************************************************/
-
-//        vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
-//        lut->SetNumberOfColors(7);
-//        double opacity = 0.3;
-//        lut->SetTableValue(0, 0, 0, 1, opacity);
-//        lut->SetTableValue(1, 0, 1.0, 0, opacity);
-//        lut->SetTableValue(2, 0.6, 1.0, 0.0, opacity);
-//        lut->SetTableValue(3, 1.0, 1.0, 0.0, 0.7);
-//        lut->SetTableValue(4, 1.0, 0.8, 0.0, opacity);
-//        lut->SetTableValue(5, 1.0, 0.4, 0.0, opacity);
-//        lut->SetTableValue(6, 1.0, 0.0, 0.0, 1);
-//        lut->SetTableRange(0,6);
-//        lut->Build();
+       /**********************************************************/
+    
+        // create transfer mapping scalar value to color
+        vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
+        colorTransferFunction->AddRGBPoint(-1.0, 0.0, 0.0, 0.0);
+        colorTransferFunction->AddRGBPoint(-0.5, 1.0, 0.0, 0.0);
+        colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
+        colorTransferFunction->AddRGBPoint(0.5, 0.0, 1.0, 0.0);
+        colorTransferFunction->AddRGBPoint(1, 0.0, 0.2, 0.0);
 
         /**********************************************************/
 
@@ -146,42 +138,57 @@ private:
             reader->Update();
             vtkSmartPointer<vtkPolyData> inputPolyData = reader->GetOutput();
 
+            // Merge duplicate points, and/or remove unused points and/or remove degenerate cells
             vtkSmartPointer<vtkCleanPolyData> clean =
             vtkSmartPointer<vtkCleanPolyData>::New();
             clean->SetInputData(inputPolyData);
 
-            // Generate normals
-            vtkSmartPointer<vtkPolyDataNormals> normals =
-            vtkSmartPointer<vtkPolyDataNormals>::New();
-            normals->SetInputConnection(clean->GetOutputPort());
-            normals->SplittingOff();
+            vtkSmartPointer<vtkSmoothPolyDataFilter> smoothFilter =
+            vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
+            smoothFilter->SetInputConnection(clean->GetOutputPort());
+            smoothFilter->SetNumberOfIterations(15);
+            smoothFilter->SetRelaxationFactor(0.1);
+            smoothFilter->FeatureEdgeSmoothingOff();
+            smoothFilter->BoundarySmoothingOn();
+            smoothFilter->Update();
 
+            // Update normals on newly smoothed polydata
+            vtkSmartPointer<vtkPolyDataNormals> normals = vtkSmartPointer<vtkPolyDataNormals>::New();
+            normals->SetInputConnection(smoothFilter->GetOutputPort());
+            normals->ComputePointNormalsOn();
+            normals->ComputeCellNormalsOn();
+            normals->Update();
 
             vtkSmartPointer<vtkPolyDataMapper> mapper =
             vtkSmartPointer<vtkPolyDataMapper>::New();
             mapper->SetInputConnection(normals->GetOutputPort());
-            mapper->ScalarVisibilityOff();
+            //mapper->ScalarVisibilityOff();
 
-//            mapper->SetLookupTable(lut);
-//            mapper->SetScalarVisibility(1);
-//            mapper->SetScalarRange(0,6);
+            mapper->SetLookupTable(colorTransferFunction);
 
             vtkSmartPointer<vtkActor> actor =
             vtkSmartPointer<vtkActor>::New();
             actor->SetMapper(mapper);
             actor->GetProperty()->SetInterpolationToFlat();
+            actor->GetProperty()->SetOpacity(0.8);
 
             ren->AddActor(actor);
             actors[i] = actor;
         }
 
+        actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
+        actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
+        actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
+        actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
+        actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
+        actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+
+
         /**********************************************************/
+    
+        ren->SetBackground(0.87, 0.88, 0.91);
+        ren->ResetCamera();
 
-        ren->SetBackground(0, 0, 0);
-        renWin->AddRenderer(ren);
-
-        initialized = true;
-        std::cout << "here" << std::endl;
     }
 
 
@@ -227,6 +234,7 @@ private:
     void onVRRenderGraphics(const MinVR::VRGraphicsState &renderState) {
         // Only draw if the application is still running.
         if (isRunning()) {
+            
             // Enable depth testing. Demonstrates OpenGL context being managed by external
             // application i.e. GLUT in this case.
             glEnable(GL_DEPTH_TEST);
@@ -241,10 +249,6 @@ private:
             glEnable(GL_LIGHTING);
             glEnable(GL_LIGHT0);
 
-            // no shading
-        //    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
-        //    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-           // color
             GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
             glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
             GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
@@ -253,14 +257,13 @@ private:
             glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
             
             
-             // Second the load() step.  We let MinVR give us the projection
+            // Second the load() step.  We let MinVR give us the projection
             // matrix from the render state argument to this method.
             const float* pm = renderState.getProjectionMatrix();
             glm::mat4 projMatrix = glm::mat4( pm[0],  pm[1], pm[2], pm[3],
                                             pm[4],  pm[5], pm[6], pm[7],
                                             pm[8],  pm[9],pm[10],pm[11],
                                             pm[12],pm[13],pm[14],pm[15]);
-            //bsg::bsgUtils::printMat("proj", projMatrix);
 
             // The draw step.  We let MinVR give us the view matrix.
             const float* vm = renderState.getViewMatrix();
@@ -270,32 +273,30 @@ private:
                                             vm[12],vm[13],vm[14],vm[15]);
 
 
-            viewMatrix = glm::transpose(viewMatrix);
+            //viewMatrix = glm::transpose(viewMatrix);
 
 
-            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
+            camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
             for(int i = 0; i < 16; i++) {
                 view[i] = glm::value_ptr(viewMatrix)[i];
-                std::cout << view[i] << " ";
             }
-            std::cout << std::endl;
 
-            camera->SetViewTransformMatrix(view);
+            this->SetViewTransformMatrix(view, camera);
 
             double proj[16];
             for(int i = 0; i < 16; i++) {
                 proj[i] = glm::value_ptr(projMatrix)[i];
             }
 
-            camera->SetProjectionTransformMatrix(proj);
+            this->SetProjectionTransformMatrix(proj, camera);
             
-            camera->SetPosition(0,0,-5);
-            camera->SetFocalPoint(0,0,0); // initial direction
-            camera->SetViewUp(0,1,0); // controls "up" direction for camera
-            //ren->ResetCamera();
+//            camera->SetPosition(4,2,360);
+//            camera->SetFocalPoint(0,0,0); // initial direction
+//            camera->SetViewUp(0,1,0); // controls "up" direction for camera
 
+            
             for(int i = 0; i < 7; i++) {
                 // transpose - vtk
                 //actors[i]->SetOrientation(0,0,0);
@@ -319,7 +320,6 @@ private:
 //               // std::cout << g[i] << " ";
 //            }
             
-            //std::cout << std::endl;
             //glm::value_ptr(f1);
 //            g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
 //            g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
@@ -328,14 +328,44 @@ private:
             
            // glMultMatrixd(g); // multiply current matrix with specified matrix
             
-            //ren->SetActiveCamera(camera);
+            
             externalVTKWidget->GetRenderWindow()->Render();
-      
             // We let MinVR swap the graphics buffers.
             // glutSwapBuffers();
         }
     }
+    
+    void SetViewTransformMatrix(const double elements[16], vtkOpenGLCamera *camera) {
+        if (!elements) {
+            return;
+        }
+        // Transpose the matrix to undo the transpose that VTK does internally
+        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
+        matrix->DeepCopy(elements);
+        matrix->Transpose();
+        //camera->ViewTransform->SetMatrix(matrix);
+        //camera->ModelViewTransform->SetMatrix(matrix);
+        //camera->UserProvidedViewTransform = true;
+        matrix->Delete();
+    }
+
+    void SetProjectionTransformMatrix(const double elements[16], vtkOpenGLCamera *camera){
+        if (!elements) {
+            return;
+        }
+        // Transpose the matrix to undo the transpose that VTK does internally
+        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
+        matrix->DeepCopy(elements);
+        matrix->Transpose();
+
+        camera->SetExplicitProjectionTransformMatrix(matrix);
+        camera->SetUseExplicitProjectionTransformMatrix(true);
+        matrix->Delete();
+    }
+    
     };
+
+    
 
     // The main function is just a shell of its former self.  Just
     // initializes a MinVR graphics object and runs it.

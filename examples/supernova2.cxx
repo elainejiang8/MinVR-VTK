@@ -4,30 +4,28 @@
 #include <GLKit/GLKMatrix4.h>
 
 #include <vtkWarpVector.h>
-#include <vtkXMLPolyDataReader.h>
 #include <vtkSphereSource.h>
 #include <vtkPolyData.h>
 #include <vtkCleanPolyData.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkDataSetAttributes.h>
-
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkProperty.h>
 #include <vtkPolyDataReader.h>
 #include <vtkLookupTable.h>
-
 #include <vtkObjectFactory.h>
 #include <vtkExternalOpenGLRenderWindow.h>
-#include <vtkExternalOpenGLCamera.h>
+#include <vtkOpenGLCamera.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
 #include <vtkCamera.h>
 #include <vtkTransform.h>
 #include <vtkSmartPointer.h>
 #include <vtkVersion.h>
-#include <vtkPolyDataReader.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkSmoothPolyDataFilter.h>
 
 vtkNew<ExternalVTKWidget> externalVTKWidget;
 vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
@@ -36,6 +34,7 @@ static int windowH = 800;
 static int windowW = 800;
 vtkSmartPointer<vtkActor> actors[7];
 
+// interaction global variables
 vtkNew<vtkTransform> transform;
 int press_x, press_y;
 int release_x, release_y;
@@ -56,19 +55,14 @@ void initialize() {
     
     /**********************************************************/
     
-    vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
-    lut->SetNumberOfColors(7);
-    double opacity = 0.3;
-    lut->SetTableValue(0, 0, 0, 1, opacity);
-    lut->SetTableValue(1, 0, 1.0, 0, opacity);
-    lut->SetTableValue(2, 0.6, 1.0, 0.0, opacity);
-    lut->SetTableValue(3, 1.0, 1.0, 0.0, 0.7);
-    lut->SetTableValue(4, 1.0, 0.8, 0.0, opacity);
-    lut->SetTableValue(5, 1.0, 0.4, 0.0, opacity);
-    lut->SetTableValue(6, 1.0, 0.0, 0.0, 1);
-    lut->SetTableRange(0,6);
-    lut->Build();
-    
+    // create transfer mapping scalar value to color
+    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
+    colorTransferFunction->AddRGBPoint(-1.0, 0.0, 0.0, 0.0);
+    colorTransferFunction->AddRGBPoint(-0.5, 1.0, 0.0, 0.0);
+    colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
+    colorTransferFunction->AddRGBPoint(0.5, 0.0, 1.0, 0.0);
+    colorTransferFunction->AddRGBPoint(1, 0.0, 0.2, 0.0);
+
     /**********************************************************/
     
     std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
@@ -80,38 +74,55 @@ void initialize() {
         reader->Update();
         vtkSmartPointer<vtkPolyData> inputPolyData = reader->GetOutput();
 
+        // Merge duplicate points, and/or remove unused points and/or remove degenerate cells
         vtkSmartPointer<vtkCleanPolyData> clean =
         vtkSmartPointer<vtkCleanPolyData>::New();
         clean->SetInputData(inputPolyData);
-
-        // Generate normals
-        vtkSmartPointer<vtkPolyDataNormals> normals =
-        vtkSmartPointer<vtkPolyDataNormals>::New();
-        normals->SetInputConnection(clean->GetOutputPort());
-        normals->SplittingOff();
         
+        vtkSmartPointer<vtkSmoothPolyDataFilter> smoothFilter =
+        vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
+        smoothFilter->SetInputConnection(clean->GetOutputPort());
+        smoothFilter->SetNumberOfIterations(15);
+        smoothFilter->SetRelaxationFactor(0.1);
+        smoothFilter->FeatureEdgeSmoothingOff();
+        smoothFilter->BoundarySmoothingOn();
+        smoothFilter->Update();
+
+        // Update normals on newly smoothed polydata
+        vtkSmartPointer<vtkPolyDataNormals> normals = vtkSmartPointer<vtkPolyDataNormals>::New();
+        normals->SetInputConnection(smoothFilter->GetOutputPort());
+        normals->ComputePointNormalsOn();
+        normals->ComputeCellNormalsOn();
+        normals->Update();
 
         vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
         mapper->SetInputConnection(normals->GetOutputPort());
         //mapper->ScalarVisibilityOff();
         
-        mapper->SetLookupTable(lut);
-        mapper->SetScalarVisibility(1);
-        mapper->SetScalarRange(0,6);
+        mapper->SetLookupTable(colorTransferFunction);
 
         vtkSmartPointer<vtkActor> actor =
         vtkSmartPointer<vtkActor>::New();
         actor->SetMapper(mapper);
         actor->GetProperty()->SetInterpolationToFlat();
+        actor->GetProperty()->SetOpacity(0.8);
 
         ren->AddActor(actor);
         actors[i] = actor;
     }
+    
+    actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
+    actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
+    actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
+    actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
+    actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
+    actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+
 
     /**********************************************************/
     
-    ren->SetBackground(0, 0, 0);
+    ren->SetBackground(0.87, 0.88, 0.91);
     ren->ResetCamera();
 }
 
@@ -122,7 +133,7 @@ void display() {
     glEnable(GL_DEPTH_TEST);
 
     // Buffers being managed by external application i.e. GLUT in this case.
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+    glClearColor(0.87f, 0.88f, 0.91f, 1.0f); // Set background color to gray and opaque
     glClearDepth(1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color buffer
 
@@ -138,16 +149,15 @@ void display() {
     GLfloat ambient[] = {1.0f, 1.0f, 0.2f,  1.0f};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
-
-//    vtkExternalOpenGLCamera *camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
-//    camera->SetPosition(0,0,-100);
-//    camera->SetFocalPoint(0,0,0); 
-//    camera->SetViewUp(0,1,0); 
-
+    vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
+    // camera default position set at (4.68744, 2.67252, 360.229) 
+    camera->SetPosition(4, 2, 360);
+    camera->SetFocalPoint(0,0,0); // initial direction
+    camera->SetViewUp(0,1,0); // controls "up" direction for camera
     
     for(int i = 0; i < 7; i++) {
         // transpose - vtk
-        //actors[i]->SetOrientation(0,1,0);
+        //actors[i]->SetOrientation(0,0,0);
         actors[i]->RotateX(y_angle);
         actors[i]->RotateY(x_angle);
         actors[i]->SetScale(scale_size);
@@ -169,7 +179,6 @@ void display() {
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
 //    GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
-
 
     externalVTKWidget->GetRenderWindow()->Render();
     glutSwapBuffers();
@@ -236,11 +245,10 @@ int main(int argc, char *argv[]) {
     windowId = glutCreateWindow("VTK External Window Test"); // Create a window with the given title
     initialize();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
-    //glutIdleFunc(display); 
+    glutIdleFunc(display); 
     glutReshapeFunc(handleResize); // Register resize callback handler for window resize
     glutMouseFunc(MouseButton);
     glutMotionFunc(MouseMotion);
-    //matexit(onexit);  // Register callback to uninitialize on exit
     glewInit();
     
     glutMainLoop();  // Enter the infinitely event-processing loop

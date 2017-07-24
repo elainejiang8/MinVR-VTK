@@ -438,12 +438,6 @@ vtkAlgorithm.h
 vtkStdString.h
 /Users/elaine/VTK/IO/Legacy/vtkStdString.h
 
-/Users/elaine/VTK/IO/Legacy/vtkPolyDataReader.h
-vtkIOLegacyModule.h
-/Users/elaine/VTK/IO/Legacy/vtkIOLegacyModule.h
-vtkDataReader.h
-/Users/elaine/VTK/IO/Legacy/vtkDataReader.h
-
 /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
 vtkIOLegacyModule.h
 /Users/elaine/VTK/IO/Legacy/vtkIOLegacyModule.h
@@ -626,6 +620,12 @@ vtkWindows.h
 GL/gl.h
 -
 
+/Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLCamera.h
+vtkRenderingOpenGLModule.h
+/Users/elaine/VTK/Rendering/OpenGL/vtkRenderingOpenGLModule.h
+vtkCamera.h
+/Users/elaine/VTK/Rendering/OpenGL/vtkCamera.h
+
 /Users/elaine/VTK/Rendering/OpenGL/vtkOpenGLRenderWindow.h
 vtkRenderingOpenGLModule.h
 /Users/elaine/VTK/Rendering/OpenGL/vtkRenderingOpenGLModule.h
@@ -723,15 +723,11 @@ vtkNew.h
 -
 ExternalVTKWidget.h
 -
-vtkCamera.h
+vtkOpenGLCamera.h
 -
 vtkTransform.h
 -
-vtkSmartPointer.h
--
 vtkVersion.h
--
-vtkPolyDataReader.h
 -
 
 /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h

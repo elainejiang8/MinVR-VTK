@@ -19,16 +19,12 @@
 #include <vtkExternalOpenGLRenderWindow.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
-#include <vtkCamera.h>
+#include <vtkOpenGLCamera.h>
 #include <vtkTransform.h>
-
-#include <vtkSmartPointer.h>
 #include <vtkVersion.h>
 
-#include <vtkPolyDataReader.h>
-
 vtkNew<ExternalVTKWidget> externalVTKWidget;
-vtkSmartPointer<vtkRenderer> ren = externalVTKWidget->AddRenderer();
+vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
 static int windowId = -1;
 static int windowH = 501;
 static int windowW = 500;
@@ -79,6 +75,7 @@ vtkStandardNewMacro(KeyPressInteractorStyle);
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+    renWin->AddRenderer(ren);
     
     // read the data from a vtk file
     vtkSmartPointer<vtkStructuredPointsReader> reader = vtkSmartPointer<vtkStructuredPointsReader>::New();
@@ -112,10 +109,9 @@ void initialize() {
     // the volume holds the mapper and the property and can be used to position/orient the volume
     volume->SetMapper(volumeMapper);
     volume->SetProperty(volumeProperty);
-    volume->SetPosition(0, 0, 0);
-    volume->SetOrigin(0, 0, 0);
 
     ren->AddVolume(volume.GetPointer());
+    ren->SetBackground(1,1,1);
     ren->MakeCamera();
     ren->ResetCamera();
 }
@@ -132,21 +128,10 @@ void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color buffer
 
     glFlush();  // Render now
-    
-    // draw gl triangles
-    glBegin(GL_TRIANGLES);
-        glVertex3f(-1.5,-1.5,0.0);
-        glVertex3f(1.5,0.0,0.0);
-        glVertex3f(0.0,1.5,1);
-    glEnd();
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    
-    // no shading
-//    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
-//    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-   // color
+
     GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
@@ -155,14 +140,14 @@ void display() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
 
-    vtkCamera *camera = ren->GetActiveCamera();
+    vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
+    
 //    camera->SetPosition(0,0,-100);
-    camera->SetFocalPoint(0,0,0); // initial direction
-    camera->SetViewUp(0,1,0); // controls "up" direction for camera
-    ren->ResetCamera();
+//    camera->SetFocalPoint(0,0,0); // initial direction
+//    camera->SetViewUp(0,1,0); // controls "up" direction for camera
 
     // transpose - vtk
-    volume->SetOrientation(0,0,0);
+    //volume->SetOrientation(0,0,0);
     volume->RotateX(y_angle);
     volume->RotateY(x_angle);
     volume->SetScale(scale_size);
@@ -172,17 +157,17 @@ void display() {
 //    glLoadIdentity();
 //    GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
 
-    // transpose - opengl
-    double f[16];
-    volume->GetMatrix(f);
-    
-    // transpose
-    double g[16];
-    g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-    g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-    g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-    g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-    glMultMatrixd(g); // multiply current matrix with specified matrix
+//    // transpose - opengl
+//    double f[16];
+//    volume->GetMatrix(f);
+//    
+//    // transpose
+//    double g[16];
+//    g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
+//    g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
+//    g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
+//    g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
+//    glMultMatrixd(g); // multiply current matrix with specified matrix
 
     externalVTKWidget->GetRenderWindow()->Render();
     glutSwapBuffers();
