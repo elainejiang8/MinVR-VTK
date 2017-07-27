@@ -165,6 +165,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../cmake/FindGLEW.cmake"
   "../cmake/FindMinVR.cmake"
   "../examples/CMakeLists.txt"
+  "../src/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -176,11 +177,13 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "examples/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "src/CMakeFiles/minvr-vtk.dir/DependInfo.cmake"
   "examples/CMakeFiles/RenderInExistingContext.dir/DependInfo.cmake"
   "examples/CMakeFiles/supernova3.dir/DependInfo.cmake"
   "examples/CMakeFiles/demo3.dir/DependInfo.cmake"

@@ -277,6 +277,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/Users/elaine/VTK/Views/Context2D"
   "/Users/elaine/VTK-build/Views/Infovis"
   "/Users/elaine/VTK/Views/Infovis"
+  "../src"
   "/Users/Elaine/YURT/headtracker/build/install/include"
   "/usr/local/Cellar/freeglut/3.0.0/include"
   "/usr/local/lib/libGLEW.dylib"

@@ -30,6 +30,8 @@
 #include <vtkVersion.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkSmoothPolyDataFilter.h>
+#include <vtkPerspectiveTransform.h>
+#include <vtkCustomExternalOpenGLCamera.h>
 
 class DemoVRVTKApp: public MinVR::VRApp {
   // Data values that were global in the supernova2.cxx file are defined as
@@ -38,7 +40,7 @@ private:
 
     vtkNew<ExternalVTKWidget> externalVTKWidget;
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New(); 
-    vtkSmartPointer<vtkOpenGLCamera> camera;
+    vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
     vtkSmartPointer<vtkActor> actors[7];
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 
@@ -107,7 +109,6 @@ private:
     // This is just a performance enhancement that allows OpenGL to
     // ignore faces that are facing away from the camera.
     glEnable(GL_CULL_FACE);
-
     }
 
 
@@ -116,6 +117,7 @@ private:
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
         
         renWin->AddRenderer(ren);
+        externalVTKWidget->GetRenderWindow()->Render();
 
        /**********************************************************/
     
@@ -188,7 +190,6 @@ private:
     
         ren->SetBackground(0.87, 0.88, 0.91);
         ren->ResetCamera();
-
     }
 
 
@@ -257,6 +258,7 @@ private:
             glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
             
             
+            
             // Second the load() step.  We let MinVR give us the projection
             // matrix from the render state argument to this method.
             const float* pm = renderState.getProjectionMatrix();
@@ -273,24 +275,26 @@ private:
                                             vm[12],vm[13],vm[14],vm[15]);
 
 
-            //viewMatrix = glm::transpose(viewMatrix);
+            // viewMatrix = glm::transpose(viewMatrix);
 
 
-            camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
+            camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
             for(int i = 0; i < 16; i++) {
                 view[i] = glm::value_ptr(viewMatrix)[i];
             }
 
-            this->SetViewTransformMatrix(view, camera);
+            //this->SetViewTransformMatrix(view, camera);
+            camera->SetViewTransformMatrix(view);
 
             double proj[16];
             for(int i = 0; i < 16; i++) {
                 proj[i] = glm::value_ptr(projMatrix)[i];
             }
 
-            this->SetProjectionTransformMatrix(proj, camera);
+            //this->SetProjectionTransformMatrix(proj, camera);
+            camera->SetProjectionTransformMatrix(proj);
             
 //            camera->SetPosition(4,2,360);
 //            camera->SetFocalPoint(0,0,0); // initial direction
@@ -299,7 +303,6 @@ private:
             
             for(int i = 0; i < 7; i++) {
                 // transpose - vtk
-                //actors[i]->SetOrientation(0,0,0);
                 actors[i]->RotateX(y_angle);
                 actors[i]->RotateY(x_angle);
                 actors[i]->SetScale(scale_size);
@@ -333,34 +336,6 @@ private:
             // We let MinVR swap the graphics buffers.
             // glutSwapBuffers();
         }
-    }
-    
-    void SetViewTransformMatrix(const double elements[16], vtkOpenGLCamera *camera) {
-        if (!elements) {
-            return;
-        }
-        // Transpose the matrix to undo the transpose that VTK does internally
-        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
-        matrix->DeepCopy(elements);
-        matrix->Transpose();
-        //camera->ViewTransform->SetMatrix(matrix);
-        //camera->ModelViewTransform->SetMatrix(matrix);
-        //camera->UserProvidedViewTransform = true;
-        matrix->Delete();
-    }
-
-    void SetProjectionTransformMatrix(const double elements[16], vtkOpenGLCamera *camera){
-        if (!elements) {
-            return;
-        }
-        // Transpose the matrix to undo the transpose that VTK does internally
-        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
-        matrix->DeepCopy(elements);
-        matrix->Transpose();
-
-        camera->SetExplicitProjectionTransformMatrix(matrix);
-        camera->SetUseExplicitProjectionTransformMatrix(true);
-        matrix->Delete();
     }
     
     };

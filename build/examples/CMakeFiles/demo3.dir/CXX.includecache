@@ -1356,6 +1356,14 @@ vtkCommonTransformsModule.h
 vtkHomogeneousTransform.h
 /Users/elaine/VTK/Common/Transforms/vtkHomogeneousTransform.h
 
+/Users/elaine/VTK/Common/Transforms/vtkPerspectiveTransform.h
+vtkCommonTransformsModule.h
+/Users/elaine/VTK/Common/Transforms/vtkCommonTransformsModule.h
+vtkHomogeneousTransform.h
+/Users/elaine/VTK/Common/Transforms/vtkHomogeneousTransform.h
+vtkMatrix4x4.h
+/Users/elaine/VTK/Common/Transforms/vtkMatrix4x4.h
+
 /Users/elaine/VTK/Common/Transforms/vtkTransform.h
 vtkCommonTransformsModule.h
 /Users/elaine/VTK/Common/Transforms/vtkCommonTransformsModule.h
@@ -1554,12 +1562,6 @@ vtkObject.h
 vtkRenderingExternalModule.h
 /Users/elaine/VTK/Rendering/External/vtkRenderingExternalModule.h
 
-/Users/elaine/VTK/Rendering/External/vtkExternalOpenGLCamera.h
-vtkRenderingExternalModule.h
-/Users/elaine/VTK/Rendering/External/vtkRenderingExternalModule.h
-vtkOpenGLCamera.h
-/Users/elaine/VTK/Rendering/External/vtkOpenGLCamera.h
-
 /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderWindow.h
 vtkRenderingExternalModule.h
 /Users/elaine/VTK/Rendering/External/vtkRenderingExternalModule.h
@@ -1705,13 +1707,15 @@ vtkNew.h
 -
 ExternalVTKWidget.h
 -
-vtkExternalOpenGLCamera.h
+vtkOpenGLCamera.h
 -
 vtkPolyDataMapper.h
 -
 vtkCallbackCommand.h
 -
 vtkTransform.h
+-
+vtkPerspectiveTransform.h
 -
 
 /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h

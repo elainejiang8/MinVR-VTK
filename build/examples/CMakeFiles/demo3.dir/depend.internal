@@ -181,6 +181,7 @@ examples/CMakeFiles/demo3.dir/demo3.cxx.o
  /Users/elaine/VTK/Common/Transforms/vtkAbstractTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkHomogeneousTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkLinearTransform.h
+ /Users/elaine/VTK/Common/Transforms/vtkPerspectiveTransform.h
  /Users/elaine/VTK/Common/Transforms/vtkTransform.h
  /Users/elaine/VTK/Filters/Sources/vtkCubeSource.h
  /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
@@ -209,7 +210,6 @@ examples/CMakeFiles/demo3.dir/demo3.cxx.o
  /Users/elaine/VTK/Rendering/Core/vtkVolumeCollection.h
  /Users/elaine/VTK/Rendering/Core/vtkVolumeProperty.h
  /Users/elaine/VTK/Rendering/External/ExternalVTKWidget.h
- /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLCamera.h
  /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderWindow.h
  /Users/elaine/VTK/Rendering/External/vtkExternalOpenGLRenderer.h
  /Users/elaine/VTK/Rendering/OpenGL/vtkGenericOpenGLRenderWindow.h

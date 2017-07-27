@@ -28,10 +28,11 @@
 #include <vtkExternalOpenGLRenderWindow.h>
 #include <vtkNew.h>
 #include <ExternalVTKWidget.h>
-#include <vtkExternalOpenGLCamera.h>
+#include <vtkOpenGLCamera.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkCallbackCommand.h>
 #include <vtkTransform.h>
+#include <vtkPerspectiveTransform.h>
 
 class DemoVRVTKApp: public MinVR::VRApp {
   // Data values that were global in the demo2.cxx file are defined as
@@ -42,7 +43,7 @@ private:
     bool initialized = false;
     std::string filename;
     vtkSmartPointer<vtkRenderer> ren; 
-    vtkSmartPointer<vtkExternalOpenGLCamera> camera;
+    vtkSmartPointer<vtkOpenGLCamera> camera;
     vtkNew<vtkActor> actor;
     vtkNew<vtkVolume> volume;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
@@ -117,9 +118,10 @@ private:
 
 
     void _initializeScene() {
-        ren = externalVTKWidget->AddRenderer();
-        camera = (vtkExternalOpenGLCamera *) ren->MakeCamera();
+        ren = vtkSmartPointer<vtkRenderer>::New();
+        camera = (vtkOpenGLCamera *) ren->GetActiveCamera();
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+        renWin->AddRenderer(ren);
 
         vtkNew<vtkPolyDataMapper> mapper;
         actor->SetMapper(mapper.GetPointer());
@@ -129,8 +131,6 @@ private:
         mapper->SetInputConnection(cs->GetOutputPort());
         actor->RotateX(45.0);
         actor->RotateY(45.0);
-        
-        //vtkSmartPointer<vtkExternalOpenGLCamera> camera = (vtkExternalOpenGLCamera *) ren->MakeCamera();
         
         ren->SetActiveCamera(camera);
         
@@ -150,8 +150,6 @@ private:
     /// event to process.
     void onVREvent(const MinVR::VREvent &event) {
 
-    //event.print();
-        std::cout << event.getName() << std::endl;
         // Quit if the escape button is pressed
         if (event.getName() == "KbdEsc_Down") {
             shutdown();
@@ -204,9 +202,6 @@ private:
             glEnable(GL_LIGHTING);
             glEnable(GL_LIGHT0);
 
-            // no shading
-        //    GLfloat lightpos[] = {10.0f, 10.0f, 10.0f, 1.0f};
-        //    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
            // color
             GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
             glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
@@ -235,65 +230,95 @@ private:
             
             //viewMatrix = glm::transpose(viewMatrix);
 
+            
 
              //camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
             
-//            double view[16];
-//            for(int i = 0; i < 16; i++) {
-//                view[i] = glm::value_ptr(viewMatrix)[i];
-//                std::cout << view[i] << " ";
-//            }
-//            std::cout << std::endl;
-//            
-//            camera->SetViewTransformMatrix(view);
-//            
-//            double proj[16];
-//            for(int i = 0; i < 16; i++) {
-//                proj[i] = glm::value_ptr(projMatrix)[i];
-//                //std::cout << g[i] << " ";
-//            }
-//            
-//            camera->SetProjectionTransformMatrix(proj);
+            double view[16];
+            for(int i = 0; i < 16; i++) {
+                view[i] = glm::value_ptr(viewMatrix)[i];
+            }
             
-            camera->SetPosition(0,0,-5);
-            camera->SetFocalPoint(0,0,0); // initial direction
-            camera->SetViewUp(0,1,0); // controls "up" direction for camera
-//            ren->ResetCamera();
-
-            // transpose - vtk
-            volume->SetOrientation(0,1,0);
+            this->SetViewTransformMatrix(view, camera);
+            
+            double proj[16];
+            for(int i = 0; i < 16; i++) {
+                proj[i] = glm::value_ptr(projMatrix)[i];
+                //std::cout << g[i] << " ";
+            }
+            
+            this->SetProjectionTransformMatrix(proj, camera);
+            
+//            camera->SetPosition(0,0,-5);
+//            camera->SetFocalPoint(0,0,0); // initial direction
+//            camera->SetViewUp(0,1,0); // controls "up" direction for camera
+//
+//            // transpose - vtk
+//            //volume->SetOrientation(0,1,0);
             volume->RotateX(y_angle);
             volume->RotateY(x_angle);
             volume->SetScale(scale_size);
+//
+//            // transpose - opengl
+//            double f[16];
+//            volume->GetMatrix(f);
+//            glm::mat4 model = glm::make_mat4(f);
+//            model = glm::transpose(model);
+//            glm::mat4 f1 = projMatrix * viewMatrix * model;
+//
+//            // transpose
+//            double g[16]; 
+//            
+//            for(int i = 0; i < 16; i++) {
+//                g[i] = glm::value_ptr(f1)[i];
+//               // std::cout << g[i] << " ";
+//            }
+//            //std::cout << std::endl;
+//            //glm::value_ptr(f1);
+////            g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
+////            g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
+////            g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
+////            g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
+//            
+//           // glMultMatrixd(g); // multiply current matrix with specified matrix
 
-            // transpose - opengl
-            double f[16];
-            volume->GetMatrix(f);
-            glm::mat4 model = glm::make_mat4(f);
-            model = glm::transpose(model);
-            glm::mat4 f1 = projMatrix * viewMatrix * model;
-
-            // transpose
-            double g[16]; 
-            
-            for(int i = 0; i < 16; i++) {
-                g[i] = glm::value_ptr(f1)[i];
-               // std::cout << g[i] << " ";
-            }
-            //std::cout << std::endl;
-            //glm::value_ptr(f1);
-//            g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-//            g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-//            g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-//            g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-            
-           // glMultMatrixd(g); // multiply current matrix with specified matrix
-            ren->SetActiveCamera(camera);
-            renWin->Render();
+            externalVTKWidget->GetRenderWindow()->Render();
       
             // We let MinVR swap the graphics buffers.
             // glutSwapBuffers();
         }
+    }
+    
+    void SetViewTransformMatrix(const double elements[16], vtkOpenGLCamera *camera) {
+        if (!elements) {
+            return;
+        }
+        // Transpose the matrix to undo the transpose that VTK does internally
+        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
+        matrix->DeepCopy(elements);
+        matrix->Transpose();
+        //camera->ViewTransform->SetMatrix(matrix);
+        //camera->ModelViewTransform->SetMatrix(matrix);
+        //camera->UserProvidedViewTransform = true;
+        vtkSmartPointer<vtkPerspectiveTransform> transform = vtkSmartPointer<vtkPerspectiveTransform>::New();
+        transform->SetMatrix(matrix);
+        camera->SetUserViewTransform(transform);
+        //camera->SetModelTransformMatrix(matrix);
+        matrix->Delete();
+    }
+
+    void SetProjectionTransformMatrix(const double elements[16], vtkOpenGLCamera *camera){
+        if (!elements) {
+            return;
+        }
+        // Transpose the matrix to undo the transpose that VTK does internally
+        vtkMatrix4x4* matrix = vtkMatrix4x4::New();
+        matrix->DeepCopy(elements);
+        matrix->Transpose();
+
+        camera->SetExplicitProjectionTransformMatrix(matrix);
+        camera->SetUseExplicitProjectionTransformMatrix(true);
+        matrix->Delete();
     }
     };
 

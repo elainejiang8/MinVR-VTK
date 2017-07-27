@@ -1,6 +1,7 @@
 # Use this file for compiling the examples
 
-include_directories(${MINVR_INCLUDE_DIR} 
+include_directories(${CMAKE_SOURCE_DIR}/src
+		    ${MINVR_INCLUDE_DIR} 
 		    ${OPENGL_INCLUDE_DIR}
 		    ${FREEGLUT_INCLUDE_DIR}
 		    ${GLEW_LIBRARY}
@@ -76,7 +77,7 @@ target_link_libraries(demo3
 
 add_executable(supernova3 supernova3.cxx)
 
-target_link_libraries(supernova3 
+target_link_libraries(supernova3 minvr-vtk
 	${VTK_LIBRARIES} 
 	${MINVR_LIBRARY}
 	${OPENGL_LIBRARY}

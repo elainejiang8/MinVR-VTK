@@ -29,6 +29,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("/Users/elaine/YURT/MinVR-VTK/build/src/cmake_install.cmake")
   include("/Users/elaine/YURT/MinVR-VTK/build/examples/cmake_install.cmake")
 
 endif()
