@@ -15,6 +15,9 @@
 ########################
 
 //No help, variable specified on the command line.
+BASE_PLUGINS:UNINITIALIZED=OFF
+
+//No help, variable specified on the command line.
 BUILD_EXAMPLES:BOOL=OFF
 
 //No help, variable specified on the command line.
@@ -199,6 +202,12 @@ GLEW_INCLUDE_DIR:PATH=/usr/local/include
 //Path to a library.
 GLEW_LIBRARY:FILEPATH=/usr/local/lib/libGLEW.dylib
 
+//No help, variable specified on the command line.
+MINVR_FREEGLUT_PLUGIN:UNINITIALIZED=ON
+
+//No help, variable specified on the command line.
+MINVR_GLFW_PLUGIN:UNINITIALIZED=ON
+
 //Path to a file.
 MINVR_INCLUDE_DIR:PATH=/Users/Elaine/YURT/headtracker/build/install/include
 
@@ -207,6 +216,15 @@ MINVR_INSTALL_DIR:UNINITIALIZED=/Users/Elaine/YURT/MinVR/build/install
 
 //Path to a library.
 MINVR_LIBRARY:FILEPATH=/Users/Elaine/YURT/headtracker/build/install/lib/libMinVR.a
+
+//No help, variable specified on the command line.
+MINVR_OPENGL_PLUGIN:UNINITIALIZED=ON
+
+//No help, variable specified on the command line.
+MINVR_SCALABLE_PLUGIN:UNINITIALIZED=ON
+
+//No help, variable specified on the command line.
+MINVR_VRPN_PLUGIN:UNINITIALIZED=ON
 
 //Value Computed by CMake
 MinVR-VTK_BINARY_DIR:STATIC=/Users/elaine/YURT/MinVR-VTK/build

@@ -3,7 +3,7 @@
   Program:   Visualization Toolkit
   Module:    vtkCustomExternalOpenGLCamera.cxx
 
-  Copyright (c) Elaine Jiang
+  Copyright (c) 
 
 =========================================================================*/
 #include "vtkCustomExternalOpenGLCamera.h"
@@ -118,6 +118,7 @@ void vtkCustomExternalOpenGLCamera::Render(vtkRenderer *ren)
   glEnable(GL_SCISSOR_TEST);
   glScissor(lowerLeft[0], lowerLeft[1], usize, vsize);
 
+   //  #ifndef OPENGL2
   // some renderer subclasses may have more complicated computations for the
   // aspect ratio. So take that into account by computing the difference
   // between our simple aspect ratio and what the actual renderer is reporting.
@@ -172,6 +173,8 @@ void vtkCustomExternalOpenGLCamera::Render(vtkRenderer *ren)
   }
 
   matrix->Delete();
+    
+   //  #endif
 
   if ((ren->GetRenderWindow())->GetErase() && ren->GetErase()
       && !ren->GetIsPicking())

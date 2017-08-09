@@ -205,11 +205,11 @@ private:
 
     //event.print();
         // Quit if the escape button is pressed
-        if (event.getName() == "KbdEsc_Down") {
-            shutdown();
-        } else if (event.getName() == "FrameStart") {
-          //_oscillator = event.getDataAsFloat("ElapsedSeconds");
-        }
+//        if (event.getName() == "KbdEsc_Down") {
+//            shutdown();
+//        } else if (event.getName() == "FrameStart") {
+//          //_oscillator = event.getDataAsFloat("ElapsedSeconds");
+//        }
 
     }
 
@@ -248,15 +248,7 @@ private:
             glFlush();  // Render now
 
             glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT0);
-
-            GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-            GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
-            glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-            GLfloat ambient[] = {1.0f, 1.0f, 0.2f,  1.0f};
-            glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-            
+            glEnable(GL_LIGHT0);          
             
             
             // Second the load() step.  We let MinVR give us the projection
@@ -275,9 +267,6 @@ private:
                                             vm[12],vm[13],vm[14],vm[15]);
 
 
-            // viewMatrix = glm::transpose(viewMatrix);
-
-
             camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
@@ -285,7 +274,6 @@ private:
                 view[i] = glm::value_ptr(viewMatrix)[i];
             }
 
-            //this->SetViewTransformMatrix(view, camera);
             camera->SetViewTransformMatrix(view);
 
             double proj[16];
@@ -293,7 +281,6 @@ private:
                 proj[i] = glm::value_ptr(projMatrix)[i];
             }
 
-            //this->SetProjectionTransformMatrix(proj, camera);
             camera->SetProjectionTransformMatrix(proj);
             
 //            camera->SetPosition(4,2,360);
@@ -307,29 +294,6 @@ private:
                 actors[i]->RotateY(x_angle);
                 actors[i]->SetScale(scale_size);
             }
-
-            // transpose - opengl
-//            double f[16];
-//            volume->GetMatrix(f);
-//            glm::mat4 model = glm::make_mat4(f);
-//            model = glm::transpose(model);
-//            glm::mat4 f1 = projMatrix * viewMatrix * model;
-
-            // transpose
-//            double g[16]; 
-//            
-//            for(int i = 0; i < 16; i++) {
-//                g[i] = glm::value_ptr(f1)[i];
-//               // std::cout << g[i] << " ";
-//            }
-            
-            //glm::value_ptr(f1);
-//            g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-//            g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-//            g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-//            g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-            
-           // glMultMatrixd(g); // multiply current matrix with specified matrix
             
             
             externalVTKWidget->GetRenderWindow()->Render();
@@ -354,8 +318,8 @@ private:
 
     // If there weren't enough args, throw an error and explain what the
     // user should have done.
-    if (argc < 4) {
-    throw std::runtime_error("\nNeed three args, including the names of a vertex and fragment shader.\nTry 'bin/supernova3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml'");
+    if (argc < 2) {
+    throw std::runtime_error("\nNeed a config file.\nTry 'bin/supernova3 -c ../config/desktop-freeglut.xml'");
 
     }
 

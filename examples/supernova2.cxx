@@ -142,12 +142,7 @@ void display() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    GLfloat diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-    GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-    GLfloat ambient[] = {1.0f, 1.0f, 0.2f,  1.0f};
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    
 
     vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
     // camera default position set at (4.68744, 2.67252, 360.229) 
