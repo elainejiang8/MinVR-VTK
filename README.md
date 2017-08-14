@@ -70,3 +70,13 @@ Running the other examples is a similar process, but be sure to use the correct 
 ```
   $ bin/demo3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml
 ```
+
+#### Run the supernova3 example:
+1. After building supernova3, run with the following command:
+```
+  $ bin/supernova3 -c ../config/desktop-freeglut.xml
+```
+2. If you want to run this in the yurt, use:
+```
+  $ bin/supernova3 -c YURT
+```
