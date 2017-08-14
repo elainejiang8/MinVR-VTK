@@ -59,7 +59,7 @@ Run project
 Running the other examples is a similar process, but be sure to use the correct data set (you can see which data set to use in a project's cxx file comments). 
 
 #### Run the demo2 example:
-1. Because demo2 is run on an external OpenGL window, make sure that Module_vtkRenderingExternal is ON (default is OFF). You can modify vtk's configurations by going to your VTK-build directory and running "ccmake /path/to/VTK". Then, find the row with Module_vtkRenderingExternal and hit the enter key to toggle the settings. Also make sure that OpenGL is set to its 2.1 version and not the newer 3.2. When everything is set correctly, hit the 'c' key until the 'g' key appears, and then hit the 'g' key to finish configuration. 
+1. Because demo2 is run on an external OpenGL window, make sure that Module_vtkRenderingExternal is ON (default is OFF). You can modify vtk's configurations by going to your VTK-build directory and running "ccmake /path/to/VTK". Then, find the row with Module_vtkRenderingExternal and hit the enter key to toggle the settings. Also make sure that for the vtk_Rendering_Backend module, OpenGL2 is switched to OpenGL. When everything is set correctly, hit the 'c' key until the 'g' key appears, and then hit the 'g' key to finish configuration. 
 
 2. If you do not have GLEW or FreeGLUT installed, install them using homebrew.
 
@@ -69,4 +69,14 @@ Running the other examples is a similar process, but be sure to use the correct 
 1. After building demo3, run with the following command:
 ```
   $ bin/demo3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml
+```
+
+#### Run the supernova3 example:
+1. After building supernova3, run with the following command:
+```
+  $ bin/supernova3 -c ../config/desktop-freeglut.xml
+```
+2. If you want to run this in the yurt, use:
+```
+  $ bin/supernova3 -c YURT
 ```
