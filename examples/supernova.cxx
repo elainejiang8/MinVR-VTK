@@ -53,8 +53,8 @@ void displayAnnotations() {
     cornerAnnotation->SetNonlinearFontScaleFactor(1);
     cornerAnnotation->SetMaximumFontSize(40);
     cornerAnnotation->GetTextProperty()->SetColor(0, 0, 0);
-    cornerAnnotation->GetTextProperty()->FrameOn();
     cornerAnnotation->GetTextProperty()->SetBackgroundColor(1,1,1);
+    cornerAnnotation->GetTextProperty()->FrameOn();
 
     ren->AddViewProp(titleAnnotation);
     ren->AddViewProp(cornerAnnotation);
@@ -173,7 +173,7 @@ void displayAxes() {
 
 // hard code Kim's annotations
 void initializeAnnotations() {
-    annotations.push_back("This is the SiII component of \nthe CasA supernova remnant."); // sill (purple)
+    annotations.push_back("At the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova."); // sill (purple)
     annotations.push_back("In green, two jets of material are seen. \nThese jets funnel material and energy \nduring and after the explosion."); // jets (green)
     annotations.push_back("The light blue portions of this model \nrepresent radiation from the element \niron as seen in X-ray light from Chandra. \nIron is forged in the very core of the \nstar but ends up on the outside \nof the expanding ring of debris."); // fek (blue)
     annotations.push_back("The yellow portions of the model represent \ninfrared data from the Spitzer Space Telescope. \nThis is cooler debris that has yet to \nbe superheated by a passing shock wave"); // arll (yellow)
@@ -181,7 +181,7 @@ void initializeAnnotations() {
     annotations.push_back("The red colored elements of the model represent \nthe outer blast wave of the explosion as seen in \nX-rays by Chandra as well as optical and infrared \nlight, much of which is silicon."); // outer knots (red)
     annotations.push_back("The Cas A supernova remnant acts like a \nrelativistic pinball machine by accelerating \nelectrons to enormous energies. This \narea shows where the acceleration is taking \nplace in an expanding shock wave generated \nby the explosion."); // reverse shock sphere (pink)
     
-    titles.push_back("SiII (Spitzer Telescope)"); // purple
+    titles.push_back("Neutron Star"); // purple
     titles.push_back("Fiducial Jets"); // green
     titles.push_back("FeK (Chandra Telescope)"); // blue
     titles.push_back("ArII (Spitzer Telescope)"); // yellow
@@ -212,9 +212,9 @@ int main(int argc, char *argv[]) {
 
     /**********************************************************/
     
-    std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
+    std::string files[7] = {"../data/cco-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
     
-    for(int i = 0; i < 7; i++) {
+    for(int i = 0; i < NUM_ACTORS; i++) {
         vtkSmartPointer<vtkPolyDataReader> reader =
         vtkSmartPointer<vtkPolyDataReader>::New();
         reader->SetFileName(files[i].c_str());
@@ -259,6 +259,7 @@ int main(int argc, char *argv[]) {
         actors.push_back(actor);
     }
     
+    // color actors
     actors[0]->GetProperty()->SetColor(0.97,0.45,0.91); // sill (purple)
     actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets (green)
     actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // fek (blue)

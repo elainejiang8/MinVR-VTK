@@ -88,6 +88,7 @@ examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../external/glm-0.9.7.1/glm/vec2.hpp
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../external/glm-0.9.7.1/glm/vec3.hpp
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../external/glm-0.9.7.1/glm/vec4.hpp
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../external/glm-0.9.7.1/glm/vector_relational.hpp
+examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../src/vtkCustomExternalOpenGLCamera.h
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: /Users/Elaine/YURT/headtracker/build/install/include/api/MinVR.h
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: /Users/Elaine/YURT/headtracker/build/install/include/api/VRApp.h
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: /Users/Elaine/YURT/headtracker/build/install/include/api/VREvent.h

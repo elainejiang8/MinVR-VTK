@@ -10,6 +10,7 @@
 #include <vtkVolume.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
+#include <vtkCamera.h>
 
 std::string filename;
 vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
@@ -73,6 +74,9 @@ int main(int argc, char *argv[]) {
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
     renWin->AddRenderer(ren);
     
+    vtkSmartPointer<vtkCamera> camera =
+    vtkSmartPointer<vtkCamera>::New();
+    
     
     /* default interactor: responds to the following events:
      *     keypress j/keypress t - toggle between joystick (position sensitive) and trackball     *                             (motion sensitive) styles.
@@ -127,8 +131,12 @@ int main(int argc, char *argv[]) {
     style->SetCurrentRenderer(ren);
     
     ren->AddVolume(volume);
-    ren->MakeCamera();
+    ren->SetActiveCamera(camera);
     ren->ResetCamera();
+    
+//    for(int i = 0; i < 3; i++) {
+//        std::cout << ren->GetActiveCamera()->GetPosition()[i] << std::endl;
+//    }
     
     ren->SetBackground(0.87, 0.88, 0.91);
     renWin->SetSize(1000, 1000);

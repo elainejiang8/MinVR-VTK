@@ -33,6 +33,8 @@
 #include <vtkPerspectiveTransform.h>
 #include <vtkCustomExternalOpenGLCamera.h>
 
+using namespace std;
+
 class DemoVRVTKApp: public MinVR::VRApp {
   // Data values that were global in the supernova2.cxx file are defined as
   // private members of the VRApp.
@@ -41,20 +43,13 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New(); 
     vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
-    vtkSmartPointer<vtkActor> actors[7];
+    vector <vtkSmartPointer<vtkActor>> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 
     vtkNew<vtkTransform> transform;
     int press_x, press_y;
     int release_x, release_y;
-    float x_angle = 0.0;
-    float y_angle = 0.0;
-    float scale_size = 1;
-    int xform_mode = 0;
-    #define XFORM_NONE    0
-    #define XFORM_ROTATE  1
-    #define XFORM_SCALE 2
-
+    int NUM_ACTORS = 7;
   
     // These functions from demo2.cpp are not needed here:
     //
@@ -131,9 +126,9 @@ private:
 
         /**********************************************************/
 
-        std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
+        std::string files[7] = {"../data/cco-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
 
-        for(int i = 0; i < 7; i++) {
+        for(int i = 0; i < NUM_ACTORS; i++) {
             vtkSmartPointer<vtkPolyDataReader> reader =
             vtkSmartPointer<vtkPolyDataReader>::New();
             reader->SetFileName(files[i].c_str());
@@ -164,7 +159,7 @@ private:
             vtkSmartPointer<vtkPolyDataMapper> mapper =
             vtkSmartPointer<vtkPolyDataMapper>::New();
             mapper->SetInputConnection(normals->GetOutputPort());
-            //mapper->ScalarVisibilityOff();
+            mapper->ScalarVisibilityOff();
 
             mapper->SetLookupTable(colorTransferFunction);
 
@@ -175,15 +170,17 @@ private:
             actor->GetProperty()->SetOpacity(0.8);
 
             ren->AddActor(actor);
-            actors[i] = actor;
+            actors.push_back(actor);
         }
 
-        actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
-        actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
-        actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
-        actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
-        actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
-        actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+        // color actors
+        actors[0]->GetProperty()->SetColor(0.97,0.45,0.91); // sill (purple)
+        actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets (green)
+        actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // fek (blue)
+        actors[3]->GetProperty()->SetColor(0.95,0.95,0.33); // arll (yellow)
+        actors[4]->GetProperty()->SetColor(0.26,0.59,0.94); // (dark blue)
+        actors[5]->GetProperty()->SetColor(0.94,0.32,0.4); // outer knots (red)
+        actors[6]->GetProperty()->SetColor(0.96,0.70,0.93); // reverse shock sphere (pink)
 
 
         /**********************************************************/
@@ -286,14 +283,6 @@ private:
 //            camera->SetPosition(4,2,360);
 //            camera->SetFocalPoint(0,0,0); // initial direction
 //            camera->SetViewUp(0,1,0); // controls "up" direction for camera
-
-            
-            for(int i = 0; i < 7; i++) {
-                // transpose - vtk
-                actors[i]->RotateX(y_angle);
-                actors[i]->RotateY(x_angle);
-                actors[i]->SetScale(scale_size);
-            }
             
             
             externalVTKWidget->GetRenderWindow()->Render();

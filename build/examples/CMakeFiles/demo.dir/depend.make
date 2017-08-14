@@ -4,6 +4,7 @@
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/Core/vtkAtomic.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/Core/vtkCommonCoreModule.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/Core/vtkConfigure.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/Core/vtkMathConfigure.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/DataModel/vtkCommonDataModelModule.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK-build/Common/ExecutionModel/vtkCommonExecutionModelModule.h
@@ -23,6 +24,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkDebugL
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkIOStream.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkIOStreamFwd.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkIndent.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkMath.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkNew.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkOStrStreamWrapper.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkOStreamWrapper.h
@@ -37,6 +39,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkStdStr
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkTimeStamp.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkType.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkTypeTraits.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkUnicodeString.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkVariant.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkVariantInlineOperators.h
@@ -46,7 +49,10 @@ examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkWindow
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Core/vtkWrappingHints.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkPiecewiseFunction.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkRect.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/DataModel/vtkVector.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/ExecutionModel/vtkAlgorithm.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Common/Math/vtkTuple.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h
@@ -55,6 +61,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkAbs
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkAbstractVolumeMapper.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkActor.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkActorCollection.h
+examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkCamera.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkColorTransferFunction.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkInteractorObserver.h
 examples/CMakeFiles/demo.dir/demo.cxx.o: /Users/elaine/VTK/Rendering/Core/vtkInteractorStyle.h

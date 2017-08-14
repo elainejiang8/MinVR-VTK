@@ -726,6 +726,12 @@ detail/type_vec4.hpp
 detail/func_vector_relational.hpp
 ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
 
+../src/vtkCustomExternalOpenGLCamera.h
+vtkRenderingExternalModule.h
+../src/vtkRenderingExternalModule.h
+vtkOpenGLCamera.h
+../src/vtkOpenGLCamera.h
+
 /Users/Elaine/YURT/headtracker/build/install/include/api/MinVR.h
 VRApp.h
 /Users/Elaine/YURT/headtracker/build/install/include/api/VRApp.h
@@ -1716,6 +1722,8 @@ vtkCallbackCommand.h
 vtkTransform.h
 -
 vtkPerspectiveTransform.h
+-
+vtkCustomExternalOpenGLCamera.h
 -
 
 /usr/local/Cellar/freeglut/3.0.0/include/GL/freeglut.h

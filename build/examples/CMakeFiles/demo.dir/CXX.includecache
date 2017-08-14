@@ -28,6 +28,12 @@ libkern/OSAtomic.h
 vtkVersionMacros.h
 /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
 
+/Users/elaine/VTK-build/Common/Core/vtkMathConfigure.h
+cmath
+-
+float.h
+-
+
 /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
 
 /Users/elaine/VTK-build/Common/DataModel/vtkCommonDataModelModule.h
@@ -125,6 +131,20 @@ vtkCommonCoreModule.h
 /Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
 vtkSystemIncludes.h
 /Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
+
+/Users/elaine/VTK/Common/Core/vtkMath.h
+vtkCommonCoreModule.h
+/Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
+vtkObject.h
+/Users/elaine/VTK/Common/Core/vtkObject.h
+vtkTypeTraits.h
+/Users/elaine/VTK/Common/Core/vtkTypeTraits.h
+vtkSmartPointer.h
+/Users/elaine/VTK/Common/Core/vtkSmartPointer.h
+vtkMathConfigure.h
+/Users/elaine/VTK/Common/Core/vtkMathConfigure.h
+cassert
+-
 
 /Users/elaine/VTK/Common/Core/vtkNew.h
 vtkIOStream.h
@@ -242,6 +262,10 @@ vtk_kwiml.h
 stdbool.h
 /Users/elaine/VTK/Common/Core/stdbool.h
 
+/Users/elaine/VTK/Common/Core/vtkTypeTraits.h
+vtkSystemIncludes.h
+/Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
+
 /Users/elaine/VTK/Common/Core/vtkUnicodeString.h
 vtkCommonCoreModule.h
 /Users/elaine/VTK/Common/Core/vtkCommonCoreModule.h
@@ -306,11 +330,37 @@ vtkCommonDataModelModule.h
 vtkDataObject.h
 /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
 
+/Users/elaine/VTK/Common/DataModel/vtkRect.h
+vtkVector.h
+/Users/elaine/VTK/Common/DataModel/vtkVector.h
+vtkMath.h
+/Users/elaine/VTK/Common/DataModel/vtkMath.h
+
+/Users/elaine/VTK/Common/DataModel/vtkVector.h
+vtkTuple.h
+/Users/elaine/VTK/Common/DataModel/vtkTuple.h
+vtkObject.h
+/Users/elaine/VTK/Common/DataModel/vtkObject.h
+cmath
+-
+
 /Users/elaine/VTK/Common/ExecutionModel/vtkAlgorithm.h
 vtkCommonExecutionModelModule.h
 /Users/elaine/VTK/Common/ExecutionModel/vtkCommonExecutionModelModule.h
 vtkObject.h
 /Users/elaine/VTK/Common/ExecutionModel/vtkObject.h
+
+/Users/elaine/VTK/Common/Math/vtkTuple.h
+vtkIOStream.h
+/Users/elaine/VTK/Common/Math/vtkIOStream.h
+vtkSystemIncludes.h
+/Users/elaine/VTK/Common/Math/vtkSystemIncludes.h
+cassert
+-
+cstdlib
+-
+cmath
+-
 
 /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
 vtkIOLegacyModule.h
@@ -363,6 +413,14 @@ vtkPropCollection.h
 /Users/elaine/VTK/Rendering/Core/vtkPropCollection.h
 vtkActor.h
 /Users/elaine/VTK/Rendering/Core/vtkActor.h
+
+/Users/elaine/VTK/Rendering/Core/vtkCamera.h
+vtkRenderingCoreModule.h
+/Users/elaine/VTK/Rendering/Core/vtkRenderingCoreModule.h
+vtkObject.h
+/Users/elaine/VTK/Rendering/Core/vtkObject.h
+vtkRect.h
+/Users/elaine/VTK/Rendering/Core/vtkRect.h
 
 /Users/elaine/VTK/Rendering/Core/vtkColorTransferFunction.h
 vtkRenderingCoreModule.h
@@ -508,5 +566,7 @@ vtkVolume.h
 vtkInteractorStyleTrackballCamera.h
 -
 vtkObjectFactory.h
+-
+vtkCamera.h
 -
 

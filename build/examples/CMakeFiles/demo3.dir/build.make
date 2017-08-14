@@ -90,6 +90,7 @@ demo3_EXTERNAL_OBJECTS =
 
 bin/demo3: examples/CMakeFiles/demo3.dir/demo3.cxx.o
 bin/demo3: examples/CMakeFiles/demo3.dir/build.make
+bin/demo3: src/libminvr-vtk.a
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkDomainsChemistry-8.1.1.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersFlowPaths-8.1.1.dylib
 bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersGeneric-8.1.1.dylib

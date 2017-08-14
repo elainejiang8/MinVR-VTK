@@ -228,7 +228,7 @@ clean: examples/CMakeFiles/supernova3.dir/clean
 # Target rules for target examples/CMakeFiles/demo3.dir
 
 # All Build rule for target.
-examples/CMakeFiles/demo3.dir/all:
+examples/CMakeFiles/demo3.dir/all: src/CMakeFiles/minvr-vtk.dir/all
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=13,14 "Built target demo3"
@@ -241,7 +241,7 @@ all: examples/CMakeFiles/demo3.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/demo3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : examples/CMakeFiles/demo3.dir/rule

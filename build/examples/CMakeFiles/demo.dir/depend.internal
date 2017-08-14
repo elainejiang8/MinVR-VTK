@@ -5,6 +5,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o
  /Users/elaine/VTK-build/Common/Core/vtkAtomic.h
  /Users/elaine/VTK-build/Common/Core/vtkCommonCoreModule.h
  /Users/elaine/VTK-build/Common/Core/vtkConfigure.h
+ /Users/elaine/VTK-build/Common/Core/vtkMathConfigure.h
  /Users/elaine/VTK-build/Common/Core/vtkVersionMacros.h
  /Users/elaine/VTK-build/Common/DataModel/vtkCommonDataModelModule.h
  /Users/elaine/VTK-build/Common/ExecutionModel/vtkCommonExecutionModelModule.h
@@ -24,6 +25,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o
  /Users/elaine/VTK/Common/Core/vtkIOStream.h
  /Users/elaine/VTK/Common/Core/vtkIOStreamFwd.h
  /Users/elaine/VTK/Common/Core/vtkIndent.h
+ /Users/elaine/VTK/Common/Core/vtkMath.h
  /Users/elaine/VTK/Common/Core/vtkNew.h
  /Users/elaine/VTK/Common/Core/vtkOStrStreamWrapper.h
  /Users/elaine/VTK/Common/Core/vtkOStreamWrapper.h
@@ -38,6 +40,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o
  /Users/elaine/VTK/Common/Core/vtkSystemIncludes.h
  /Users/elaine/VTK/Common/Core/vtkTimeStamp.h
  /Users/elaine/VTK/Common/Core/vtkType.h
+ /Users/elaine/VTK/Common/Core/vtkTypeTraits.h
  /Users/elaine/VTK/Common/Core/vtkUnicodeString.h
  /Users/elaine/VTK/Common/Core/vtkVariant.h
  /Users/elaine/VTK/Common/Core/vtkVariantInlineOperators.h
@@ -47,7 +50,10 @@ examples/CMakeFiles/demo.dir/demo.cxx.o
  /Users/elaine/VTK/Common/Core/vtkWrappingHints.h
  /Users/elaine/VTK/Common/DataModel/vtkDataObject.h
  /Users/elaine/VTK/Common/DataModel/vtkPiecewiseFunction.h
+ /Users/elaine/VTK/Common/DataModel/vtkRect.h
+ /Users/elaine/VTK/Common/DataModel/vtkVector.h
  /Users/elaine/VTK/Common/ExecutionModel/vtkAlgorithm.h
+ /Users/elaine/VTK/Common/Math/vtkTuple.h
  /Users/elaine/VTK/IO/Legacy/vtkDataReader.h
  /Users/elaine/VTK/IO/Legacy/vtkStructuredPointsReader.h
  /Users/elaine/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h
@@ -56,6 +62,7 @@ examples/CMakeFiles/demo.dir/demo.cxx.o
  /Users/elaine/VTK/Rendering/Core/vtkAbstractVolumeMapper.h
  /Users/elaine/VTK/Rendering/Core/vtkActor.h
  /Users/elaine/VTK/Rendering/Core/vtkActorCollection.h
+ /Users/elaine/VTK/Rendering/Core/vtkCamera.h
  /Users/elaine/VTK/Rendering/Core/vtkColorTransferFunction.h
  /Users/elaine/VTK/Rendering/Core/vtkInteractorObserver.h
  /Users/elaine/VTK/Rendering/Core/vtkInteractorStyle.h
