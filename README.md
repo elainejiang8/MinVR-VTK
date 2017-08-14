@@ -58,17 +58,30 @@ Run project
 ```
 Running the other examples is a similar process, but be sure to use the correct data set (you can see which data set to use in a project's cxx file comments). 
 
-#### Run the demo2 example:
+#### Prepare to run the demo2/demo3/supernova2/supernova3 examples:
 1. Because demo2 is run on an external OpenGL window, make sure that Module_vtkRenderingExternal is ON (default is OFF). You can modify vtk's configurations by going to your VTK-build directory and running "ccmake /path/to/VTK". Then, find the row with Module_vtkRenderingExternal and hit the enter key to toggle the settings. Also make sure that for the vtk_Rendering_Backend module, OpenGL2 is switched to OpenGL. When everything is set correctly, hit the 'c' key until the 'g' key appears, and then hit the 'g' key to finish configuration. 
 
 2. If you do not have GLEW or FreeGLUT installed, install them using homebrew.
 
-3. After completing steps 1 and 2, you should be able to build and run demo2 the same way you built and ran the original demo.
+#### Run the demo2/supernova2 examples: 
+1. After building demo2 or supernova2, you can run them the same way you ran demo/supernova.
+ - For demo2, run:
+ ```
+   $ bin/demo2 ../data/ironProt.vtk
+ ```
+ - For supernova2, run:
+ ```
+   $ bin/supernova2
+ ```
 
 #### Run the demo3 example: 
 1. After building demo3, run with the following command:
 ```
   $ bin/demo3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml
+```
+2. If you want to run this in the yurt, use:
+```
+  $ bin/supernova3 -c YURT
 ```
 
 #### Run the supernova3 example:
