@@ -39,79 +39,57 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
+CMAKE_COMMAND = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
+RM = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/elaine/YURT/MinVR-VTK
+CMAKE_SOURCE_DIR = /users/ejiang1/MinVR-VTK-8
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
+CMAKE_BINARY_DIR = /users/ejiang1/MinVR-VTK-8/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/CMake.app/Contents/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/Applications/CMake.app/Contents/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
 install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CMake.app/Contents/bin/cmake -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CMake.app/Contents/bin/cmake -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target list_install_components
@@ -124,16 +102,38 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/progress.marks
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
+	cd /users/ejiang1/MinVR-VTK-8/build && $(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles /users/ejiang1/MinVR-VTK-8/build/examples/CMakeFiles/progress.marks
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/clean
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,52 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /users/ejiang1/MinVR-VTK-8/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
-examples/CMakeFiles/RenderInExistingContext.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/RenderInExistingContext.dir/rule
-.PHONY : examples/CMakeFiles/RenderInExistingContext.dir/rule
-
-# Convenience name for target.
-RenderInExistingContext: examples/CMakeFiles/RenderInExistingContext.dir/rule
-
-.PHONY : RenderInExistingContext
-
-# fast build rule for target.
-RenderInExistingContext/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
-.PHONY : RenderInExistingContext/fast
-
-# Convenience name for target.
-examples/CMakeFiles/supernova3.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova3.dir/rule
-.PHONY : examples/CMakeFiles/supernova3.dir/rule
-
-# Convenience name for target.
-supernova3: examples/CMakeFiles/supernova3.dir/rule
-
-.PHONY : supernova3
-
-# fast build rule for target.
-supernova3/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
-.PHONY : supernova3/fast
-
-# Convenience name for target.
 examples/CMakeFiles/demo3.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/rule
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/rule
 .PHONY : examples/CMakeFiles/demo3.dir/rule
 
 # Convenience name for target.
@@ -198,72 +168,27 @@ demo3: examples/CMakeFiles/demo3.dir/rule
 
 # fast build rule for target.
 demo3/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
 .PHONY : demo3/fast
 
 # Convenience name for target.
-examples/CMakeFiles/demo2.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo2.dir/rule
-.PHONY : examples/CMakeFiles/demo2.dir/rule
+examples/CMakeFiles/supernova3.dir/rule:
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova3.dir/rule
+.PHONY : examples/CMakeFiles/supernova3.dir/rule
 
 # Convenience name for target.
-demo2: examples/CMakeFiles/demo2.dir/rule
+supernova3: examples/CMakeFiles/supernova3.dir/rule
 
-.PHONY : demo2
+.PHONY : supernova3
 
 # fast build rule for target.
-demo2/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
-.PHONY : demo2/fast
-
-# Convenience name for target.
-examples/CMakeFiles/supernova2.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova2.dir/rule
-.PHONY : examples/CMakeFiles/supernova2.dir/rule
-
-# Convenience name for target.
-supernova2: examples/CMakeFiles/supernova2.dir/rule
-
-.PHONY : supernova2
-
-# fast build rule for target.
-supernova2/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/build
-.PHONY : supernova2/fast
-
-# Convenience name for target.
-examples/CMakeFiles/demo2-cube.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo2-cube.dir/rule
-.PHONY : examples/CMakeFiles/demo2-cube.dir/rule
-
-# Convenience name for target.
-demo2-cube: examples/CMakeFiles/demo2-cube.dir/rule
-
-.PHONY : demo2-cube
-
-# fast build rule for target.
-demo2-cube/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/build
-.PHONY : demo2-cube/fast
-
-# Convenience name for target.
-examples/CMakeFiles/SmartVolumeMapper.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/SmartVolumeMapper.dir/rule
-.PHONY : examples/CMakeFiles/SmartVolumeMapper.dir/rule
-
-# Convenience name for target.
-SmartVolumeMapper: examples/CMakeFiles/SmartVolumeMapper.dir/rule
-
-.PHONY : SmartVolumeMapper
-
-# fast build rule for target.
-SmartVolumeMapper/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/build
-.PHONY : SmartVolumeMapper/fast
+supernova3/fast:
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
+.PHONY : supernova3/fast
 
 # Convenience name for target.
 examples/CMakeFiles/supernova.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova.dir/rule
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova.dir/rule
 .PHONY : examples/CMakeFiles/supernova.dir/rule
 
 # Convenience name for target.
@@ -273,27 +198,12 @@ supernova: examples/CMakeFiles/supernova.dir/rule
 
 # fast build rule for target.
 supernova/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
 .PHONY : supernova/fast
 
 # Convenience name for target.
-examples/CMakeFiles/MinIntensityRendering.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/MinIntensityRendering.dir/rule
-.PHONY : examples/CMakeFiles/MinIntensityRendering.dir/rule
-
-# Convenience name for target.
-MinIntensityRendering: examples/CMakeFiles/MinIntensityRendering.dir/rule
-
-.PHONY : MinIntensityRendering
-
-# fast build rule for target.
-MinIntensityRendering/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/build
-.PHONY : MinIntensityRendering/fast
-
-# Convenience name for target.
 examples/CMakeFiles/demo.dir/rule:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo.dir/rule
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo.dir/rule
 .PHONY : examples/CMakeFiles/demo.dir/rule
 
 # Convenience name for target.
@@ -303,89 +213,8 @@ demo: examples/CMakeFiles/demo.dir/rule
 
 # fast build rule for target.
 demo/fast:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
 .PHONY : demo/fast
-
-MinIntensityRendering.o: MinIntensityRendering.cxx.o
-
-.PHONY : MinIntensityRendering.o
-
-# target to build an object file
-MinIntensityRendering.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/MinIntensityRendering.cxx.o
-.PHONY : MinIntensityRendering.cxx.o
-
-MinIntensityRendering.i: MinIntensityRendering.cxx.i
-
-.PHONY : MinIntensityRendering.i
-
-# target to preprocess a source file
-MinIntensityRendering.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/MinIntensityRendering.cxx.i
-.PHONY : MinIntensityRendering.cxx.i
-
-MinIntensityRendering.s: MinIntensityRendering.cxx.s
-
-.PHONY : MinIntensityRendering.s
-
-# target to generate assembly for a file
-MinIntensityRendering.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/MinIntensityRendering.cxx.s
-.PHONY : MinIntensityRendering.cxx.s
-
-RenderInExistingContext.o: RenderInExistingContext.cxx.o
-
-.PHONY : RenderInExistingContext.o
-
-# target to build an object file
-RenderInExistingContext.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.o
-.PHONY : RenderInExistingContext.cxx.o
-
-RenderInExistingContext.i: RenderInExistingContext.cxx.i
-
-.PHONY : RenderInExistingContext.i
-
-# target to preprocess a source file
-RenderInExistingContext.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.i
-.PHONY : RenderInExistingContext.cxx.i
-
-RenderInExistingContext.s: RenderInExistingContext.cxx.s
-
-.PHONY : RenderInExistingContext.s
-
-# target to generate assembly for a file
-RenderInExistingContext.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/RenderInExistingContext.cxx.s
-.PHONY : RenderInExistingContext.cxx.s
-
-SmartVolumeMapper.o: SmartVolumeMapper.cxx.o
-
-.PHONY : SmartVolumeMapper.o
-
-# target to build an object file
-SmartVolumeMapper.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.o
-.PHONY : SmartVolumeMapper.cxx.o
-
-SmartVolumeMapper.i: SmartVolumeMapper.cxx.i
-
-.PHONY : SmartVolumeMapper.i
-
-# target to preprocess a source file
-SmartVolumeMapper.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.i
-.PHONY : SmartVolumeMapper.cxx.i
-
-SmartVolumeMapper.s: SmartVolumeMapper.cxx.s
-
-.PHONY : SmartVolumeMapper.s
-
-# target to generate assembly for a file
-SmartVolumeMapper.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/SmartVolumeMapper.cxx.s
-.PHONY : SmartVolumeMapper.cxx.s
 
 demo.o: demo.cxx.o
 
@@ -393,7 +222,7 @@ demo.o: demo.cxx.o
 
 # target to build an object file
 demo.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.o
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.o
 .PHONY : demo.cxx.o
 
 demo.i: demo.cxx.i
@@ -402,7 +231,7 @@ demo.i: demo.cxx.i
 
 # target to preprocess a source file
 demo.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.i
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.i
 .PHONY : demo.cxx.i
 
 demo.s: demo.cxx.s
@@ -411,62 +240,8 @@ demo.s: demo.cxx.s
 
 # target to generate assembly for a file
 demo.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.s
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/demo.cxx.s
 .PHONY : demo.cxx.s
-
-demo2-cube.o: demo2-cube.cxx.o
-
-.PHONY : demo2-cube.o
-
-# target to build an object file
-demo2-cube.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.o
-.PHONY : demo2-cube.cxx.o
-
-demo2-cube.i: demo2-cube.cxx.i
-
-.PHONY : demo2-cube.i
-
-# target to preprocess a source file
-demo2-cube.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.i
-.PHONY : demo2-cube.cxx.i
-
-demo2-cube.s: demo2-cube.cxx.s
-
-.PHONY : demo2-cube.s
-
-# target to generate assembly for a file
-demo2-cube.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/demo2-cube.cxx.s
-.PHONY : demo2-cube.cxx.s
-
-demo2.o: demo2.cxx.o
-
-.PHONY : demo2.o
-
-# target to build an object file
-demo2.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/demo2.cxx.o
-.PHONY : demo2.cxx.o
-
-demo2.i: demo2.cxx.i
-
-.PHONY : demo2.i
-
-# target to preprocess a source file
-demo2.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/demo2.cxx.i
-.PHONY : demo2.cxx.i
-
-demo2.s: demo2.cxx.s
-
-.PHONY : demo2.s
-
-# target to generate assembly for a file
-demo2.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/demo2.cxx.s
-.PHONY : demo2.cxx.s
 
 demo3.o: demo3.cxx.o
 
@@ -474,7 +249,7 @@ demo3.o: demo3.cxx.o
 
 # target to build an object file
 demo3.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.o
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.o
 .PHONY : demo3.cxx.o
 
 demo3.i: demo3.cxx.i
@@ -483,7 +258,7 @@ demo3.i: demo3.cxx.i
 
 # target to preprocess a source file
 demo3.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.i
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.i
 .PHONY : demo3.cxx.i
 
 demo3.s: demo3.cxx.s
@@ -492,7 +267,7 @@ demo3.s: demo3.cxx.s
 
 # target to generate assembly for a file
 demo3.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.s
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/demo3.cxx.s
 .PHONY : demo3.cxx.s
 
 supernova.o: supernova.cxx.o
@@ -501,7 +276,7 @@ supernova.o: supernova.cxx.o
 
 # target to build an object file
 supernova.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.o
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.o
 .PHONY : supernova.cxx.o
 
 supernova.i: supernova.cxx.i
@@ -510,7 +285,7 @@ supernova.i: supernova.cxx.i
 
 # target to preprocess a source file
 supernova.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.i
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.i
 .PHONY : supernova.cxx.i
 
 supernova.s: supernova.cxx.s
@@ -519,35 +294,8 @@ supernova.s: supernova.cxx.s
 
 # target to generate assembly for a file
 supernova.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.s
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/supernova.cxx.s
 .PHONY : supernova.cxx.s
-
-supernova2.o: supernova2.cxx.o
-
-.PHONY : supernova2.o
-
-# target to build an object file
-supernova2.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/supernova2.cxx.o
-.PHONY : supernova2.cxx.o
-
-supernova2.i: supernova2.cxx.i
-
-.PHONY : supernova2.i
-
-# target to preprocess a source file
-supernova2.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/supernova2.cxx.i
-.PHONY : supernova2.cxx.i
-
-supernova2.s: supernova2.cxx.s
-
-.PHONY : supernova2.s
-
-# target to generate assembly for a file
-supernova2.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/supernova2.cxx.s
-.PHONY : supernova2.cxx.s
 
 supernova3.o: supernova3.cxx.o
 
@@ -555,7 +303,7 @@ supernova3.o: supernova3.cxx.o
 
 # target to build an object file
 supernova3.cxx.o:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.o
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.o
 .PHONY : supernova3.cxx.o
 
 supernova3.i: supernova3.cxx.i
@@ -564,7 +312,7 @@ supernova3.i: supernova3.cxx.i
 
 # target to preprocess a source file
 supernova3.cxx.i:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.i
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.i
 .PHONY : supernova3.cxx.i
 
 supernova3.s: supernova3.cxx.s
@@ -573,7 +321,7 @@ supernova3.s: supernova3.cxx.s
 
 # target to generate assembly for a file
 supernova3.cxx.s:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.s
+	cd /users/ejiang1/MinVR-VTK-8/build && $(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/supernova3.cxx.s
 .PHONY : supernova3.cxx.s
 
 # Help Target
@@ -582,49 +330,25 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/local"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... RenderInExistingContext"
-	@echo "... supernova3"
 	@echo "... install/strip"
-	@echo "... demo3"
-	@echo "... demo2"
-	@echo "... supernova2"
-	@echo "... demo2-cube"
+	@echo "... install/local"
 	@echo "... install"
-	@echo "... SmartVolumeMapper"
 	@echo "... list_install_components"
+	@echo "... rebuild_cache"
+	@echo "... demo3"
+	@echo "... edit_cache"
+	@echo "... supernova3"
 	@echo "... supernova"
-	@echo "... MinIntensityRendering"
 	@echo "... demo"
-	@echo "... MinIntensityRendering.o"
-	@echo "... MinIntensityRendering.i"
-	@echo "... MinIntensityRendering.s"
-	@echo "... RenderInExistingContext.o"
-	@echo "... RenderInExistingContext.i"
-	@echo "... RenderInExistingContext.s"
-	@echo "... SmartVolumeMapper.o"
-	@echo "... SmartVolumeMapper.i"
-	@echo "... SmartVolumeMapper.s"
 	@echo "... demo.o"
 	@echo "... demo.i"
 	@echo "... demo.s"
-	@echo "... demo2-cube.o"
-	@echo "... demo2-cube.i"
-	@echo "... demo2-cube.s"
-	@echo "... demo2.o"
-	@echo "... demo2.i"
-	@echo "... demo2.s"
 	@echo "... demo3.o"
 	@echo "... demo3.i"
 	@echo "... demo3.s"
 	@echo "... supernova.o"
 	@echo "... supernova.i"
 	@echo "... supernova.s"
-	@echo "... supernova2.o"
-	@echo "... supernova2.i"
-	@echo "... supernova2.s"
 	@echo "... supernova3.o"
 	@echo "... supernova3.i"
 	@echo "... supernova3.s"
@@ -639,6 +363,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/elaine/YURT/MinVR-VTK/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /users/ejiang1/MinVR-VTK-8/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

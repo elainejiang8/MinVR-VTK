@@ -39,7 +39,7 @@ public:
     LastPickedProperty->Delete();
   }
   
-  virtual void OnLeftButtonDown() VTK_OVERRIDE{
+  virtual void OnLeftButtonDown() { //VTK_OVERRIDE
     int* clickPos = this->GetInteractor()->GetEventPosition();
 
     // Pick from this location.

@@ -3,7 +3,7 @@
   Program:   Visualization Toolkit
   Module:    vtkCustomExternalOpenGLCamera.cxx
 
-  Copyright (c) Elaine Jiang
+  Copyright (c) 
 
 =========================================================================*/
 #include "vtkCustomExternalOpenGLCamera.h"

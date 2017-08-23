@@ -9,20 +9,6 @@ include_directories(${CMAKE_SOURCE_DIR}/src
 )
 
 
-add_executable(MinIntensityRendering MinIntensityRendering.cxx)
-
-target_link_libraries(MinIntensityRendering 
-	${VTK_LIBRARIES}
-)
-
-
-add_executable(SmartVolumeMapper SmartVolumeMapper.cxx)
-
-target_link_libraries(SmartVolumeMapper 
-	${VTK_LIBRARIES}
-)
-
-
 add_executable(demo demo.cxx)
 
 target_link_libraries(demo 
@@ -34,34 +20,6 @@ add_executable(supernova supernova.cxx)
 
 target_link_libraries(supernova 
 	${VTK_LIBRARIES}
-)
-
-
-add_executable(demo2 demo2.cxx)
-
-target_link_libraries(demo2 
-	${VTK_LIBRARIES}
-	${OPENGL_LIBRARY}
-	${FREEGLUT_LIBRARY}
-	${GLEW_LIBRARY}
-)
-
-add_executable(demo2-cube demo2-cube.cxx)
-
-target_link_libraries(demo2-cube 
-	${VTK_LIBRARIES}
-	${OPENGL_LIBRARY}
-	${FREEGLUT_LIBRARY}
-	${GLEW_LIBRARY}
-)
-
-add_executable(supernova2 supernova2.cxx)
-
-target_link_libraries(supernova2 
-	${VTK_LIBRARIES}
-	${OPENGL_LIBRARY}
-	${FREEGLUT_LIBRARY}
-	${GLEW_LIBRARY}
 )
 
 add_executable(demo3 demo3.cxx)
@@ -85,15 +43,6 @@ target_link_libraries(supernova3 minvr-vtk
 	${GLEW_LIBRARY}
 )
 
-
-add_executable(RenderInExistingContext RenderInExistingContext.cxx)
-
-target_link_libraries(RenderInExistingContext 
-	${VTK_LIBRARIES}
-	${OPENGL_LIBRARY}
-	${FREEGLUT_LIBRARY}
-	${GLEW_LIBRARY}
-)
 
 
 

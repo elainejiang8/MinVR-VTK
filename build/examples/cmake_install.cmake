@@ -1,8 +1,8 @@
-# Install script for directory: /Users/elaine/YURT/MinVR-VTK/examples
+# Install script for directory: /users/ejiang1/MinVR-VTK-8/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/elaine/YURT/MinVR-VTK/build/install")
+  set(CMAKE_INSTALL_PREFIX "/users/ejiang1/MinVR-VTK-8/build/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -25,5 +25,10 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   else()
     set(CMAKE_INSTALL_COMPONENT)
   endif()
+endif()
+
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "0")
 endif()
 

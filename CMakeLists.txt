@@ -53,6 +53,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   
 #  set(CMAKE_C_COMPILER gcc)
 #  set(CMAKE_CXX_COMPILER g++)
+# set(CMAKE_C_COMPILER /gpfs/runtime/opt/gcc/5.2.0/bin/g++)
+# set(CMAKE_CXX_COMPILER /gpfs/runtime/opt/gcc/5.2.0/bin/gcc)
 
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 

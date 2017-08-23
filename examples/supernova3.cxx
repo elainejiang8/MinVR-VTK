@@ -205,11 +205,11 @@ private:
 
     //event.print();
         // Quit if the escape button is pressed
-        if (event.getName() == "KbdEsc_Down") {
-            shutdown();
-        } else if (event.getName() == "FrameStart") {
-          //_oscillator = event.getDataAsFloat("ElapsedSeconds");
-        }
+    //    if (event.getName() == "KbdEsc_Down") {
+      //      shutdown();
+  //      } else if (event.getName() == "FrameStart") {
+          //_oscillator = event.getDataAsFloat("El
+//	}
 
     }
 
@@ -354,8 +354,8 @@ private:
 
     // If there weren't enough args, throw an error and explain what the
     // user should have done.
-    if (argc < 4) {
-    throw std::runtime_error("\nNeed three args, including the names of a vertex and fragment shader.\nTry 'bin/supernova3 ../shaders/shader2.vp ../shaders/shader.fp -c ../config/desktop-freeglut.xml'");
+    if (argc < 2) {
+    throw std::runtime_error("\nNeed a config file.\nTry 'bin/supernova3 -c ../config/desktop-freeglut.xml'");
 
     }
 

@@ -28,11 +28,13 @@ public:
   static vtkCustomExternalOpenGLCamera *New();
   vtkTypeMacro(vtkCustomExternalOpenGLCamera, vtkOpenGLCamera);
   void PrintSelf(ostream& os, vtkIndent indent) VTK_OVERRIDE;
+//  void PrintSelf(ostream& os, vtkIndent indent);
 
   /**
    * Implement base class method.
    */
   void Render(vtkRenderer *ren) VTK_OVERRIDE;
+//   virtual void Render(vtkRenderer *ren);
 
   /**
    * Set the view transform matrix
@@ -47,12 +49,14 @@ public:
 protected:
   vtkCustomExternalOpenGLCamera();
   ~vtkCustomExternalOpenGLCamera() VTK_OVERRIDE {}
+//  virtual ~vtkCustomExternalOpenGLCamera() {}
 
   /**
    * These methods should only be used within vtkCamera.cxx.
    * Bypass computation if user provided the view transform
    */
   void ComputeViewTransform() VTK_OVERRIDE;
+//  void ComputeViewTransform();
 
 private:
   bool UserProvidedViewTransform;

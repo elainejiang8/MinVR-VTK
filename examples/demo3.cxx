@@ -151,11 +151,11 @@ private:
     void onVREvent(const MinVR::VREvent &event) {
 
         // Quit if the escape button is pressed
-        if (event.getName() == "KbdEsc_Down") {
-            shutdown();
-        } else if (event.getName() == "FrameStart") {
+//        if (event.getName() == "KbdEsc_Down") {
+//            shutdown();
+//        } else if (event.getName() == "FrameStart") {
           //_oscillator = event.getDataAsFloat("ElapsedSeconds");
-        }
+//        }
 
     }
 

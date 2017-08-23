@@ -39,57 +39,57 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
+CMAKE_COMMAND = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
+RM = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/elaine/YURT/MinVR-VTK
+CMAKE_SOURCE_DIR = /users/ejiang1/MinVR-VTK-8
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
+CMAKE_BINARY_DIR = /users/ejiang1/MinVR-VTK-8/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
 install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CMake.app/Contents/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CMake.app/Contents/bin/cmake -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CMake.app/Contents/bin/cmake -P cmake_install.cmake
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target list_install_components
@@ -105,7 +105,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/CMake.app/Contents/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -116,7 +116,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/Applications/CMake.app/Contents/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/gpfs/runtime/opt/cmake/3.8.1/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -126,9 +126,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -170,17 +170,17 @@ minvr-vtk/fast:
 .PHONY : minvr-vtk/fast
 
 #=============================================================================
-# Target rules for targets named RenderInExistingContext
+# Target rules for targets named demo3
 
 # Build rule for target.
-RenderInExistingContext: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 RenderInExistingContext
-.PHONY : RenderInExistingContext
+demo3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo3
+.PHONY : demo3
 
 # fast build rule for target.
-RenderInExistingContext/fast:
-	$(MAKE) -f examples/CMakeFiles/RenderInExistingContext.dir/build.make examples/CMakeFiles/RenderInExistingContext.dir/build
-.PHONY : RenderInExistingContext/fast
+demo3/fast:
+	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
+.PHONY : demo3/fast
 
 #=============================================================================
 # Target rules for targets named supernova3
@@ -196,71 +196,6 @@ supernova3/fast:
 .PHONY : supernova3/fast
 
 #=============================================================================
-# Target rules for targets named demo3
-
-# Build rule for target.
-demo3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo3
-.PHONY : demo3
-
-# fast build rule for target.
-demo3/fast:
-	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
-.PHONY : demo3/fast
-
-#=============================================================================
-# Target rules for targets named demo2
-
-# Build rule for target.
-demo2: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo2
-.PHONY : demo2
-
-# fast build rule for target.
-demo2/fast:
-	$(MAKE) -f examples/CMakeFiles/demo2.dir/build.make examples/CMakeFiles/demo2.dir/build
-.PHONY : demo2/fast
-
-#=============================================================================
-# Target rules for targets named supernova2
-
-# Build rule for target.
-supernova2: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 supernova2
-.PHONY : supernova2
-
-# fast build rule for target.
-supernova2/fast:
-	$(MAKE) -f examples/CMakeFiles/supernova2.dir/build.make examples/CMakeFiles/supernova2.dir/build
-.PHONY : supernova2/fast
-
-#=============================================================================
-# Target rules for targets named demo2-cube
-
-# Build rule for target.
-demo2-cube: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo2-cube
-.PHONY : demo2-cube
-
-# fast build rule for target.
-demo2-cube/fast:
-	$(MAKE) -f examples/CMakeFiles/demo2-cube.dir/build.make examples/CMakeFiles/demo2-cube.dir/build
-.PHONY : demo2-cube/fast
-
-#=============================================================================
-# Target rules for targets named SmartVolumeMapper
-
-# Build rule for target.
-SmartVolumeMapper: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SmartVolumeMapper
-.PHONY : SmartVolumeMapper
-
-# fast build rule for target.
-SmartVolumeMapper/fast:
-	$(MAKE) -f examples/CMakeFiles/SmartVolumeMapper.dir/build.make examples/CMakeFiles/SmartVolumeMapper.dir/build
-.PHONY : SmartVolumeMapper/fast
-
-#=============================================================================
 # Target rules for targets named supernova
 
 # Build rule for target.
@@ -272,19 +207,6 @@ supernova: cmake_check_build_system
 supernova/fast:
 	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
 .PHONY : supernova/fast
-
-#=============================================================================
-# Target rules for targets named MinIntensityRendering
-
-# Build rule for target.
-MinIntensityRendering: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MinIntensityRendering
-.PHONY : MinIntensityRendering
-
-# fast build rule for target.
-MinIntensityRendering/fast:
-	$(MAKE) -f examples/CMakeFiles/MinIntensityRendering.dir/build.make examples/CMakeFiles/MinIntensityRendering.dir/build
-.PHONY : MinIntensityRendering/fast
 
 #=============================================================================
 # Target rules for targets named demo
@@ -305,22 +227,16 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/local"
 	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... minvr-vtk"
-	@echo "... RenderInExistingContext"
-	@echo "... supernova3"
 	@echo "... demo3"
-	@echo "... demo2"
-	@echo "... supernova2"
-	@echo "... demo2-cube"
-	@echo "... SmartVolumeMapper"
+	@echo "... supernova3"
 	@echo "... supernova"
-	@echo "... MinIntensityRendering"
 	@echo "... demo"
 .PHONY : help
 
