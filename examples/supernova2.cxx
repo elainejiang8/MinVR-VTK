@@ -48,6 +48,10 @@ vtkSmartPointer<vtkCornerAnnotation> titleAnnotation =
     vtkSmartPointer<vtkCornerAnnotation>::New();
 vtkSmartPointer<vtkCornerAnnotation> cornerAnnotation = 
     vtkSmartPointer<vtkCornerAnnotation>::New();
+vtkSmartPointer<vtkRenderWindowInteractor> interactor =
+    vtkSmartPointer<vtkRenderWindowInteractor>::New();
+vtkSmartPointer<vtkCubeAxesActor> cubeAxesActor =
+    vtkSmartPointer<vtkCubeAxesActor>::New();
 
 // interaction global variables
 vtkNew<vtkTransform> transform;
@@ -109,6 +113,7 @@ class MouseInteractorHighLightActor : public vtkInteractorStyleTrackballCamera {
     }
   
     virtual void OnLeftButtonDown() VTK_OVERRIDE{
+        std::cout << "here" << std::endl;
         int* clickPos = this->GetInteractor()->GetEventPosition();
 
         // Pick from this location.
@@ -166,8 +171,6 @@ vtkStandardNewMacro(MouseInteractorHighLightActor);
 
 // display cube axes
 void displayAxes() {
-    vtkSmartPointer<vtkCubeAxesActor> cubeAxesActor =
-    vtkSmartPointer<vtkCubeAxesActor>::New();
     cubeAxesActor->SetBounds(-60, 70, -45, 50, -50, 50);
     cubeAxesActor->SetCamera(ren->GetActiveCamera());
     cubeAxesActor->GetTitleTextProperty(0)->SetColor(1.0, 0.0, 0.0);
@@ -215,18 +218,8 @@ void initializeAnnotations() {
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
     externalVTKWidget->SetRenderWindow(renWin.GetPointer());
-    
-    renWin->AddRenderer(ren);
-    
-    /**********************************************************/
-    
-    // create transfer mapping scalar value to color
-    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-    colorTransferFunction->AddRGBPoint(-1.0, 0.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(-0.5, 1.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
-    colorTransferFunction->AddRGBPoint(0.5, 0.0, 1.0, 0.0);
-    colorTransferFunction->AddRGBPoint(1, 0.0, 0.2, 0.0);
+        
+    renWin->AddRenderer(ren);    
 
     /**********************************************************/
     
@@ -264,8 +257,6 @@ void initialize() {
         vtkSmartPointer<vtkPolyDataMapper>::New();
         mapper->SetInputConnection(normals->GetOutputPort());
         mapper->ScalarVisibilityOff();
-        
-        mapper->SetLookupTable(colorTransferFunction);
 
         vtkSmartPointer<vtkActor> actor =
         vtkSmartPointer<vtkActor>::New();
@@ -286,16 +277,28 @@ void initialize() {
     actors[5]->GetProperty()->SetColor(0.94,0.32,0.4); // outer knots (red)
     actors[6]->GetProperty()->SetColor(0.96,0.70,0.93); // reverse shock sphere (pink)
 
-
     /**********************************************************/
+    
+    // Set the custom type to use for interaction.
+//    vtkSmartPointer<MouseInteractorHighLightActor> style =
+//    vtkSmartPointer<MouseInteractorHighLightActor>::New();
+//    style->SetDefaultRenderer(ren);
+//    
+//    interactor->SetRenderWindow(renWin.GetPointer());
+//    interactor->SetInteractorStyle(style);
+    
+    /**********************************************************/
+    initializeAnnotations();
+    displayAnnotations();
+    displayAxes();
     
     ren->SetBackground(0.87, 0.88, 0.91);
     ren->ResetCamera();
+//    interactor->Initialize();
     
     vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
     // camera default position set at (4.68744, 2.67252, 360.229) 
     camera->SetPosition(4, 2, 360);
-    camera->SetFocalPoint(0,0,0); // initial direction
     camera->SetViewUp(0,1,0); // controls "up" direction for camera
 }
 
@@ -322,7 +325,11 @@ void display() {
         actors[i]->RotateY(x_angle);
         actors[i]->SetScale(scale_size);
     }
+    cubeAxesActor->RotateX(y_angle);
+    cubeAxesActor->RotateY(x_angle);
+    cubeAxesActor->SetScale(scale_size);
 
+    //interactor->Render();
     externalVTKWidget->GetRenderWindow()->Render();
     glutSwapBuffers();
 }
@@ -395,6 +402,7 @@ int main(int argc, char *argv[]) {
     glewInit();
     
     glutMainLoop();  // Enter the infinitely event-processing loop
+    //interactor->Start();
     
     return EXIT_SUCCESS;
     

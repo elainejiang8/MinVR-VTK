@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <api/MinVR.h>
+#include <math/VRMath.h>
 
 #include <vtkPolyData.h>
 #include <vtkCleanPolyData.h>
@@ -32,6 +33,14 @@
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPerspectiveTransform.h>
 #include <vtkCustomExternalOpenGLCamera.h>
+#include <vtkLight.h>
+#include <vtkExternalLight.h>
+#include <vtkExternalOpenGLRenderer.h>
+
+//annotation stuff
+#include <vtkPropPicker.h>
+#include <vtkTextProperty.h>
+#include <vtkCornerAnnotation.h>
 
 using namespace std;
 
@@ -41,10 +50,11 @@ class DemoVRVTKApp: public MinVR::VRApp {
 private:
 
     vtkNew<ExternalVTKWidget> externalVTKWidget;
-    vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New(); 
+    vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
     vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
     vector <vtkSmartPointer<vtkActor>> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
+    vtkNew<vtkLight> light;
 
     vtkNew<vtkTransform> transform;
     int press_x, press_y;
@@ -110,19 +120,10 @@ private:
     void _initializeScene() {
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
-        
+        ren->SetActiveCamera(camera);
+
         renWin->AddRenderer(ren);
         externalVTKWidget->GetRenderWindow()->Render();
-
-       /**********************************************************/
-    
-        // create transfer mapping scalar value to color
-        vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-        colorTransferFunction->AddRGBPoint(-1.0, 0.0, 0.0, 0.0);
-        colorTransferFunction->AddRGBPoint(-0.5, 1.0, 0.0, 0.0);
-        colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
-        colorTransferFunction->AddRGBPoint(0.5, 0.0, 1.0, 0.0);
-        colorTransferFunction->AddRGBPoint(1, 0.0, 0.2, 0.0);
 
         /**********************************************************/
 
@@ -161,16 +162,20 @@ private:
             mapper->SetInputConnection(normals->GetOutputPort());
             mapper->ScalarVisibilityOff();
 
-            mapper->SetLookupTable(colorTransferFunction);
-
             vtkSmartPointer<vtkActor> actor =
             vtkSmartPointer<vtkActor>::New();
             actor->SetMapper(mapper);
             actor->GetProperty()->SetInterpolationToFlat();
-            actor->GetProperty()->SetOpacity(0.8);
+            actor->GetProperty()->SetOpacity(1);
 
             ren->AddActor(actor);
             actors.push_back(actor);
+            
+//            std::cout << actor << i << std::endl;
+//            for(int j = 0; j < 16; j++) {
+//                std::cout << actor->GetMatrix()->GetData()[j] << " ";
+//            }
+//            std::cout << std::endl;
         }
 
         // color actors
@@ -191,22 +196,73 @@ private:
 
 
     public:
+    bool movingSlide;
+    glm::mat4 lastWandPos;
+    glm::mat4 slideMat;
+    
     DemoVRVTKApp(int argc, char** argv) :
+    
     MinVR::VRApp(argc, argv) {
-        
+        movingSlide = false;
+        double mm[16] = {1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0};
+        slideMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
+        lastWandPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
     }
 
     /// The MinVR apparatus invokes this method whenever there is a new
     /// event to process.
     void onVREvent(const MinVR::VREvent &event) {
-
-    //event.print();
+        std::string eventName = event.getName();
+        if(eventName != "FrameStart") {
+            //event.print();
+        }
+        
+        
         // Quit if the escape button is pressed
-//        if (event.getName() == "KbdEsc_Down") {
-//            shutdown();
-//        } else if (event.getName() == "FrameStart") {
-//          //_oscillator = event.getDataAsFloat("ElapsedSeconds");
-//        }
+        if (eventName == "KbdEsc_Down") {
+            shutdown();
+        } 
+        
+        if (eventName == "Wand0_Move") {  //Set up for Wand Movement
+            const float* wp = event.getDataAsFloatArray("Transform");
+            glm::mat4 wandPos = glm::mat4( wp[0],  wp[1], wp[2], wp[3],
+                                            wp[4],  wp[5], wp[6], wp[7],
+                                            wp[8],  wp[9],wp[10],wp[11],
+                                            wp[12],wp[13],wp[14],wp[15]);
+
+            if (movingSlide){ //when slide moving
+                slideMat = wandPos / lastWandPos * slideMat; //update the model matrix for slide
+            }
+            lastWandPos = wandPos;
+            
+//            double pos[16];
+//            for(int i = 0; i < 16; i++) {
+//                pos[i] = glm::value_ptr(wandPos)[i];
+//                std::cout << pos[i];
+//            }
+//            std::cout << std::endl;
+
+        } else if (eventName == "Wand_Right_Btn_Down") {
+            movingSlide = true;
+        }
+        else if (eventName == "Wand_Right_Btn_Up") {
+            movingSlide = false;
+        } else if (eventName == "MouseBtnLeft_Down") {
+//            int* clickPos = this->GetInteractor()->GetEventPosition();
+//
+//            // Pick from this location.
+//            vtkSmartPointer<vtkPropPicker>  picker =
+//              vtkSmartPointer<vtkPropPicker>::New();
+//            picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
+        }
+        
+        
 
     }
 
@@ -238,7 +294,7 @@ private:
             glEnable(GL_DEPTH_TEST);
 
             // Buffers being managed by external application i.e. GLUT in this case.
-            glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // Set background color to black and opaque
+            glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // Set background color to gray and opaque
             glClearDepth(1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color buffer
 
@@ -280,10 +336,25 @@ private:
 
             camera->SetProjectionTransformMatrix(proj);
             
-//            camera->SetPosition(4,2,360);
-//            camera->SetFocalPoint(0,0,0); // initial direction
-//            camera->SetViewUp(0,1,0); // controls "up" direction for camera
+//            std::cout <<  "view: " << std::endl;
+//            for(int i = 0; i < 16; i++) {
+//                std::cout << view[i] << " ";
+//            }
+//            std::cout << std::endl;
+//            
+
+            double transform[16];
+            for(int i = 0; i < 16; i++) {
+                transform[i] = glm::value_ptr(slideMat)[i];
+            }
             
+            vtkSmartPointer<vtkMatrix4x4> model = vtkSmartPointer<vtkMatrix4x4>::New();
+            model->DeepCopy(transform);
+            model->Transpose();
+            for(int i = 0; i < NUM_ACTORS; i++) {
+                actors[i]->SetUserMatrix(model);
+            }
+
             
             externalVTKWidget->GetRenderWindow()->Render();
             // We let MinVR swap the graphics buffers.

@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
         vtkSmartPointer<vtkActor>::New();
         actor->SetMapper(mapper);
         actor->GetProperty()->SetInterpolationToFlat();
-        actor->GetProperty()->SetOpacity(0.8);
+        actor->GetProperty()->SetOpacity(1);
 
         ren->AddActor(actor);
         actors.push_back(actor);
