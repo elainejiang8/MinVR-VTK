@@ -179,9 +179,6 @@ GLEW_LIBRARY:FILEPATH=/gpfs/runtime/opt/glew/1.13.0/lib64/libGLEW.so
 //Path to a file.
 MINVR_INCLUDE_DIR:PATH=/gpfs/home/ejiang1/MinVR/src
 
-//No help, variable specified on the command line.
-MINVR_INSTALL_DIR:UNINITIALIZED=/gpfs/runtime/opt/MinVR/0.3beta
-
 //Path to a library.
 MINVR_LIBRARY:FILEPATH=/gpfs/home/ejiang1/MinVR/build/lib/libMinVR.a
 

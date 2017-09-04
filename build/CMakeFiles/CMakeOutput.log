@@ -1,4 +1,4 @@
-The system is: Linux - 2.6.32-504.el6.x86_64 - x86_64
+The system is: Linux - 2.6.32-431.29.2.el6.x86_64 - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /gpfs/runtime/opt/gcc/5.2.0/bin/gcc 
 Build flags: 
@@ -28,28 +28,28 @@ The CXX compiler identification is GNU, found in "/users/ejiang1/MinVR-VTK-8/bui
 Determining if the C compiler works passed with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_ea851/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_ea851.dir/build.make CMakeFiles/cmTC_ea851.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ea851.dir/testCCompiler.c.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_ea851.dir/testCCompiler.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_ea851
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ea851.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_ea851.dir/testCCompiler.c.o  -o cmTC_ea851 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_cc168/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_cc168.dir/build.make CMakeFiles/cmTC_cc168.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cc168.dir/testCCompiler.c.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_cc168.dir/testCCompiler.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_cc168
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc168.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_cc168.dir/testCCompiler.c.o  -o cmTC_cc168 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_4abbd/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_4abbd.dir/build.make CMakeFiles/cmTC_4abbd.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o   -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_4abbd
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4abbd.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc     -v -rdynamic CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o  -o cmTC_4abbd 
+Run Build Command:"/usr/bin/gmake" "cmTC_29428/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_29428.dir/build.make CMakeFiles/cmTC_29428.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o   -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_29428
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29428.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc     -v -rdynamic CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o  -o cmTC_29428 
 Using built-in specs.
 COLLECT_GCC=/gpfs/runtime/opt/gcc/5.2.0/bin/gcc
 COLLECT_LTO_WRAPPER=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/lto-wrapper
@@ -59,23 +59,23 @@ Thread model: posix
 gcc version 5.2.0 (GCC) 
 COMPILER_PATH=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/
 LIBRARY_PATH=/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64/:/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib64/:/gpfs/runtime/opt/libpng/1.6.2-intel/lib/:/gpfs/runtime/opt/freeglut/2.8.1/lib/:/gpfs/runtime/opt/glew/1.13.0/lib64/:/gpfs/runtime/opt/vrpn/7.31/lib/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/:/gpfs/runtime/opt/python/2.7.3/lib/:/gpfs/runtime/opt/intel/2013.1.106/lib/intel64/:/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4abbd' '-mtune=generic' '-march=x86-64'
- /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4abbd /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_29428' '-mtune=generic' '-march=x86-64'
+ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_29428 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_4abbd/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_4abbd.dir/build.make CMakeFiles/cmTC_4abbd.dir/build]
-  ignore line: [gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o   -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_4abbd]
-  ignore line: [/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4abbd.dir/link.txt --verbose=1]
-  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/gcc     -v -rdynamic CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o  -o cmTC_4abbd ]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_29428/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_29428.dir/build.make CMakeFiles/cmTC_29428.dir/build]
+  ignore line: [gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/gcc    -o CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o   -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_29428]
+  ignore line: [/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29428.dir/link.txt --verbose=1]
+  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/gcc     -v -rdynamic CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o  -o cmTC_29428 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/gpfs/runtime/opt/gcc/5.2.0/bin/gcc]
   ignore line: [COLLECT_LTO_WRAPPER=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/lto-wrapper]
@@ -85,8 +85,8 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 5.2.0 (GCC) ]
   ignore line: [COMPILER_PATH=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/]
   ignore line: [LIBRARY_PATH=/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64/:/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib64/:/gpfs/runtime/opt/libpng/1.6.2-intel/lib/:/gpfs/runtime/opt/freeglut/2.8.1/lib/:/gpfs/runtime/opt/glew/1.13.0/lib64/:/gpfs/runtime/opt/vrpn/7.31/lib/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/:/gpfs/runtime/opt/python/2.7.3/lib/:/gpfs/runtime/opt/intel/2013.1.106/lib/intel64/:/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4abbd' '-mtune=generic' '-march=x86-64']
-  link line: [ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4abbd /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_29428' '-mtune=generic' '-march=x86-64']
+  link line: [ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_29428 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o]
     arg [/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2] ==> ignore
     arg [--eh-frame-hdr] ==> ignore
     arg [-m] ==> ignore
@@ -95,7 +95,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_4abbd] ==> ignore
+    arg [cmTC_29428] ==> ignore
     arg [/usr/lib/../lib64/crt1.o] ==> ignore
     arg [/usr/lib/../lib64/crti.o] ==> ignore
     arg [/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o] ==> ignore
@@ -116,7 +116,7 @@ Parsed C implicit link information from above output:
     arg [-L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64] ==> dir [/gpfs/runtime/opt/intel/2013.1.106/lib/intel64]
     arg [-L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64] ==> dir [/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64]
     arg [-L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../..] ==> dir [/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../..]
-    arg [CMakeFiles/cmTC_4abbd.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_29428.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -159,15 +159,15 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_75c15/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_75c15.dir/build.make CMakeFiles/cmTC_75c15.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_75c15.dir/feature_tests.c.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c11 -o CMakeFiles/cmTC_75c15.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_75c15
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75c15.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_75c15.dir/feature_tests.c.o  -o cmTC_75c15 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_c7e5c/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_c7e5c.dir/build.make CMakeFiles/cmTC_c7e5c.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c7e5c.dir/feature_tests.c.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c11 -o CMakeFiles/cmTC_c7e5c.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_c7e5c
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c7e5c.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_c7e5c.dir/feature_tests.c.o  -o cmTC_c7e5c 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -179,15 +179,15 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_52b95/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_52b95.dir/build.make CMakeFiles/cmTC_52b95.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_52b95.dir/feature_tests.c.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c99 -o CMakeFiles/cmTC_52b95.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_52b95
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52b95.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_52b95.dir/feature_tests.c.o  -o cmTC_52b95 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_1a25a/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_1a25a.dir/build.make CMakeFiles/cmTC_1a25a.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1a25a.dir/feature_tests.c.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c99 -o CMakeFiles/cmTC_1a25a.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_1a25a
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a25a.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_1a25a.dir/feature_tests.c.o  -o cmTC_1a25a 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -199,15 +199,15 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_84f75/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_84f75.dir/build.make CMakeFiles/cmTC_84f75.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_84f75.dir/feature_tests.c.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c90 -o CMakeFiles/cmTC_84f75.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_84f75
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_84f75.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_84f75.dir/feature_tests.c.o  -o cmTC_84f75 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_f8741/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_f8741.dir/build.make CMakeFiles/cmTC_f8741.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f8741.dir/feature_tests.c.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc   -std=c90 -o CMakeFiles/cmTC_f8741.dir/feature_tests.c.o   -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_f8741
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8741.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/gcc      -rdynamic CMakeFiles/cmTC_f8741.dir/feature_tests.c.o  -o cmTC_f8741 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -217,28 +217,28 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_20dbd/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_20dbd.dir/build.make CMakeFiles/cmTC_20dbd.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_20dbd.dir/testCXXCompiler.cxx.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_20dbd.dir/testCXXCompiler.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_20dbd
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_20dbd.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_20dbd.dir/testCXXCompiler.cxx.o  -o cmTC_20dbd 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_caa36/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_caa36.dir/build.make CMakeFiles/cmTC_caa36.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_caa36.dir/testCXXCompiler.cxx.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_caa36.dir/testCXXCompiler.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_caa36
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_caa36.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_caa36.dir/testCXXCompiler.cxx.o  -o cmTC_caa36 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_24e9b/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_24e9b.dir/build.make CMakeFiles/cmTC_24e9b.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_24e9b
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24e9b.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++      -v -rdynamic CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_24e9b 
+Run Build Command:"/usr/bin/gmake" "cmTC_7bf46/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_7bf46.dir/build.make CMakeFiles/cmTC_7bf46.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_7bf46
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7bf46.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++      -v -rdynamic CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7bf46 
 Using built-in specs.
 COLLECT_GCC=/gpfs/runtime/opt/gcc/5.2.0/bin/g++
 COLLECT_LTO_WRAPPER=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/lto-wrapper
@@ -248,23 +248,23 @@ Thread model: posix
 gcc version 5.2.0 (GCC) 
 COMPILER_PATH=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/
 LIBRARY_PATH=/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64/:/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib64/:/gpfs/runtime/opt/libpng/1.6.2-intel/lib/:/gpfs/runtime/opt/freeglut/2.8.1/lib/:/gpfs/runtime/opt/glew/1.13.0/lib64/:/gpfs/runtime/opt/vrpn/7.31/lib/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/:/gpfs/runtime/opt/python/2.7.3/lib/:/gpfs/runtime/opt/intel/2013.1.106/lib/intel64/:/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_24e9b' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24e9b /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_7bf46' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7bf46 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_24e9b/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_24e9b.dir/build.make CMakeFiles/cmTC_24e9b.dir/build]
-  ignore line: [gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_24e9b]
-  ignore line: [/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24e9b.dir/link.txt --verbose=1]
-  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/g++      -v -rdynamic CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_24e9b ]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_7bf46/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_7bf46.dir/build.make CMakeFiles/cmTC_7bf46.dir/build]
+  ignore line: [gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/g++     -o CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o -c /gpfs/runtime/opt/cmake/3.8.1/share/cmake-3.8/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_7bf46]
+  ignore line: [/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7bf46.dir/link.txt --verbose=1]
+  ignore line: [/gpfs/runtime/opt/gcc/5.2.0/bin/g++      -v -rdynamic CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7bf46 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/gpfs/runtime/opt/gcc/5.2.0/bin/g++]
   ignore line: [COLLECT_LTO_WRAPPER=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/lto-wrapper]
@@ -274,8 +274,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 5.2.0 (GCC) ]
   ignore line: [COMPILER_PATH=/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/]
   ignore line: [LIBRARY_PATH=/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64/:/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/gpfs/runtime/opt/gcc/5.2.0/lib64/:/gpfs/runtime/opt/libpng/1.6.2-intel/lib/:/gpfs/runtime/opt/freeglut/2.8.1/lib/:/gpfs/runtime/opt/glew/1.13.0/lib64/:/gpfs/runtime/opt/vrpn/7.31/lib/:/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/:/gpfs/runtime/opt/python/2.7.3/lib/:/gpfs/runtime/opt/intel/2013.1.106/lib/intel64/:/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64/:/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_24e9b' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24e9b /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_7bf46' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2 --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7bf46 /usr/lib/../lib64/crt1.o /usr/lib/../lib64/crti.o /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o -L/gpfs/runtime/opt/gcc/5.2.0/lib64/../lib64 -L/gpfs/runtime/opt/glew/1.13.0/lib64/../lib64 -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/gpfs/runtime/opt/gcc/5.2.0/lib64 -L/gpfs/runtime/opt/libpng/1.6.2-intel/lib -L/gpfs/runtime/opt/freeglut/2.8.1/lib -L/gpfs/runtime/opt/glew/1.13.0/lib64 -L/gpfs/runtime/opt/vrpn/7.31/lib -L/gpfs/runtime/opt/nvidia-driver/331.38/usr/lib64 -L/gpfs/runtime/opt/python/2.7.3/lib -L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64 -L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64 -L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../.. CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtend.o /usr/lib/../lib64/crtn.o]
     arg [/gpfs/runtime/opt/gcc/5.2.0/libexec/gcc/x86_64-redhat-linux-gnu/5.2.0/collect2] ==> ignore
     arg [--eh-frame-hdr] ==> ignore
     arg [-m] ==> ignore
@@ -284,7 +284,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_24e9b] ==> ignore
+    arg [cmTC_7bf46] ==> ignore
     arg [/usr/lib/../lib64/crt1.o] ==> ignore
     arg [/usr/lib/../lib64/crti.o] ==> ignore
     arg [/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/crtbegin.o] ==> ignore
@@ -305,7 +305,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/gpfs/runtime/opt/intel/2013.1.106/lib/intel64] ==> dir [/gpfs/runtime/opt/intel/2013.1.106/lib/intel64]
     arg [-L/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64] ==> dir [/gpfs/runtime/opt/intel/2013.1.106/mkl/lib/intel64]
     arg [-L/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../..] ==> dir [/gpfs/runtime/opt/gcc/5.2.0/lib/gcc/x86_64-redhat-linux-gnu/5.2.0/../../..]
-    arg [CMakeFiles/cmTC_24e9b.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_7bf46.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -346,15 +346,15 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_9c00d/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_9c00d.dir/build.make CMakeFiles/cmTC_9c00d.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_9c00d.dir/feature_tests.cxx.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++1z -o CMakeFiles/cmTC_9c00d.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_9c00d
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c00d.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_9c00d.dir/feature_tests.cxx.o  -o cmTC_9c00d 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_382ca/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_382ca.dir/build.make CMakeFiles/cmTC_382ca.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_382ca.dir/feature_tests.cxx.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++1z -o CMakeFiles/cmTC_382ca.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_382ca
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_382ca.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_382ca.dir/feature_tests.cxx.o  -o cmTC_382ca 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -419,15 +419,15 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_7646f/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_7646f.dir/build.make CMakeFiles/cmTC_7646f.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7646f.dir/feature_tests.cxx.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++14 -o CMakeFiles/cmTC_7646f.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_7646f
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7646f.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_7646f.dir/feature_tests.cxx.o  -o cmTC_7646f 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_19d77/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_19d77.dir/build.make CMakeFiles/cmTC_19d77.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_19d77.dir/feature_tests.cxx.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++14 -o CMakeFiles/cmTC_19d77.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_19d77
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_19d77.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_19d77.dir/feature_tests.cxx.o  -o cmTC_19d77 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -492,15 +492,15 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_d5227/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_d5227.dir/build.make CMakeFiles/cmTC_d5227.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_d5227.dir/feature_tests.cxx.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++11 -o CMakeFiles/cmTC_d5227.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_d5227
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d5227.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_d5227.dir/feature_tests.cxx.o  -o cmTC_d5227 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_65e5d/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_65e5d.dir/build.make CMakeFiles/cmTC_65e5d.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_65e5d.dir/feature_tests.cxx.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++11 -o CMakeFiles/cmTC_65e5d.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_65e5d
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_65e5d.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_65e5d.dir/feature_tests.cxx.o  -o cmTC_65e5d 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -565,15 +565,15 @@ gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMa
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_c568e/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_c568e.dir/build.make CMakeFiles/cmTC_c568e.dir/build
-gmake[1]: Entering directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_c568e.dir/feature_tests.cxx.o
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++98 -o CMakeFiles/cmTC_c568e.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_c568e
-/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c568e.dir/link.txt --verbose=1
-/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_c568e.dir/feature_tests.cxx.o  -o cmTC_c568e 
-gmake[1]: Leaving directory `/gpfs/home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_1005c/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_1005c.dir/build.make CMakeFiles/cmTC_1005c.dir/build
+gmake[1]: Entering directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1005c.dir/feature_tests.cxx.o
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++    -std=c++98 -o CMakeFiles/cmTC_1005c.dir/feature_tests.cxx.o -c /users/ejiang1/MinVR-VTK-8/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_1005c
+/gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1005c.dir/link.txt --verbose=1
+/gpfs/runtime/opt/gcc/5.2.0/bin/g++       -rdynamic CMakeFiles/cmTC_1005c.dir/feature_tests.cxx.o  -o cmTC_1005c 
+gmake[1]: Leaving directory `/gpfs_home/ejiang1/MinVR-VTK-8/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

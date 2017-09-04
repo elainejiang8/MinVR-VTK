@@ -26,13 +26,28 @@
 #include <vtkVersion.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkSmoothPolyDataFilter.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkPropPicker.h>
+#include <vtkCornerAnnotation.h>
+#include <vtkTextProperty.h>
+#include <vtkCubeAxesActor.h>
+
+//using namespace std;
 
 vtkNew<ExternalVTKWidget> externalVTKWidget;
 vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
 static int windowId = -1;
 static int windowH = 800;
 static int windowW = 800;
-vtkSmartPointer<vtkActor> actors[7];
+static int NUM_ACTORS = 7;
+std::vector <vtkSmartPointer<vtkActor>> actors;
+std::vector <const char *> titles;
+std::vector <const char *> annotations;
+vtkSmartPointer<vtkCornerAnnotation> titleAnnotation = 
+    vtkSmartPointer<vtkCornerAnnotation>::New();
+vtkSmartPointer<vtkCornerAnnotation> cornerAnnotation = 
+    vtkSmartPointer<vtkCornerAnnotation>::New();
 
 // interaction global variables
 vtkNew<vtkTransform> transform;
@@ -46,6 +61,156 @@ int xform_mode = 0;
 #define XFORM_ROTATE  1
 #define XFORM_SCALE 2
 
+// set up annotations
+void displayAnnotations() {
+    // title annotations 
+    titleAnnotation->SetLinearFontScaleFactor( 2 );
+    titleAnnotation->SetNonlinearFontScaleFactor( 1 );
+    titleAnnotation->SetMaximumFontSize( 40 );
+    titleAnnotation->GetTextProperty()->SetColor( 0, 0, 0 );
+    titleAnnotation->GetTextProperty()->BoldOn();
+    
+    // caption annotations
+    cornerAnnotation->SetLinearFontScaleFactor(2);
+    cornerAnnotation->SetNonlinearFontScaleFactor(1);
+    cornerAnnotation->SetMaximumFontSize(40);
+    cornerAnnotation->GetTextProperty()->SetColor(0, 0, 0);
+    cornerAnnotation->GetTextProperty()->SetBackgroundColor(1,1,1);
+    cornerAnnotation->GetTextProperty()->FrameOn();
+
+    ren->AddViewProp(titleAnnotation);
+    ren->AddViewProp(cornerAnnotation);
+}
+
+// Handle mouse events
+class MouseInteractorHighLightActor : public vtkInteractorStyleTrackballCamera {
+    public:
+    static MouseInteractorHighLightActor* New();
+    vtkTypeMacro(MouseInteractorHighLightActor, vtkInteractorStyleTrackballCamera);
+
+
+    MouseInteractorHighLightActor() {
+        LastPickedActor = NULL;
+        LastPickedProperty = vtkProperty::New();
+        for(int i = 0; i < NUM_ACTORS; i++) {
+            OtherActors.push_back(actors[i]);
+        }
+        for(int i = 0; i < NUM_ACTORS; i++) {
+            OtherProperties.push_back(vtkProperty::New());
+        }
+    }
+  
+    virtual ~MouseInteractorHighLightActor() {
+        LastPickedProperty->Delete();
+
+        for(int i = 0; i < NUM_ACTORS; i++) {
+            OtherProperties[i]->Delete();
+        }
+    }
+  
+    virtual void OnLeftButtonDown() VTK_OVERRIDE{
+        int* clickPos = this->GetInteractor()->GetEventPosition();
+
+        // Pick from this location.
+        vtkSmartPointer<vtkPropPicker>  picker =
+          vtkSmartPointer<vtkPropPicker>::New();
+        picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
+
+        // If we picked something before, reset its property
+        if (this->LastPickedActor) {
+            this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+
+            for(int i = 0; i < NUM_ACTORS; i++) {
+                this->OtherActors[i]->GetProperty()->DeepCopy(this->OtherProperties[i]);
+            }
+        }
+        titleAnnotation->ClearAllTexts();
+        cornerAnnotation->ClearAllTexts();
+
+        this->LastPickedActor = picker->GetActor();
+
+        if (this->LastPickedActor) {
+            // Save the property of the picked actor so that we can
+            // restore it next time
+            this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
+            for(int i = 0; i < NUM_ACTORS; i++) {
+                this->OtherProperties[i]->DeepCopy(this->OtherActors[i]->GetProperty());
+            }
+            // Highlight the picked actor by changing its properties
+            for(int i = 0; i < NUM_ACTORS; i++) {
+                if(actors[i] != LastPickedActor) {
+                    this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
+                } else {
+                    this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+                    titleAnnotation->SetText(2, titles[i]);
+                    cornerAnnotation->SetText(0, annotations[i]);
+                }
+            }
+
+            this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
+            this->LastPickedActor->GetProperty()->SetSpecular(0.0);
+        }
+
+        // Forward events
+        vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
+    }
+
+    private:
+        vtkActor    *LastPickedActor;
+        vtkProperty *LastPickedProperty;
+        std::vector <vtkSmartPointer<vtkActor>> OtherActors;
+        std::vector <vtkSmartPointer<vtkProperty>> OtherProperties;
+};
+
+vtkStandardNewMacro(MouseInteractorHighLightActor);
+
+// display cube axes
+void displayAxes() {
+    vtkSmartPointer<vtkCubeAxesActor> cubeAxesActor =
+    vtkSmartPointer<vtkCubeAxesActor>::New();
+    cubeAxesActor->SetBounds(-60, 70, -45, 50, -50, 50);
+    cubeAxesActor->SetCamera(ren->GetActiveCamera());
+    cubeAxesActor->GetTitleTextProperty(0)->SetColor(1.0, 0.0, 0.0);
+    cubeAxesActor->GetLabelTextProperty(0)->SetColor(1.0, 0.0, 0.0);
+
+    cubeAxesActor->GetTitleTextProperty(1)->SetColor(0.0, 1.0, 0.0);
+    cubeAxesActor->GetLabelTextProperty(1)->SetColor(0.0, 1.0, 0.0);
+
+    cubeAxesActor->GetTitleTextProperty(2)->SetColor(0.0, 0.0, 1.0);
+    cubeAxesActor->GetLabelTextProperty(2)->SetColor(0.0, 0.0, 1.0);
+
+    cubeAxesActor->DrawXGridlinesOn();
+    cubeAxesActor->DrawYGridlinesOn();
+    cubeAxesActor->DrawZGridlinesOn();
+
+    cubeAxesActor->SetGridLineLocation(
+    cubeAxesActor->VTK_GRID_LINES_FURTHEST);
+
+    cubeAxesActor->XAxisMinorTickVisibilityOff();
+    cubeAxesActor->YAxisMinorTickVisibilityOff();
+    cubeAxesActor->ZAxisMinorTickVisibilityOff();
+
+    ren->AddActor(cubeAxesActor);
+}
+
+// hard code Kim's annotations
+void initializeAnnotations() {
+    annotations.push_back("At the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova."); // sill (purple)
+    annotations.push_back("In green, two jets of material are seen. \nThese jets funnel material and energy \nduring and after the explosion."); // jets (green)
+    annotations.push_back("The light blue portions of this model \nrepresent radiation from the element \niron as seen in X-ray light from Chandra. \nIron is forged in the very core of the \nstar but ends up on the outside \nof the expanding ring of debris."); // fek (blue)
+    annotations.push_back("The yellow portions of the model represent \ninfrared data from the Spitzer Space Telescope. \nThis is cooler debris that has yet to \nbe superheated by a passing shock wave"); // arll (yellow)
+    annotations.push_back("The dark blue colored elements of the model \nrepresent the outer blast wave of the \nexplosion as seen in X-rays by Chandra as well \nas optical and infrared light, much of which is silicon."); // (dark blue)
+    annotations.push_back("The red colored elements of the model represent \nthe outer blast wave of the explosion as seen in \nX-rays by Chandra as well as optical and infrared \nlight, much of which is silicon."); // outer knots (red)
+    annotations.push_back("The Cas A supernova remnant acts like a \nrelativistic pinball machine by accelerating \nelectrons to enormous energies. This \narea shows where the acceleration is taking \nplace in an expanding shock wave generated \nby the explosion."); // reverse shock sphere (pink)
+    
+    titles.push_back("Neutron Star"); // purple
+    titles.push_back("Fiducial Jets"); // green
+    titles.push_back("FeK (Chandra Telescope)"); // blue
+    titles.push_back("ArII (Spitzer Telescope)"); // yellow
+    titles.push_back("Si (Chandra Telescope, HETG)"); // dark blue
+    titles.push_back("Outer Knots"); // red
+    titles.push_back("Reverse Shock Sphere"); // pink
+}
 
 void initialize() {
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
@@ -65,9 +230,9 @@ void initialize() {
 
     /**********************************************************/
     
-    std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
+    std::string files[7] = {"../data/cco-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
     
-    for(int i = 0; i < 7; i++) {
+    for(int i = 0; i < NUM_ACTORS; i++) {
         vtkSmartPointer<vtkPolyDataReader> reader =
         vtkSmartPointer<vtkPolyDataReader>::New();
         reader->SetFileName(files[i].c_str());
@@ -98,7 +263,7 @@ void initialize() {
         vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
         mapper->SetInputConnection(normals->GetOutputPort());
-        //mapper->ScalarVisibilityOff();
+        mapper->ScalarVisibilityOff();
         
         mapper->SetLookupTable(colorTransferFunction);
 
@@ -109,21 +274,29 @@ void initialize() {
         actor->GetProperty()->SetOpacity(0.8);
 
         ren->AddActor(actor);
-        actors[i] = actor;
+        actors.push_back(actor);
     }
     
-    actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
-    actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
-    actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
-    actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
-    actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
-    actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+    // color actors
+    actors[0]->GetProperty()->SetColor(0.97,0.45,0.91); // sill (purple)
+    actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets (green)
+    actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // fek (blue)
+    actors[3]->GetProperty()->SetColor(0.95,0.95,0.33); // arll (yellow)
+    actors[4]->GetProperty()->SetColor(0.26,0.59,0.94); // (dark blue)
+    actors[5]->GetProperty()->SetColor(0.94,0.32,0.4); // outer knots (red)
+    actors[6]->GetProperty()->SetColor(0.96,0.70,0.93); // reverse shock sphere (pink)
 
 
     /**********************************************************/
     
     ren->SetBackground(0.87, 0.88, 0.91);
     ren->ResetCamera();
+    
+    vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
+    // camera default position set at (4.68744, 2.67252, 360.229) 
+    camera->SetPosition(4, 2, 360);
+    camera->SetFocalPoint(0,0,0); // initial direction
+    camera->SetViewUp(0,1,0); // controls "up" direction for camera
 }
 
 
@@ -142,43 +315,13 @@ void display() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
-    GLfloat diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-    GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-    GLfloat ambient[] = {1.0f, 1.0f, 0.2f,  1.0f};
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-
-    vtkOpenGLCamera *camera = (vtkOpenGLCamera *)ren->GetActiveCamera();
-    // camera default position set at (4.68744, 2.67252, 360.229) 
-    camera->SetPosition(4, 2, 360);
-    camera->SetFocalPoint(0,0,0); // initial direction
-    camera->SetViewUp(0,1,0); // controls "up" direction for camera
     
     for(int i = 0; i < 7; i++) {
         // transpose - vtk
-        //actors[i]->SetOrientation(0,0,0);
         actors[i]->RotateX(y_angle);
         actors[i]->RotateY(x_angle);
         actors[i]->SetScale(scale_size);
-        
-//        // transpose - opengl
-//        double f[16];
-//        actors[i]->GetMatrix(f);
-//
-//        // transpose
-//        double g[16];
-//        g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-//        g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-//        g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-//        g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-//        glMultMatrixd(g); // multiply current matrix with specified matrix
     }
-
-    // camera - opengl
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-//    GLKMatrix4MakeLookAt(0,0,-5,0,0,0,0,1,0);
 
     externalVTKWidget->GetRenderWindow()->Render();
     glutSwapBuffers();

@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <api/MinVR.h>
+#include <math/VRMath.h>
 
 #include <vtkPolyData.h>
 #include <vtkCleanPolyData.h>
@@ -33,6 +34,13 @@
 #include <vtkPerspectiveTransform.h>
 #include <vtkCustomExternalOpenGLCamera.h>
 
+// annotation stuff
+#include <vtkPropPicker.h>
+#include <vtkTextProperty.h>
+#include <vtkCornerAnnotation.h>
+
+using namespace std;
+
 class DemoVRVTKApp: public MinVR::VRApp {
   // Data values that were global in the supernova2.cxx file are defined as
   // private members of the VRApp.
@@ -41,20 +49,13 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New(); 
     vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
-    vtkSmartPointer<vtkActor> actors[7];
+    vector <vtkSmartPointer<vtkActor>> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 
     vtkNew<vtkTransform> transform;
     int press_x, press_y;
     int release_x, release_y;
-    float x_angle = 0.0;
-    float y_angle = 0.0;
-    float scale_size = 1;
-    int xform_mode = 0;
-    #define XFORM_NONE    0
-    #define XFORM_ROTATE  1
-    #define XFORM_SCALE 2
-
+    int NUM_ACTORS = 7;
   
     // These functions from demo2.cpp are not needed here:
     //
@@ -119,21 +120,11 @@ private:
         renWin->AddRenderer(ren);
         externalVTKWidget->GetRenderWindow()->Render();
 
-       /**********************************************************/
-    
-        // create transfer mapping scalar value to color
-        vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-        colorTransferFunction->AddRGBPoint(-1.0, 0.0, 0.0, 0.0);
-        colorTransferFunction->AddRGBPoint(-0.5, 1.0, 0.0, 0.0);
-        colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
-        colorTransferFunction->AddRGBPoint(0.5, 0.0, 1.0, 0.0);
-        colorTransferFunction->AddRGBPoint(1, 0.0, 0.2, 0.0);
-
         /**********************************************************/
 
-        std::string files[7] = {"../data/newsi-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
+        std::string files[7] = {"../data/cco-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
 
-        for(int i = 0; i < 7; i++) {
+        for(int i = 0; i < NUM_ACTORS; i++) {
             vtkSmartPointer<vtkPolyDataReader> reader =
             vtkSmartPointer<vtkPolyDataReader>::New();
             reader->SetFileName(files[i].c_str());
@@ -164,26 +155,26 @@ private:
             vtkSmartPointer<vtkPolyDataMapper> mapper =
             vtkSmartPointer<vtkPolyDataMapper>::New();
             mapper->SetInputConnection(normals->GetOutputPort());
-            //mapper->ScalarVisibilityOff();
-
-            mapper->SetLookupTable(colorTransferFunction);
+            mapper->ScalarVisibilityOff();
 
             vtkSmartPointer<vtkActor> actor =
             vtkSmartPointer<vtkActor>::New();
             actor->SetMapper(mapper);
             actor->GetProperty()->SetInterpolationToFlat();
-            actor->GetProperty()->SetOpacity(0.8);
+            actor->GetProperty()->SetOpacity(1);
 
             ren->AddActor(actor);
-            actors[i] = actor;
+            actors.push_back(actor);
         }
 
-        actors[0]->GetProperty()->SetColor(0.97,0.45,0.91);
-        actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets
-        actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // 
-        actors[3]->GetProperty()->SetColor(0.95,0.95,0.33);
-        actors[4]->GetProperty()->SetColor(0.87,0.59,0.94);
-        actors[5]->GetProperty()->SetColor(0.94,0.32,0.4);
+        // color actors
+        actors[0]->GetProperty()->SetColor(0.97,0.45,0.91); // sill (purple)
+        actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets (green)
+        actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // fek (blue)
+        actors[3]->GetProperty()->SetColor(0.95,0.95,0.33); // arll (yellow)
+        actors[4]->GetProperty()->SetColor(0.26,0.59,0.94); // (dark blue)
+        actors[5]->GetProperty()->SetColor(0.94,0.32,0.4); // outer knots (red)
+        actors[6]->GetProperty()->SetColor(0.96,0.70,0.93); // reverse shock sphere (pink)
 
 
         /**********************************************************/
@@ -194,22 +185,79 @@ private:
 
 
     public:
+    bool movingSlide;
+    glm::mat4 lastWandPos;
+    glm::mat4 slideMat;
+
     DemoVRVTKApp(int argc, char** argv) :
     MinVR::VRApp(argc, argv) {
-        
+        movingSlide = false;
+	double mm[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
+	slideMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
+
+	lastWandPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
+
+	std::cout <<  "slide: " << std::endl;
+            for(int i = 0; i < 16; i++) {
+                std::cout << glm::value_ptr(slideMat)[i] << " ";
+            }
+            std::cout << std::endl;
     }
 
     /// The MinVR apparatus invokes this method whenever there is a new
     /// event to process.
     void onVREvent(const MinVR::VREvent &event) {
-
-    //event.print();
+        std::string eventName = event.getName();
+    
+  	if(eventName != "FrameStart" && eventName != "Head_Move") {
+	    event.print();
+	}
+    
         // Quit if the escape button is pressed
-    //    if (event.getName() == "KbdEsc_Down") {
-      //      shutdown();
-  //      } else if (event.getName() == "FrameStart") {
-          //_oscillator = event.getDataAsFloat("El
-//	}
+
+        if (eventName == "KbdEsc_Down") {
+            shutdown();
+	}
+	
+	if(eventName == "Wand0_Move") {
+//	    std::cout << "wand moving" << std::endl;
+	    const float *wp = event.getDataAsFloatArray("Transform");
+	    glm::mat4 wandPos = glm::mat4( wp[0],  wp[1], wp[2], wp[3],
+                                            wp[4],  wp[5], wp[6], wp[7],
+                                            wp[8],  wp[9],wp[10],wp[11],
+                                            wp[12],wp[13],wp[14],wp[15]);
+	    if(movingSlide) {
+		slideMat = wandPos / lastWandPos * slideMat;
+            }
+ 	    lastWandPos = wandPos;
+
+	//    double pos[16];
+        //    for(int i = 0; i < 16; i++) {
+        //        pos[i] = glm::value_ptr(wandPos)[i];
+        //        std::cout << pos[i];
+        //    }
+            //std::cout << std::endl;
+	} else if(eventName == "Wand_Right_Btn_Down") {
+	    movingSlide = true;
+	} else if(eventName == "Wand_Right_Btn_Up") {
+	    movingSlide = false;
+	} else if(eventName == "B10_Down" || eventName == "MouseBtnLeft_Down") {
+	    std::cout << "trigger button" << std::endl;
+	    
+	    const float *wp = event.getDataAsFloatArray("Position");
+	    for(int i = 0; i < 3; i++) {
+		std::cout << wp[0] << std::endl;
+	    }
+	    // pick actors
+	    //vtkSmartPointer<vtkPropPicker> picker = vtkSmartPointer<vtkPropPicker>::New();
+   	    
+	}
 
     }
 
@@ -248,15 +296,7 @@ private:
             glFlush();  // Render now
 
             glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT0);
-
-            GLfloat diffuse[] = {1.0f, 0.8f, 1.0f, 1.0f};
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-            GLfloat specular[] = {0.5f, 0.0f, 0.0f, 1.0f};
-            glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-            GLfloat ambient[] = {1.0f, 1.0f, 0.2f,  1.0f};
-            glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-            
+            glEnable(GL_LIGHT0);          
             
             
             // Second the load() step.  We let MinVR give us the projection
@@ -275,9 +315,6 @@ private:
                                             vm[12],vm[13],vm[14],vm[15]);
 
 
-            // viewMatrix = glm::transpose(viewMatrix);
-
-
             camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
@@ -285,7 +322,6 @@ private:
                 view[i] = glm::value_ptr(viewMatrix)[i];
             }
 
-            //this->SetViewTransformMatrix(view, camera);
             camera->SetViewTransformMatrix(view);
 
             double proj[16];
@@ -293,44 +329,33 @@ private:
                 proj[i] = glm::value_ptr(projMatrix)[i];
             }
 
-            //this->SetProjectionTransformMatrix(proj, camera);
             camera->SetProjectionTransformMatrix(proj);
-            
+
+	  //  std::cout <<  "model: " << std::endl;
+          //  for(int i = 0; i < 16; i++) {
+          //      std::cout << actors[0]->GetMatrix()->GetData()[i] << " ";
+          //  }
+          //  std::cout << std::endl;
+
 //            camera->SetPosition(4,2,360);
 //            camera->SetFocalPoint(0,0,0); // initial direction
 //            camera->SetViewUp(0,1,0); // controls "up" direction for camera
 
-            
-            for(int i = 0; i < 7; i++) {
-                // transpose - vtk
-                actors[i]->RotateX(y_angle);
-                actors[i]->RotateY(x_angle);
-                actors[i]->SetScale(scale_size);
-            }
+	    
+           // glm::mat4 mvp = projMatrix * viewMatrix * slideMat;
 
-            // transpose - opengl
-//            double f[16];
-//            volume->GetMatrix(f);
-//            glm::mat4 model = glm::make_mat4(f);
-//            model = glm::transpose(model);
-//            glm::mat4 f1 = projMatrix * viewMatrix * model;
+	    double transform[16];
+	    for(int i = 0; i < 16; i++) {
+		 transform[i] = glm::value_ptr(slideMat)[i];
+	    }
 
-            // transpose
-//            double g[16]; 
-//            
-//            for(int i = 0; i < 16; i++) {
-//                g[i] = glm::value_ptr(f1)[i];
-//               // std::cout << g[i] << " ";
-//            }
-            
-            //glm::value_ptr(f1);
-//            g[0] = f[0]; g[1] = f[4]; g[2] = f[8]; g[3] = f[12];
-//            g[4] = f[1]; g[5] = f[5]; g[6] = f[9]; g[7] = f[13];
-//            g[8] = f[2]; g[9] = f[6]; g[10]= f[10];g[11]= f[14];
-//            g[12]= f[3]; g[13]= f[7]; g[14]= f[11];g[15]= f[15];
-            
-           // glMultMatrixd(g); // multiply current matrix with specified matrix
-            
+	    vtkSmartPointer<vtkMatrix4x4> trans = vtkSmartPointer<vtkMatrix4x4>::New();
+	    trans->DeepCopy(transform);
+	    trans->Transpose();
+
+     	    for(int i = 0; i < NUM_ACTORS; i++) {
+	        actors[i]->SetUserMatrix(trans);
+	    }
             
             externalVTKWidget->GetRenderWindow()->Render();
             // We let MinVR swap the graphics buffers.
@@ -354,6 +379,7 @@ private:
 
     // If there weren't enough args, throw an error and explain what the
     // user should have done.
+
     if (argc < 2) {
     throw std::runtime_error("\nNeed a config file.\nTry 'bin/supernova3 -c ../config/desktop-freeglut.xml'");
 

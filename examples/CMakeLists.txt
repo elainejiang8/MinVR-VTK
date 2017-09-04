@@ -24,7 +24,7 @@ target_link_libraries(supernova
 
 add_executable(demo3 demo3.cxx)
 
-target_link_libraries(demo3 
+target_link_libraries(demo3 minvr-vtk
 	${VTK_LIBRARIES} 
 	${MINVR_LIBRARY}
 	${OPENGL_LIBRARY}

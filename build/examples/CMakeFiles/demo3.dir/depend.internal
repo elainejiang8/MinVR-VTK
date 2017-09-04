@@ -89,6 +89,7 @@ examples/CMakeFiles/demo3.dir/demo3.cxx.o
  ../external/glm-0.9.7.1/glm/vec3.hpp
  ../external/glm-0.9.7.1/glm/vec4.hpp
  ../external/glm-0.9.7.1/glm/vector_relational.hpp
+ ../src/vtkCustomExternalOpenGLCamera.h
  /gpfs/home/ejiang1/MinVR/src/api/MinVR.h
  /gpfs/home/ejiang1/MinVR/src/api/VRApp.h
  /gpfs/home/ejiang1/MinVR/src/api/VREvent.h

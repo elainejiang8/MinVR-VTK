@@ -78,6 +78,14 @@ vtkDebugLeaksManager.h
 vtkTimeStamp.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkTimeStamp.h
 
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkCamera.h
+vtkRenderingCoreModule.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkRenderingCoreModule.h
+vtkObject.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkObject.h
+vtkRect.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkRect.h
+
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkCollection.h
 vtkCommonCoreModule.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkCommonCoreModule.h
@@ -188,6 +196,26 @@ vtkInteractionStyleModule.h
 vtkInteractorStyle.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkInteractorStyle.h
 
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkMath.h
+vtkCommonCoreModule.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkCommonCoreModule.h
+vtkObject.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkObject.h
+vtkTypeTraits.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkTypeTraits.h
+vtkSmartPointer.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkSmartPointer.h
+vtkMathConfigure.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkMathConfigure.h
+cassert
+-
+
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkMathConfigure.h
+cmath
+-
+float.h
+-
+
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkOStrStreamWrapper.h
 
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkOStreamWrapper.h
@@ -249,6 +277,12 @@ vtkCollection.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkCollection.h
 vtkProp.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkProp.h
+
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkRect.h
+vtkVector.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkVector.h
+vtkMath.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkMath.h
 
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkRenderWindow.h
 vtkRenderingCoreModule.h
@@ -360,6 +394,18 @@ vtkCommonCoreModule.h
 vtkSystemIncludes.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkSystemIncludes.h
 
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkTuple.h
+vtkIOStream.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkIOStream.h
+vtkSystemIncludes.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkSystemIncludes.h
+cassert
+-
+cstdlib
+-
+cmath
+-
+
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkType.h
 vtkConfigure.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkConfigure.h
@@ -367,6 +413,10 @@ vtk_kwiml.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtk_kwiml.h
 stdbool.h
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/stdbool.h
+
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkTypeTraits.h
+vtkSystemIncludes.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkSystemIncludes.h
 
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkUnicodeString.h
 vtkCommonCoreModule.h
@@ -396,6 +446,14 @@ vtkVariantInlineOperators.h
 
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkVariantInlineOperators.h
 climits
+-
+
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkVector.h
+vtkTuple.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkTuple.h
+vtkObject.h
+/gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkObject.h
+cmath
 -
 
 /gpfs/runtime/opt/vtk/8.0.0/include/vtk-8.0/vtkVersionMacros.h
@@ -494,5 +552,7 @@ vtkVolume.h
 vtkInteractorStyleTrackballCamera.h
 -
 vtkObjectFactory.h
+-
+vtkCamera.h
 -
 

@@ -10,9 +10,21 @@
 #include <vtkVolume.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
+#include <vtkCamera.h>
 
 std::string filename;
+vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
+vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+int opacity = 20;
 
+void draw(int opacity) {
+    vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
+    opacityTransferFunction->AddPoint(opacity, 0.0);
+    opacityTransferFunction->AddPoint(255, 0.2);
+    
+    volumeProperty->SetScalarOpacity(opacityTransferFunction);
+    renWin->Render();
+}
 
 // define an interaction style
 class KeyPressInteractorStyle: public vtkInteractorStyleTrackballCamera {
@@ -30,11 +42,15 @@ class KeyPressInteractorStyle: public vtkInteractorStyleTrackballCamera {
             std::cout << "Pressed " << key << std::endl;
             
             // handle an arrow key
-            if(key == "Up") {
-                std::cout << "The up arrow was pressed." << std::endl;
+            if(key == "Up") {       
+                opacity += 20;
+                std::cout << "Opacity level: " << opacity << std::endl;
+                draw(opacity);
             }
-            if(key == "a") {
-                std::cout << "The a key was pressed." << std::endl;
+            if(key == "Down") {
+                opacity -= 20;
+                draw(opacity);
+                std::cout << "Opacity level: " << opacity << std::endl;
             }
             
             // forward events
@@ -42,6 +58,8 @@ class KeyPressInteractorStyle: public vtkInteractorStyleTrackballCamera {
         }
 };
 vtkStandardNewMacro(KeyPressInteractorStyle);
+
+
 
 
 int main(int argc, char *argv[]) {
@@ -52,10 +70,12 @@ int main(int argc, char *argv[]) {
     
     filename = argv[1]; // "/Data/ironProt.vtk;
     
-    // create the renderers, render window, and interactor
-    vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
+     // create the renderers, render window, and interactor
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
     renWin->AddRenderer(ren);
+    
+    vtkSmartPointer<vtkCamera> camera =
+    vtkSmartPointer<vtkCamera>::New();
     
     
     /* default interactor: responds to the following events:
@@ -88,7 +108,7 @@ int main(int argc, char *argv[]) {
     colorTransferFunction->AddRGBPoint(255.0, 0.0, 0.2, 0.0);
     
     // the property describes how the data will look
-    vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+    
     volumeProperty->SetColor(colorTransferFunction);
     volumeProperty->SetScalarOpacity(opacityTransferFunction);
     volumeProperty->ShadeOn();
@@ -107,15 +127,19 @@ int main(int argc, char *argv[]) {
     
     // a keypress interactor
     vtkSmartPointer<KeyPressInteractorStyle> style = vtkSmartPointer<KeyPressInteractorStyle>::New();
-    //iren->SetInteractorStyle(style);
+    iren->SetInteractorStyle(style);
     style->SetCurrentRenderer(ren);
     
     ren->AddVolume(volume);
-    ren->MakeCamera();
+    ren->SetActiveCamera(camera);
     ren->ResetCamera();
     
-    ren->SetBackground(1, 1, 1);
-    renWin->SetSize(600, 600);
+//    for(int i = 0; i < 3; i++) {
+//        std::cout << ren->GetActiveCamera()->GetPosition()[i] << std::endl;
+//    }
+    
+    ren->SetBackground(0.87, 0.88, 0.91);
+    renWin->SetSize(1000, 1000);
     renWin->Render();
     iren->Start();
     

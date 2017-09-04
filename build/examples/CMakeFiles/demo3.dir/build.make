@@ -90,6 +90,7 @@ demo3_EXTERNAL_OBJECTS =
 
 bin/demo3: examples/CMakeFiles/demo3.dir/demo3.cxx.o
 bin/demo3: examples/CMakeFiles/demo3.dir/build.make
+bin/demo3: src/libminvr-vtk.a
 bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkDomainsChemistry-8.0.so.1
 bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersFlowPaths-8.0.so.1
 bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersGeneric-8.0.so.1
