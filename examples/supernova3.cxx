@@ -38,6 +38,7 @@
 #include <vtkExternalOpenGLRenderer.h>
 
 //annotation stuff
+#include <vtkConeSource.h>
 #include <vtkPropPicker.h>
 #include <vtkTextProperty.h>
 #include <vtkCornerAnnotation.h>
@@ -54,11 +55,18 @@ private:
     vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
     vector <vtkSmartPointer<vtkActor>> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
-    vtkNew<vtkLight> light;
-
-    vtkNew<vtkTransform> transform;
-    int press_x, press_y;
-    int release_x, release_y;
+    vtkSmartPointer<vtkActor> coneActor =
+        vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkCornerAnnotation> titleAnnotation = 
+    vtkSmartPointer<vtkCornerAnnotation>::New();
+    vtkSmartPointer<vtkCornerAnnotation> cornerAnnotation = 
+    vtkSmartPointer<vtkCornerAnnotation>::New();
+    vector <const char *> titles;
+    vector <const char *> annotations;
+    vtkActor    *LastPickedActor;
+    vtkProperty *LastPickedProperty;
+    vector <vtkSmartPointer<vtkActor>> OtherActors;
+    vector <vtkSmartPointer<vtkProperty>> OtherProperties;
     int NUM_ACTORS = 7;
   
     // These functions from demo2.cpp are not needed here:
@@ -114,6 +122,57 @@ private:
     // This is just a performance enhancement that allows OpenGL to
     // ignore faces that are facing away from the camera.
     glEnable(GL_CULL_FACE);
+    }
+    
+    void initializePickers() {
+        LastPickedActor = NULL;
+        LastPickedProperty = vtkProperty::New();
+        for(int i = 0; i < NUM_ACTORS; i++) {
+            OtherActors.push_back(actors[i]);
+        }
+        for(int i = 0; i < NUM_ACTORS; i++) {
+            OtherProperties.push_back(vtkProperty::New());
+        }
+    }
+    
+    // set up annotations
+    void displayAnnotations() {
+        // title annotations 
+        titleAnnotation->SetLinearFontScaleFactor( 2 );
+        titleAnnotation->SetNonlinearFontScaleFactor( 1 );
+        titleAnnotation->SetMaximumFontSize( 40 );
+        titleAnnotation->GetTextProperty()->SetColor( 0, 0, 0 );
+        titleAnnotation->GetTextProperty()->BoldOn();
+
+        // caption annotations
+        cornerAnnotation->SetLinearFontScaleFactor(2);
+        cornerAnnotation->SetNonlinearFontScaleFactor(1);
+        cornerAnnotation->SetMaximumFontSize(40);
+        cornerAnnotation->GetTextProperty()->SetColor(0, 0, 0);
+        cornerAnnotation->GetTextProperty()->SetBackgroundColor(1,1,1);
+        cornerAnnotation->GetTextProperty()->FrameOn();
+
+        ren->AddViewProp(titleAnnotation);
+        ren->AddViewProp(cornerAnnotation);
+    }
+    
+    // hard code Kim's annotations
+    void initializeAnnotations() {
+        annotations.push_back("At the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova."); // sill (purple)
+        annotations.push_back("In green, two jets of material are seen. \nThese jets funnel material and energy \nduring and after the explosion."); // jets (green)
+        annotations.push_back("The light blue portions of this model \nrepresent radiation from the element \niron as seen in X-ray light from Chandra. \nIron is forged in the very core of the \nstar but ends up on the outside \nof the expanding ring of debris."); // fek (blue)
+        annotations.push_back("The yellow portions of the model represent \ninfrared data from the Spitzer Space Telescope. \nThis is cooler debris that has yet to \nbe superheated by a passing shock wave"); // arll (yellow)
+        annotations.push_back("The dark blue colored elements of the model \nrepresent the outer blast wave of the \nexplosion as seen in X-rays by Chandra as well \nas optical and infrared light, much of which is silicon."); // (dark blue)
+        annotations.push_back("The red colored elements of the model represent \nthe outer blast wave of the explosion as seen in \nX-rays by Chandra as well as optical and infrared \nlight, much of which is silicon."); // outer knots (red)
+        annotations.push_back("The Cas A supernova remnant acts like a \nrelativistic pinball machine by accelerating \nelectrons to enormous energies. This \narea shows where the acceleration is taking \nplace in an expanding shock wave generated \nby the explosion."); // reverse shock sphere (pink)
+
+        titles.push_back("Neutron Star"); // purple
+        titles.push_back("Fiducial Jets"); // green
+        titles.push_back("FeK (Chandra Telescope)"); // blue
+        titles.push_back("ArII (Spitzer Telescope)"); // yellow
+        titles.push_back("Si (Chandra Telescope, HETG)"); // dark blue
+        titles.push_back("Outer Knots"); // red
+        titles.push_back("Reverse Shock Sphere"); // pink
     }
 
 
@@ -189,6 +248,22 @@ private:
 
 
         /**********************************************************/
+        
+        //Create a cone
+        vtkSmartPointer<vtkConeSource> coneSource =
+        vtkSmartPointer<vtkConeSource>::New();
+        coneSource->Update();
+
+        //Create a mapper and actor
+        vtkSmartPointer<vtkPolyDataMapper> mapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputConnection(coneSource->GetOutputPort());
+
+        coneActor->SetMapper(mapper);
+        
+        ren->AddActor(coneActor);
+        
+        /**********************************************************/
     
         ren->SetBackground(0.87, 0.88, 0.91);
         ren->ResetCamera();
@@ -199,6 +274,9 @@ private:
     bool movingSlide;
     glm::mat4 lastWandPos;
     glm::mat4 slideMat;
+    glm::mat4 coneMat;
+    glm::mat4 annotateMat;
+    glm::mat4 wandPos;
     
     DemoVRVTKApp(int argc, char** argv) :
     
@@ -210,6 +288,14 @@ private:
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
         lastWandPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
+        coneMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+                                            mm[4],  mm[5], mm[6], mm[7],
+                                            mm[8],  mm[9],mm[10],mm[11],
+                                            mm[12],mm[13],mm[14],mm[15]);
+        annotateMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
@@ -231,7 +317,7 @@ private:
         
         if (eventName == "Wand0_Move") {  //Set up for Wand Movement
             const float* wp = event.getDataAsFloatArray("Transform");
-            glm::mat4 wandPos = glm::mat4( wp[0],  wp[1], wp[2], wp[3],
+            wandPos = glm::mat4( wp[0],  wp[1], wp[2], wp[3],
                                             wp[4],  wp[5], wp[6], wp[7],
                                             wp[8],  wp[9],wp[10],wp[11],
                                             wp[12],wp[13],wp[14],wp[15]);
@@ -239,7 +325,9 @@ private:
             if (movingSlide){ //when slide moving
                 slideMat = wandPos / lastWandPos * slideMat; //update the model matrix for slide
             }
+            coneMat = wandPos / lastWandPos * coneMat;
             lastWandPos = wandPos;
+            
             
 //            double pos[16];
 //            for(int i = 0; i < 16; i++) {
@@ -253,16 +341,49 @@ private:
         }
         else if (eventName == "Wand_Right_Btn_Up") {
             movingSlide = false;
-        } else if (eventName == "MouseBtnLeft_Down") {
-//            int* clickPos = this->GetInteractor()->GetEventPosition();
-//
-//            // Pick from this location.
-//            vtkSmartPointer<vtkPropPicker>  picker =
-//              vtkSmartPointer<vtkPropPicker>::New();
-//            picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
+        } else if (eventName == "WandB10_Down") {
+            int clickPos[] = {0,0,0};
+
+            // Pick from this location.
+            vtkSmartPointer<vtkPropPicker>  picker =
+              vtkSmartPointer<vtkPropPicker>::New();
+            picker->Pick(clickPos[0], clickPos[1], clickPos[2], ren);
+            
+            // If we picked something before, reset its property
+            if (this->LastPickedActor) {
+                this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+
+                for(int i = 0; i < NUM_ACTORS; i++) {
+                    this->OtherActors[i]->GetProperty()->DeepCopy(this->OtherProperties[i]);
+                }
+            }
+            titleAnnotation->ClearAllTexts();
+            cornerAnnotation->ClearAllTexts();
+
+            this->LastPickedActor = picker->GetActor();
+
+            if (this->LastPickedActor) {
+                // Save the property of the picked actor so that we can
+                // restore it next time
+                this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
+                for(int i = 0; i < NUM_ACTORS; i++) {
+                    this->OtherProperties[i]->DeepCopy(this->OtherActors[i]->GetProperty());
+                }
+                // Highlight the picked actor by changing its properties
+                for(int i = 0; i < NUM_ACTORS; i++) {
+                    if(actors[i] != LastPickedActor) {
+                        this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
+                    } else {
+                        this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+                        titleAnnotation->SetText(2, titles[i]);
+                        cornerAnnotation->SetText(0, annotations[i]);
+                    }
+                }
+
+                this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
+                this->LastPickedActor->GetProperty()->SetSpecular(0.0);
+            }
         }
-        
-        
 
     }
 
@@ -343,17 +464,27 @@ private:
 //            std::cout << std::endl;
 //            
 
-            double transform[16];
+            double supernovaModel[16];
             for(int i = 0; i < 16; i++) {
-                transform[i] = glm::value_ptr(slideMat)[i];
+                supernovaModel[i] = glm::value_ptr(slideMat)[i];
             }
             
-            vtkSmartPointer<vtkMatrix4x4> model = vtkSmartPointer<vtkMatrix4x4>::New();
-            model->DeepCopy(transform);
-            model->Transpose();
+            vtkSmartPointer<vtkMatrix4x4> sm = vtkSmartPointer<vtkMatrix4x4>::New();
+            sm->DeepCopy(supernovaModel);
+            sm->Transpose();
             for(int i = 0; i < NUM_ACTORS; i++) {
-                actors[i]->SetUserMatrix(model);
+                actors[i]->SetUserMatrix(sm);
             }
+            
+            double coneModel[16];
+            for(int i = 0; i < 16; i++) {
+                coneModel[i] = glm::value_ptr(coneMat)[i];
+            }
+            
+            vtkSmartPointer<vtkMatrix4x4> cm = vtkSmartPointer<vtkMatrix4x4>::New();
+            cm->DeepCopy(coneModel);
+            cm->Transpose();
+            coneActor->SetUserMatrix(cm);
 
             
             externalVTKWidget->GetRenderWindow()->Render();
