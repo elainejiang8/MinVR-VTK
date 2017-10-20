@@ -7,8 +7,8 @@ include_directories(
   ${GLEW_INCLUDE_DIRS}
   )
 
-set(headers vtkCustomExternalOpenGLCamera.h)
-set(sources vtkCustomExternalOpenGLCamera.cxx)
+set(headers vtkCustomExternalOpenGLCamera.h vtkCustomPropPicker.h)
+set(sources vtkCustomExternalOpenGLCamera.cxx vtkCustomPropPicker.cxx)
 set(files ${headers} ${sources})
 
 add_library(minvr-vtk ${files})
