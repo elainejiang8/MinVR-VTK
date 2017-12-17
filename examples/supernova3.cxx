@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <api/MinVR.h>
+#include <main/VREventInternal.h>
 #include <math/VRMath.h>
 
 #include <vtkPolyData.h>
@@ -16,8 +17,13 @@
 #include <vtkDataSetAttributes.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
+#include <vtkLine.h>
 #include <vtkCamera.h>
 #include <vtkProperty.h>
+#include <vtkCellArray.h>
+#include <vtkCellData.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
 #include <vtkPolyDataReader.h>
 #include <vtkLookupTable.h>
 #include <vtkObjectFactory.h>
@@ -32,14 +38,15 @@
 #include <vtkColorTransferFunction.h>
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPerspectiveTransform.h>
-#include <vtkCustomExternalOpenGLCamera.h>
+#include <vtkExternalOpenGLCamera.h>
 #include <vtkLight.h>
 #include <vtkExternalLight.h>
 #include <vtkExternalOpenGLRenderer.h>
 
 //annotation stuff
 #include <vtkConeSource.h>
-#include <vtkCustomPropPicker.h>
+#include <vtkCellPicker.h>
+#include <vtkActorCollection.h>
 #include <vtkTextProperty.h>
 #include <vtkCornerAnnotation.h>
 #include <vtkVectorText.h>
@@ -55,27 +62,19 @@ class DemoVRVTKApp: public MinVR::VRApp {
 private:
 
     vtkNew<ExternalVTKWidget> externalVTKWidget;
-    vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
-   // vtkSmartPointer<vtkRenderer> textRen = vtkSmartPointer<vtkRenderer>::New();
-    vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
+	vtkSmartPointer<vtkRenderer> ren;
+    vtkSmartPointer<vtkExternalOpenGLCamera> camera;
     vector <vtkSmartPointer<vtkActor>> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
-    vtkSmartPointer<vtkActor> coneActor =
-        vtkSmartPointer<vtkActor>::New();
-    vtkSmartPointer<vtkFollower> textActor = vtkSmartPointer<vtkFollower>::New();
-    vtkSmartPointer<vtkVectorText> textSource = vtkSmartPointer<vtkVectorText>::New();
-    vtkSmartPointer<vtkCornerAnnotation> titleAnnotation = 
-    vtkSmartPointer<vtkCornerAnnotation>::New();
-    vtkSmartPointer<vtkCornerAnnotation> cornerAnnotation = 
-    vtkSmartPointer<vtkCornerAnnotation>::New();
+	vtkSmartPointer<vtkFollower> textActor;
+	vtkSmartPointer<vtkVectorText> textSource;
     vector <const char *> titles;
     vector <const char *> annotations;
-    vtkSmartPointer<vtkActor> LastPickedActor = vtkSmartPointer<vtkActor>::New();
-    vtkSmartPointer<vtkProperty> LastPickedProperty = vtkSmartPointer<vtkProperty>::New();
+	vtkSmartPointer<vtkActor> LastPickedActor;
+	vtkSmartPointer<vtkProperty> LastPickedProperty;
     vector <vtkSmartPointer<vtkActor>> OtherActors;
     vector <vtkSmartPointer<vtkProperty>> OtherProperties;
-    vtkSmartPointer<vtkCustomPropPicker>  picker =
-              vtkSmartPointer<vtkCustomPropPicker>::New();
+	vtkSmartPointer<vtkCellPicker>  picker;
     int NUM_ACTORS = 7;
   
     // These functions from demo2.cpp are not needed here:
@@ -143,27 +142,6 @@ private:
         }
     }
     
-    // set up annotations
-    void displayAnnotations() {
-        // title annotations 
-        titleAnnotation->SetLinearFontScaleFactor( 2 );
-        titleAnnotation->SetNonlinearFontScaleFactor( 1 );
-        titleAnnotation->SetMaximumFontSize( 40 );
-        titleAnnotation->GetTextProperty()->SetColor( 0, 0, 0 );
-        titleAnnotation->GetTextProperty()->BoldOn();
-
-        // caption annotations
-        cornerAnnotation->SetLinearFontScaleFactor(2);
-        cornerAnnotation->SetNonlinearFontScaleFactor(1);
-        cornerAnnotation->SetMaximumFontSize(40);
-        cornerAnnotation->GetTextProperty()->SetColor(0, 0, 0);
-        cornerAnnotation->GetTextProperty()->SetBackgroundColor(1,1,1);
-        cornerAnnotation->GetTextProperty()->FrameOn();
-
-        ren->AddViewProp(titleAnnotation);
-        ren->AddViewProp(cornerAnnotation);
-    }
-    
     // hard code Kim's annotations
     void initializeAnnotations() {
         annotations.push_back("Neutron Star: \nAt the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova."); // sill (purple)
@@ -185,17 +163,29 @@ private:
 
 
     void _initializeScene() {
+		ren = vtkSmartPointer<vtkRenderer>::New();
+		textActor = vtkSmartPointer<vtkFollower>::New();
+		textSource = vtkSmartPointer<vtkVectorText>::New();
+		LastPickedActor = vtkSmartPointer<vtkActor>::New();
+		LastPickedProperty = vtkSmartPointer<vtkProperty>::New();
+		picker = vtkSmartPointer<vtkCellPicker>::New();
+
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
         ren->SetActiveCamera(camera);
-	//renWin->SetNumberOfLayers(2);
         renWin->AddRenderer(ren);
-        //renWin->AddRenderer(textRen);
         externalVTKWidget->GetRenderWindow()->Render();
 
         /**********************************************************/
 
-        std::string files[7] = {"../data/cco-ascii.vtk", "../data/newjets-ascii.vtk", "../data/fekcorr-ascii.vtk", "../data/newar-ascii.vtk", "../data/newhetg-ascii.vtk", "../data/newopt-ascii.vtk", "../data/newsi-ascii.vtk"};
+		vector <std::string> files;
+		files.push_back(std::string("../../../data/cco-ascii.vtk"));
+		files.push_back(std::string("../../../data/newjets-ascii.vtk"));
+		files.push_back(std::string("../../../data/fekcorr-ascii.vtk"));
+		files.push_back(std::string("../../../data/newar-ascii.vtk"));
+		files.push_back(std::string("../../../data/newhetg-ascii.vtk"));
+		files.push_back(std::string("../../../data/newopt-ascii.vtk"));
+		files.push_back(std::string("../../../data/newsi-ascii.vtk"));
 
         for(int i = 0; i < NUM_ACTORS; i++) {
             vtkSmartPointer<vtkPolyDataReader> reader =
@@ -238,12 +228,6 @@ private:
 
             ren->AddActor(actor);
             actors.push_back(actor);
-            
-//            std::cout << actor << i << std::endl;
-//            for(int j = 0; j < 16; j++) {
-//                std::cout << actor->GetMatrix()->GetData()[j] << " ";
-//            }
-//            std::cout << std::endl;
         }
 
         // color actors
@@ -268,40 +252,27 @@ private:
         vtkSmartPointer<vtkPolyDataMapper> mapper =
         vtkSmartPointer<vtkPolyDataMapper>::New();
         mapper->SetInputConnection(coneSource->GetOutputPort());
-	
-	coneActor->RotateY(90);
-	coneActor->GetProperty()->SetColor(1,0,0);
-        coneActor->SetMapper(mapper);
-        
-        ren->AddActor(coneActor);
         
         /**********************************************************/
 
-	// create a mapper and actor
-	vtkSmartPointer<vtkPolyDataMapper> textMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	textMapper->SetInputConnection(textSource->GetOutputPort());
+		// create a mapper and actor
+		vtkSmartPointer<vtkPolyDataMapper> textMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+		textMapper->SetInputConnection(textSource->GetOutputPort());
 	
-	textActor->SetMapper(textMapper);
-	textActor->GetProperty()->SetColor(0,0,0);
-	
-	vtkSmartPointer<vtkProperty> backface = vtkSmartPointer<vtkProperty>::New();
-	backface->SetColor(1,1,1);
-	textActor->SetProperty(backface);
-	textActor->SetScale(0.05);
-	textActor->SetPosition(0,2,-3);
-	
+		textActor->SetMapper(textMapper);
+		textActor->GetProperty()->SetColor(0,0,0);
 
-	ren->AddActor(textActor);
+		textActor->SetScale(0.1);	
+		ren->AddActor(textActor);
 
 
-	/**********************************************************/
+		/**********************************************************/
 	
-	initializeAnnotations();
-	displayAnnotations();
-	initializePickers();
+		initializeAnnotations();
+		initializePickers();
     
-        ren->SetBackground(0.87, 0.88, 0.91);
-        ren->ResetCamera();
+		ren->SetBackground(0.87, 0.88, 0.91);
+		ren->ResetCamera();
     }
 
 
@@ -310,13 +281,19 @@ private:
     bool picked;
     glm::mat4 lastWandPos;
     glm::mat4 slideMat;
-    glm::mat4 coneMat;
     glm::mat4 textMat;
     glm::mat4 wandPos;
     glm::mat4 lastHeadPos;
     glm::mat4 headPos;
-    const float* wp;
+	std::vector<float> w;
+	int actorIndex;
+	vtkSmartPointer<vtkActor> PickedActor;
     
+	// Added by Tom
+	glm::vec3 cameraTranslate;
+	glm::mat4 cameraRotate;
+	float joystickX, joystickY;
+
     DemoVRVTKApp(int argc, char** argv) :
     
     MinVR::VRApp(argc, argv) {
@@ -330,28 +307,28 @@ private:
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
-        coneMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
-                                            mm[4],  mm[5], mm[6], mm[7],
-                                            mm[8],  mm[9],mm[10],mm[11],
-                                            mm[12],mm[13],mm[14],mm[15]);
         textMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
-	lastHeadPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
+		lastHeadPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
+		cameraTranslate = glm::vec3(0, 0, 0);
+		actorIndex = 7;
     }
 
     /// The MinVR apparatus invokes this method whenever there is a new
     /// event to process.
     void onVREvent(const MinVR::VREvent &event) {
         std::string eventName = event.getName();
+		std::string newLine = "\n";
 
-        if(eventName != "FrameStart" && eventName != "Wand0_Move") {
-            //event.print();
-        }
+		std::string d = event.getInternal()->getDataIndex()->printStructure();
+
+		OutputDebugString((std::string("hearing:") + eventName + newLine).c_str());
+		//OutputDebugString(eventName.c_str());
         
         
         // Quit if the escape button is pressed
@@ -359,60 +336,150 @@ private:
             shutdown();
         } 
         
-        if (eventName == "Wand0_Move") {  //Set up for Wand Movement
-            wp = event.getDataAsFloatArray("Transform");
-            wandPos = glm::mat4( wp[0],  wp[1], wp[2], wp[3],
-                                            wp[4],  wp[5], wp[6], wp[7],
-                                            wp[8],  wp[9],wp[10],wp[11],
-                                            wp[12],wp[13],wp[14],wp[15]);
+        if (eventName == "Wand0_Move" || eventName == "HTC_Controller_Right" || eventName == "HTC_Controller_1" ||
+										 eventName == "HTC_Controller_Left" || eventName == "HTC_Controller_2") {  //Set up for Wand Movement
+			
+			w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
+			wandPos = glm::mat4( w[0],  w[1], w[2], w[3],
+                                            w[4],  w[5], w[6], w[7],
+                                            w[8],  w[9],w[10],w[11],
+                                            w[12],w[13],w[14],w[15]);
+
+			joystickX = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/XPos", 0.0f);
+			joystickY = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/YPos", 0.0f);
+
 
             if (movingSlide){ //when slide moving
-                slideMat = wandPos / lastWandPos * slideMat; //update the model matrix for slide
+                slideMat = (wandPos / lastWandPos) * slideMat; //update the model matrix for slide
             }
 
-	   const float* hp = event.getDataAsFloatArray("Transform");
-           headPos = glm::mat4( hp[0],  hp[1], hp[2], hp[3],
-                                            hp[4],  hp[5], hp[6], hp[7],
-                                            hp[8],  hp[9],hp[10],hp[11],
-                                            hp[12],hp[13],hp[14],hp[15]);
+		    textMat = wandPos / lastWandPos * textMat;
+            lastWandPos = wandPos;
 
-           coneMat = wandPos / lastWandPos * coneMat;
-	   textMat = wandPos / lastWandPos * textMat;
-           lastWandPos = wandPos;
+		} else if (eventName == "HTC_HMD_1") {
+			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
 
-        } else if(eventName == "Head_Move") {
-	   const float* hp = event.getDataAsFloatArray("Transform");
-           headPos = glm::mat4( hp[0],  hp[1], hp[2], hp[3],
-                                            hp[4],  hp[5], hp[6], hp[7],
-                                            hp[8],  hp[9],hp[10],hp[11],
-                                            hp[12],hp[13],hp[14],hp[15]);
-
-           //textMat = headPos / lastHeadPos * textMat;
-           lastHeadPos = headPos;
-
-	}  else if (eventName == "Wand_Right_Btn_Down") {
+			headPos = glm::mat4(h[0], h[1], h[2], h[3],
+								h[4], h[5], h[6], h[7],
+								h[8], h[9], h[10], h[11],
+								h[12], h[13], h[14], h[15]);
+		} else if (eventName == "Wand_Right_Btn_Down") {
             movingSlide = true;
         } else if (eventName == "Wand_Right_Btn_Up") {
             movingSlide = false;
-        } else if (eventName == "B08_Down" || eventName == "Mouse_Move") {
-	    double x = coneActor->GetCenter()[0];
-	    double y = coneActor->GetCenter()[1];
-	    double z = coneActor->GetCenter()[2];
-            double clickPos[] = {x, y, z};
-            std::cout <<  "cone: " << std::endl;
-            for(int i = 0; i < 16; i++) {
-                std::cout << glm::value_ptr(coneMat)[i] << " ";
-            }
-            std::cout << std::endl;
+        } else if (eventName == "B08_Down" || 
+			       eventName == "HTC_Controller_Right_AButton_Pressed" || 
+			       eventName == "HTC_Controller_1_AButton_Pressed" ||
+			       eventName == "HTC_Controller_2_AButton_Pressed") {
 
-            // Pick from this location.
-            picker->PickProp3DPoint(clickPos, ren);
-            std::cout << "x: " << x << std::endl;
-	    std::cout << "y: " << y << std::endl;
-	    std::cout << "z: " << z << std::endl;
-	    
+			//if (actorIndex == 7) {
+			//	actorIndex = 0;
+			//}
+			//else {
+			//	actorIndex++;
+			//}
+
+			//if (actorIndex != 7) {
+			//	PickedActor = actors[actorIndex];
+			//}
+			//else {
+			//	PickedActor = NULL;
+			//}
+
+            // Added by Tom
+			OutputDebugString(d.c_str());
+			OutputDebugString((std::string("*************") + eventName + newLine).c_str());
+
+			w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/Pose");
+			double selectionPoint[] = { w[12], w[13], w[14] };
+
+			// The picker orientation seems to be specified with (angle, x, y, z) where
+			// (x,y,z) indicate the unit vector around which the angle is rotated.  The
+			// following algebra appears to be how to convert a rotation matrix to angle/axis.
+			glm::quat qrot = glm::quat_cast(glm::inverse(glm::mat3(w[0], w[1], w[2],
+				w[4], w[5], w[6],
+				w[8], w[9], w[10])));
+
+			double scale = sqrt(1 - pow(qrot.w, 2));
+			double orient[] = { (-360.0f / 3.1415926f) * acos(qrot.w), qrot.x / scale, qrot.y / scale, qrot.z / scale };
+
+			// Draw a ray.
+			vtkSmartPointer<vtkPoints> pts = vtkSmartPointer<vtkPoints>::New();
+			double originPoint[] = { 0.0f, 0.0f, 0.0f }; 
+			pts->InsertNextPoint(originPoint);
+			double secondPoint[] = { 0.0f, 0.0f, -10.0f };
+			pts->InsertNextPoint(secondPoint);
+
+			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/HTC_HMD_1/State/Pose");
+			std::ostringstream lss;
+			lss << " selectionPoint: (" << selectionPoint[0] << ", " << selectionPoint[1] << ", " << selectionPoint[2] << ")" << std::endl;
+			lss << " secondPoint:    (" << secondPoint[0] << ", " << secondPoint[1] << ", " << secondPoint[2] << ")" << std::endl;
+			lss << " orient:       " << orient[0] << ", (" << orient[1] << ", " << orient[2] << ", " << orient[3] << ")" << std::endl;
+			OutputDebugString(lss.str().c_str());
+
+
+			vtkSmartPointer<vtkPolyData> lpd = vtkSmartPointer<vtkPolyData>::New();
+			lpd->SetPoints(pts);
+
+			vtkSmartPointer<vtkLine> ray = vtkSmartPointer<vtkLine>::New();
+			ray->GetPointIds()->SetId(0, 0);
+			ray->GetPointIds()->SetId(1, 1);
+
+			vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+			lines->InsertNextCell(ray);
+			lpd->SetLines(lines);
+
+			unsigned char red[3] = { 255,0,0 };
+			vtkSmartPointer<vtkUnsignedCharArray> color = vtkSmartPointer<vtkUnsignedCharArray>::New();
+			color->SetNumberOfComponents(3);
+			color->InsertNextTypedTuple(red);
+
+			lpd->GetCellData()->SetScalars(color);
+			vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+			mapper->SetInputData(lpd);
+
+			vtkSmartPointer<vtkActor> rayActor = vtkSmartPointer<vtkActor>::New();
+			rayActor->SetMapper(mapper);
+			rayActor->RotateWXYZ(orient[0], orient[1], orient[2], orient[3]);
+			rayActor->SetPosition(selectionPoint);
+			ren->AddActor(rayActor);
+
+			picker->Pick3DRay(selectionPoint, orient, ren);
+			vtkActorCollection *ac = picker->GetActors();
+			std::ostringstream actorss;
+			actorss << *ac << std::endl;
+			OutputDebugString(actorss.str().c_str());
+			ac->InitTraversal();
+			PickedActor = ac->GetNextActor();
+			if (PickedActor == NULL) {
+				OutputDebugString(std::string("NO ACTOR SELECTED\n").c_str());
+
+			}
+			else {
+			    std:ostringstream acss;
+				acss << "PICKED: " << *PickedActor << std::endl;
+				OutputDebugString(acss.str().c_str());
+
+			}
+
             picked = true;
-        }
+		} else if (eventName == "HTC_Controller_Right_ApplicationMenuButton_Pressed" || eventName == "HTC_Controller_1_ApplicationMenuButton_Pressed") { // B button
+			//if (actorIndex == 0) {
+			//	actorIndex = 7;
+			//}
+			//else {
+			//	actorIndex--;
+			//}
+
+			//if (actorIndex != 7) {
+			//	PickedActor = actors[actorIndex];
+			//}
+			//else {
+			//	PickedActor = NULL;
+			//}
+
+			picked = true;
+		}
 
     }
 
@@ -429,8 +496,17 @@ private:
           _checkContext();
           _initializeScene();
         }
-    }
 
+		if (fabs(joystickY) > 0.1)
+		  cameraTranslate += glm::vec3(wandPos * glm::vec4(0, 0, joystickY, 0));
+		//if (fabs(joystickX) > 0.1)
+		  //cameraRotate = glm::rotate(wandPos, joystickX * .0360f, glm::vec3(0.0, 1.0, 0.0));
+
+		//textMat = wandPos;
+		//textMat = glm::translate(textMat, glm::vec3(0, 0, 1));
+	
+	}
+	
     /// This is the heart of any graphics program, the render function.
     /// It is called each time through the main graphics loop, and
     /// re-draws the scene according to whatever has changed since the
@@ -469,8 +545,9 @@ private:
                                             vm[8],  vm[9],vm[10],vm[11],
                                             vm[12],vm[13],vm[14],vm[15]);
 
+			viewMatrix = glm::translate(cameraRotate * viewMatrix, cameraTranslate);
 
-            camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
+            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
             for(int i = 0; i < 16; i++) {
@@ -484,19 +561,7 @@ private:
                 proj[i] = glm::value_ptr(projMatrix)[i];
             }
 
-            camera->SetProjectionTransformMatrix(proj);
-
-//            camera->SetPosition(4,2,360);
-//            camera->SetFocalPoint(0,0,0); // initial direction
-//            camera->SetViewUp(0,1,0); // controls "up" direction for camera
-
-            
-//            std::cout <<  "view: " << std::endl;
-//            for(int i = 0; i < 16; i++) {
-//                std::cout << view[i] << " ";
-//            }
-//            std::cout << std::endl;
-//            
+            camera->SetProjectionTransformMatrix(proj);           
 
             double supernovaModel[16];
             for(int i = 0; i < 16; i++) {
@@ -509,31 +574,22 @@ private:
             for(int i = 0; i < NUM_ACTORS; i++) {
                 actors[i]->SetUserMatrix(sm);
             }
-            
-            double coneModel[16];
-            for(int i = 0; i < 16; i++) {
-                coneModel[i] = glm::value_ptr(coneMat)[i];
-            }
-            
-            vtkSmartPointer<vtkMatrix4x4> cm = vtkSmartPointer<vtkMatrix4x4>::New();
-            cm->DeepCopy(coneModel);
-            cm->Transpose();
-            coneActor->SetUserMatrix(cm);
 
 	   if(picked) {
+		   if (PickedActor == NULL) {
+			   textSource->SetText("");
+			   textSource->Update();
+		   }
 		 // If we picked something before, reset its property
             	if (this->LastPickedActor) {
-		   // std::cout << "HERE1" << std::endl;
                     this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
 
                     for(int i = 0; i < NUM_ACTORS; i++) {
                     	this->OtherActors[i]->GetProperty()->DeepCopy(this->OtherProperties[i]);
                     }
             	}
-		//std::cout << "HERE2" << std::endl;
 
-            	this->LastPickedActor = picker->GetActor();
-	    	//std::cout << "HERE3" << std::endl;
+            	this->LastPickedActor = PickedActor;
 
             	if (this->LastPickedActor) {
                     // Save the property of the picked actor so that we can
@@ -547,32 +603,28 @@ private:
                     	if(actors[i] != LastPickedActor) {
                             this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
                     	} else {
-			   // std::cout << "AN ACTOR WAS CHOSEN" << std::endl;
                             this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
-                            // titleAnnotation->SetText(2, titles[i]);
-                            //cornerAnnotation->SetText(0, annotations[i]);
-			    textSource->SetText(annotations[i]);
-			    textSource->Update();
+							//textSource->SetText(annotations[i]);
+							//textSource->Update();
                     	} 
                     }
 
                     this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
                     this->LastPickedActor->GetProperty()->SetSpecular(0.0);
-		   // std::cout << "HERE4" << std::endl;
             	}
 
-		picked = false;
-	   }
+					picked = false;
+			}
 
-	   double textModel[16];
-	   for(int i = 0; i < 16; i++) {
-		textModel[i] = glm::value_ptr(textMat)[i];
-	   }
+			double textModel[16];
+			for(int i = 0; i < 16; i++) {
+				textModel[i] = glm::value_ptr(headPos)[i];
+			}
 
-	   vtkSmartPointer<vtkMatrix4x4> tm = vtkSmartPointer<vtkMatrix4x4>::New();
-           tm->DeepCopy(textModel);
-           tm->Transpose();
-           //textActor->SetUserMatrix(tm);
+			vtkSmartPointer<vtkMatrix4x4> tm = vtkSmartPointer<vtkMatrix4x4>::New();
+			tm->DeepCopy(textModel);
+			tm->Transpose();
+			textActor->SetUserMatrix(tm);
 
             
             externalVTKWidget->GetRenderWindow()->Render();
