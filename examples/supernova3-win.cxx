@@ -33,7 +33,7 @@
 #include <vtkColorTransferFunction.h>
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPerspectiveTransform.h>
-#include <vtkCustomExternalOpenGLCamera.h>
+#include <vtkExternalOpenGLCamera.h>
 #include <vtkLight.h>
 #include <vtkExternalLight.h>
 #include <vtkExternalOpenGLRenderer.h>
@@ -445,7 +445,7 @@ private:
 
 			viewMatrix = glm::translate(cameraRotate * viewMatrix, cameraTranslate);
 
-            camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
+            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
 
             double view[16];
             for(int i = 0; i < 16; i++) {
