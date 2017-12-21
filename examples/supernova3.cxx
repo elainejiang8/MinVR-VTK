@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/geometric.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <api/MinVR.h>
@@ -42,6 +44,8 @@
 #include <vtkLight.h>
 #include <vtkExternalLight.h>
 #include <vtkExternalOpenGLRenderer.h>
+#include <vtkTransformPolyDataFilter.h>
+#include <vtkLineSource.h>
 
 //annotation stuff
 #include <vtkConeSource.h>
@@ -64,7 +68,7 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
 	vtkSmartPointer<vtkRenderer> ren;
     vtkSmartPointer<vtkExternalOpenGLCamera> camera;
-    vector <vtkSmartPointer<vtkActor>> actors;
+    vector <vtkSmartPointer<vtkActor> > actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 	vtkSmartPointer<vtkFollower> textActor;
 	vtkSmartPointer<vtkVectorText> textSource;
@@ -72,10 +76,14 @@ private:
     vector <const char *> annotations;
 	vtkSmartPointer<vtkActor> LastPickedActor;
 	vtkSmartPointer<vtkProperty> LastPickedProperty;
-    vector <vtkSmartPointer<vtkActor>> OtherActors;
-    vector <vtkSmartPointer<vtkProperty>> OtherProperties;
+    vector <vtkSmartPointer<vtkActor> > OtherActors;
+    vector <vtkSmartPointer<vtkProperty> > OtherProperties;
 	vtkSmartPointer<vtkCellPicker>  picker;
-    int NUM_ACTORS = 7;
+	vtkSmartPointer<vtkActor> rayActor;
+	vtkSmartPointer<vtkTransform> rayActorTransform;
+	double rayActorOrientation[4];
+	double rayActorPosition[3];
+	int NUM_ACTORS = 7;
   
     // These functions from demo2.cpp are not needed here:
     //
@@ -169,7 +177,7 @@ private:
 		LastPickedActor = vtkSmartPointer<vtkActor>::New();
 		LastPickedProperty = vtkSmartPointer<vtkProperty>::New();
 		picker = vtkSmartPointer<vtkCellPicker>::New();
-
+		
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
         ren->SetActiveCamera(camera);
@@ -243,14 +251,12 @@ private:
         /**********************************************************/
         
         //Create a cone
-        vtkSmartPointer<vtkConeSource> coneSource =
-        vtkSmartPointer<vtkConeSource>::New();
+        vtkSmartPointer<vtkConeSource> coneSource = vtkSmartPointer<vtkConeSource>::New();
         coneSource->SetRadius(0.08);
         coneSource->Update();
 
         //Create a mapper and actor
-        vtkSmartPointer<vtkPolyDataMapper> mapper =
-        vtkSmartPointer<vtkPolyDataMapper>::New();
+        vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
         mapper->SetInputConnection(coneSource->GetOutputPort());
         
         /**********************************************************/
@@ -270,7 +276,38 @@ private:
 	
 		initializeAnnotations();
 		initializePickers();
-    
+
+		// Add a ray extending from the right touch controller.  Usually this will not be visible,
+		// but will be made visible when the A button is pressed.
+		double origin[3] = { 0.0, 0.0, -0.001 };
+		double point[3] = { 0.0, 0.0, -10.0 };
+		vtkSmartPointer<vtkLineSource> ray = vtkSmartPointer<vtkLineSource>::New();
+		ray->SetPoint1(origin);
+		ray->SetPoint2(point);
+		ray->Update();
+
+		vtkSmartPointer<vtkTransformPolyDataFilter> rayTransformFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+		rayTransformFilter->SetInputConnection(ray->GetOutputPort());
+		
+		rayActorTransform = vtkSmartPointer<vtkTransform>::New();
+
+		glm::mat4 fmat = glm::mat4(1.0);
+		float* f = glm::value_ptr(fmat);
+		double fd[16];
+		for (int i = 0; i < 16; i++) fd[i] = f[i];
+
+		rayActorTransform->SetMatrix(fd);
+		rayTransformFilter->SetTransform(rayActorTransform);
+
+		vtkSmartPointer<vtkPolyDataMapper> rayMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+		rayMapper->SetInputConnection(rayTransformFilter->GetOutputPort());
+
+		rayActor = vtkSmartPointer<vtkActor>::New();
+		rayActor->SetMapper(rayMapper);
+		rayActor->GetProperty()->SetLineWidth(10.0f);
+
+		ren->AddActor(rayActor);
+
 		ren->SetBackground(0.87, 0.88, 0.91);
 		ren->ResetCamera();
     }
@@ -282,17 +319,38 @@ private:
     glm::mat4 lastWandPos;
     glm::mat4 slideMat;
     glm::mat4 textMat;
-    glm::mat4 wandPos;
+    glm::mat4 wandPosRoom;
+	glm::mat4 wandPosSpace;
     glm::mat4 lastHeadPos;
     glm::mat4 headPos;
 	std::vector<float> w;
 	int actorIndex;
 	vtkSmartPointer<vtkActor> PickedActor;
     
-	// Added by Tom
-	glm::vec3 cameraTranslate;
-	glm::mat4 cameraRotate;
+	// There is an extra coordinate transformation we insert here. The concept is that
+	// the room coordinates returned by the Oculus for the head and wand locations is to
+	// be considered relative to the center of a magic carpet that we fly around with
+	// the wand controls.  The carpet has a position, a *normalized* "up" vector, and an
+	// angle defined relative to the z direction.  The carpetTransform() method returns a
+	// rotation matrix for the current state of the carpet.
+	// Use glm::rotate(carpetDirection, carpetUp.x, carpetUp.y, carpetUp.z) to get a rotation matrix.
+	glm::vec3 carpetPosition, carpetUp, carpetScale;
+	float carpetDirection; // (expressed in degrees)
+
 	float joystickX, joystickY;
+
+	std::string printMat(const glm::mat4 m) {
+		std::ostringstream mss;
+		const float* f = glm::value_ptr(m);
+		mss << "        [0]        [1]         [2]         [3]" << std::endl;
+		mss << " [0] " << f[0] << ", " << f[1] << ", " << f[2] << ", " << f[3] << std::endl;
+		mss << " [1] " << f[4] << ", " << f[5] << ", " << f[6] << ", " << f[7] << std::endl;
+		mss << " [2] " << f[8] << ", " << f[9] << ", " << f[10] << ", " << f[11] << std::endl;
+		mss << " [3] " << f[12] << ", " << f[13] << ", " << f[14] << ", " << f[15] << std::endl;
+		return mss.str();
+	}
+
+
 
     DemoVRVTKApp(int argc, char** argv) :
     
@@ -315,46 +373,99 @@ private:
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
-		cameraTranslate = glm::vec3(0, 0, 0);
+		carpetPosition = glm::vec3(0.0, 0.0, 0.0);
+		carpetDirection = 0.0;
+		carpetUp = glm::vec3(0.0, 1.0, 0.0);
+		carpetScale = glm::vec3(1.0, 1.0, 1.0);
 		actorIndex = 7;
     }
 
     /// The MinVR apparatus invokes this method whenever there is a new
     /// event to process.
-    void onVREvent(const MinVR::VREvent &event) {
-        std::string eventName = event.getName();
-		std::string newLine = "\n";
+	void onVREvent(const MinVR::VREvent &event) {
+		std::string eventName = event.getName();
 
-		std::string d = event.getInternal()->getDataIndex()->printStructure();
+		//std::string newLine = "\n";
+		//std::string d = event.getInternal()->getDataIndex()->printStructure();
 
-		OutputDebugString((std::string("hearing:") + eventName + newLine).c_str());
+		//OutputDebugString((std::string("hearing event:") + eventName + newLine).c_str());
 		//OutputDebugString(eventName.c_str());
-        
-        
-        // Quit if the escape button is pressed
-        if (eventName == "KbdEsc_Down") {
-            shutdown();
-        } 
-        
-        if (eventName == "Wand0_Move" || eventName == "HTC_Controller_Right" || eventName == "HTC_Controller_1" ||
-										 eventName == "HTC_Controller_Left" || eventName == "HTC_Controller_2") {  //Set up for Wand Movement
+
+
+		// Quit if the escape button is pressed
+		if (eventName == "KbdEsc_Down") {
+			shutdown();
+		}
+
+		if (eventName == "Wand0_Move" || eventName == "HTC_Controller_Right" || eventName == "HTC_Controller_1") {
+			OutputDebugString("right controller\n");
+
+		} else if (eventName == "HTC_Controller_Left" || eventName == "HTC_Controller_2") {  //Set up for Wand Movement
 			
 			w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
-			wandPos = glm::mat4( w[0],  w[1], w[2], w[3],
-                                            w[4],  w[5], w[6], w[7],
-                                            w[8],  w[9],w[10],w[11],
-                                            w[12],w[13],w[14],w[15]);
+			wandPosRoom = glm::mat4( w[0],  w[1], w[2], w[3],
+                                     w[4], w[5], w[6], w[7],
+                                     w[8], w[9], w[10],w[11],
+                                     w[12], w[13], w[14],w[15]);
+			//ren->GetActors()->GetNextActor()->GetScale();
+			wandPosSpace = glm::transpose(glm::translate(-carpetPosition) * glm::rotate(-carpetDirection, carpetUp) * glm::scale(wandPosRoom, carpetScale));
+
+			glm::vec3 wandScale, wandPos, wandSkew;
+			glm::vec4 wandPersp;
+			glm::quat wandQuat;
+			glm::decompose(wandPosRoom, wandScale, wandQuat, wandPos, wandSkew, wandPersp);
+
+			float *f = glm::value_ptr(wandPosSpace);
+			double wandPosSpaceArray[16];
+			for (int i = 0; i < 16; i++) wandPosSpaceArray[i] = f[i];
+
+			rayActorPosition[0] = f[12];
+			rayActorPosition[1] = f[13];
+			rayActorPosition[2] = f[14];
+
+
+			std::ostringstream fss;
+			fss << "room:" << std::endl << printMat(wandPosRoom);
+			fss << "space:" << std::endl << printMat(wandPosSpace);
+
+			//glm::vec4 a = wandPosSpace * glm::vec4(1.0, 0.0, 0.0, 1.0);
+//			fss << "product: (" << a.x << ", " << a.y << ", " << a.z << ", " << a.w << ")" << std::endl;
+			//glm::vec4 b = wandPosSpace * glm::vec4(1.0, 0.0, 1.0, 1.0);
+//			fss << "product: (" << b.x << ", " << b.y << ", " << b.z << ", " << b.w << ")" << std::endl;
+
+//			fss << "rayActorPosition: (" << rayActorPosition[0] << "," << rayActorPosition[1] << "," << rayActorPosition[2] << ")" << std::endl;
+			fss << "carpetDirection:  " << carpetDirection << " (" << carpetUp.x << "," << carpetUp.y << "," << carpetUp.z << ")" << std::endl;
+			fss << "carpetPosition:   (" << carpetPosition.x << "," << carpetPosition.y << "," << carpetPosition.z << ")" << std::endl;
+			OutputDebugString(fss.str().c_str());
+
+
+			glm::quat qWandRot = glm::quat_cast(glm::inverse(wandPosSpace));
+
+			double scale = sqrt(1 - pow(qWandRot.w, 2));
+			rayActorOrientation[0] = (360.0f / 3.1415926f) * acos(qWandRot.w);
+			rayActorOrientation[0] = qWandRot.x / scale;
+			rayActorOrientation[0] = qWandRot.y / scale;
+			rayActorOrientation[0] = qWandRot.z / scale;
+
+			if (rayActor != NULL) { // This is true before the screen is intialized.
+				rayActorTransform->PreMultiply();
+				wandQuat += glm::angleAxis(carpetDirection, carpetUp);
+				//rayActor->SetScale(wandScale.x, wandScale.y, wandScale.z);
+				//rayActor->SetOrientation(glm::pitch(wandQuat), glm::yaw(wandQuat), glm::roll(wandQuat));
+				rayActorTransform->SetMatrix(wandPosSpaceArray);
+				//rayActorTransform->Translate(wandPos.x + carpetPosition.x, wandPos.y + carpetPosition.y, wandPos.z + carpetPosition.z);
+			}
 
 			joystickX = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/XPos", 0.0f);
 			joystickY = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/YPos", 0.0f);
-
+			
 
             if (movingSlide){ //when slide moving
-                slideMat = (wandPos / lastWandPos) * slideMat; //update the model matrix for slide
+                slideMat = (wandPosRoom / lastWandPos) * slideMat; //update the model matrix for slide
             }
 
-		    textMat = wandPos / lastWandPos * textMat;
-            lastWandPos = wandPos;
+		    textMat = wandPosRoom / lastWandPos * textMat;
+            lastWandPos = wandPosRoom;
 
 		} else if (eventName == "HTC_HMD_1") {
 			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
@@ -386,9 +497,8 @@ private:
 			//	PickedActor = NULL;
 			//}
 
-            // Added by Tom
-			OutputDebugString(d.c_str());
-			OutputDebugString((std::string("*************") + eventName + newLine).c_str());
+//			OutputDebugString(d.c_str());
+//			OutputDebugString((std::string("*************") + eventName + newLine).c_str());
 
 			w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/Pose");
 			double selectionPoint[] = { w[12], w[13], w[14] };
@@ -412,10 +522,10 @@ private:
 
 			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/HTC_HMD_1/State/Pose");
 			std::ostringstream lss;
-			lss << " selectionPoint: (" << selectionPoint[0] << ", " << selectionPoint[1] << ", " << selectionPoint[2] << ")" << std::endl;
-			lss << " secondPoint:    (" << secondPoint[0] << ", " << secondPoint[1] << ", " << secondPoint[2] << ")" << std::endl;
-			lss << " orient:       " << orient[0] << ", (" << orient[1] << ", " << orient[2] << ", " << orient[3] << ")" << std::endl;
-			OutputDebugString(lss.str().c_str());
+//			lss << " selectionPoint: (" << selectionPoint[0] << ", " << selectionPoint[1] << ", " << selectionPoint[2] << ")" << std::endl;
+//			lss << " secondPoint:    (" << secondPoint[0] << ", " << secondPoint[1] << ", " << secondPoint[2] << ")" << std::endl;
+//			lss << " orient:       " << orient[0] << ", (" << orient[1] << ", " << orient[2] << ", " << orient[3] << ")" << std::endl;
+//			OutputDebugString(lss.str().c_str());
 
 
 			vtkSmartPointer<vtkPolyData> lpd = vtkSmartPointer<vtkPolyData>::New();
@@ -435,20 +545,20 @@ private:
 			color->InsertNextTypedTuple(red);
 
 			lpd->GetCellData()->SetScalars(color);
-			vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-			mapper->SetInputData(lpd);
+			vtkSmartPointer<vtkPolyDataMapper> raybmapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+			raybmapper->SetInputData(lpd);
 
-			vtkSmartPointer<vtkActor> rayActor = vtkSmartPointer<vtkActor>::New();
-			rayActor->SetMapper(mapper);
-			rayActor->RotateWXYZ(orient[0], orient[1], orient[2], orient[3]);
-			rayActor->SetPosition(selectionPoint);
-			ren->AddActor(rayActor);
+			vtkSmartPointer<vtkActor> rayActorB = vtkSmartPointer<vtkActor>::New();
+			rayActorB->SetMapper(raybmapper);
+			rayActorB->RotateWXYZ(orient[0], orient[1], orient[2], orient[3]);
+			rayActorB->SetPosition(selectionPoint);
+			ren->AddActor(rayActorB);
 
 			picker->Pick3DRay(selectionPoint, orient, ren);
 			vtkActorCollection *ac = picker->GetActors();
 			std::ostringstream actorss;
 			actorss << *ac << std::endl;
-			OutputDebugString(actorss.str().c_str());
+//			OutputDebugString(actorss.str().c_str());
 			ac->InitTraversal();
 			PickedActor = ac->GetNextActor();
 			if (PickedActor == NULL) {
@@ -498,9 +608,14 @@ private:
         }
 
 		if (fabs(joystickY) > 0.1)
-		  cameraTranslate += glm::vec3(wandPos * glm::vec4(0, 0, joystickY, 0));
-		//if (fabs(joystickX) > 0.1)
-		  //cameraRotate = glm::rotate(wandPos, joystickX * .0360f, glm::vec3(0.0, 1.0, 0.0));
+		  carpetPosition += glm::vec3(wandPosRoom * glm::vec4(0, 0, 0.1 * joystickY, 0));
+		if (fabs(joystickX) > 0.1)
+		  carpetDirection += joystickX * .0360f;
+		if (carpetDirection >= 360.0f) carpetDirection -= 360.0f;
+		if (carpetDirection < 0.0f) carpetDirection += 360.0f;
+
+		// Undoing all this above, for testing.
+		//carpetDirection = 0.0f;
 
 		//textMat = wandPos;
 		//textMat = glm::translate(textMat, glm::vec3(0, 0, 1));
@@ -545,7 +660,7 @@ private:
                                             vm[8],  vm[9],vm[10],vm[11],
                                             vm[12],vm[13],vm[14],vm[15]);
 
-			viewMatrix = glm::translate(cameraRotate * viewMatrix, cameraTranslate);
+			viewMatrix = glm::translate(glm::rotate(carpetDirection, carpetUp) * viewMatrix, carpetPosition);
 
             camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
 
@@ -604,8 +719,8 @@ private:
                             this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
                     	} else {
                             this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
-							//textSource->SetText(annotations[i]);
-							//textSource->Update();
+							textSource->SetText(annotations[i]);
+							textSource->Update();
                     	} 
                     }
 
