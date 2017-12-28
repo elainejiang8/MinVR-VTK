@@ -72,8 +72,6 @@ private:
     vtkSmartPointer<vtkExternalOpenGLCamera> camera;
     vector <vtkSmartPointer<vtkActor> > actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
-	vtkSmartPointer<vtkFollower> textActor;
-	vtkSmartPointer<vtkVectorText> textSource;
 	vtkSmartPointer<vtkTransform> txtActorTransform;
 	vtkSmartPointer<vtkVectorText> txtSource;
 	vtkSmartPointer<vtkActor> txtActor;
@@ -187,8 +185,6 @@ private:
 
     void _initializeScene() {
 		ren = vtkSmartPointer<vtkRenderer>::New();
-		textActor = vtkSmartPointer<vtkFollower>::New();
-		textSource = vtkSmartPointer<vtkVectorText>::New();
 		LastPickedActor = vtkSmartPointer<vtkActor>::New();
 		LastPickedProperty = vtkSmartPointer<vtkProperty>::New();
 		picker = vtkSmartPointer<vtkCellPicker>::New();
@@ -196,7 +192,6 @@ private:
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
         ren->SetActiveCamera(camera);
-		textActor->SetCamera(camera);
 
         renWin->AddRenderer(ren);
         externalVTKWidget->GetRenderWindow()->Render();
@@ -277,16 +272,7 @@ private:
         
         /**********************************************************/
 
-		// create a mapper and actor
-		vtkSmartPointer<vtkPolyDataMapper> textMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-		textMapper->SetInputConnection(textSource->GetOutputPort());
-	
-		textActor->SetMapper(textMapper);
-		textActor->GetProperty()->SetColor(0,0,0);
-
-		textActor->SetScale(0.1);	
-		ren->AddActor(textActor);
-
+		// create a mapper and actor for the text legends
 		txtSource = vtkSmartPointer<vtkVectorText>::New();
 		txtSource->SetText("HELLO I AM HERE!!!!");
 
@@ -313,6 +299,7 @@ private:
 
 		txtActor = vtkSmartPointer<vtkActor>::New();
 		txtActor->SetMapper(txtMapper);
+		txtActor->SetScale(0.1);
 
 		ren->AddActor(txtActor);
 
@@ -369,10 +356,10 @@ private:
     bool picked;
     glm::mat4 lastWandPos;
     glm::mat4 slideMat;
-    glm::mat4 textMat;
     glm::mat4 wandPosRoom, wandPosSpace;
-    glm::mat4 headPosRoom, txtPosSpace;
-	glm::mat4 txtPosRoom;
+    glm::mat4 headPosRoom;
+	glm::mat4 txtPosSpace;
+	glm::vec3 txtPos;
 	std::vector<float> w;
 	int actorIndex;
 	vtkSmartPointer<vtkActor> PickedActor;
@@ -385,7 +372,7 @@ private:
 	// rotation matrix for the current state of the carpet.
 	// Use glm::rotate(carpetDirection, carpetUp.x, carpetUp.y, carpetUp.z) to get a rotation matrix.
 	glm::vec3 carpetPosition, carpetUp, carpetScale;
-	float carpetDirection; // (expressed in degrees)
+	float carpetDirection; // (expressed in radians)
 
 	float joystickX, joystickY;
 
@@ -412,10 +399,6 @@ private:
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
         lastWandPos = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
-                                            mm[4],  mm[5], mm[6], mm[7],
-                                            mm[8],  mm[9],mm[10],mm[11],
-                                            mm[12],mm[13],mm[14],mm[15]);
-        textMat = glm::mat4( mm[0],  mm[1], mm[2], mm[3],
                                             mm[4],  mm[5], mm[6], mm[7],
                                             mm[8],  mm[9],mm[10],mm[11],
                                             mm[12],mm[13],mm[14],mm[15]);
@@ -491,7 +474,6 @@ private:
 				slideMat = (wandPosRoom / lastWandPos) * slideMat; //update the model matrix for slide
 			}
 
-			textMat = wandPosRoom / lastWandPos * textMat;
 			lastWandPos = wandPosRoom;
 
 		} else if (eventName == "HTC_Controller_Right_AButton_Pressed" ||
@@ -539,19 +521,25 @@ private:
 
 			picked = true;
 			rayActor->SetVisibility(false);
-			// This is the position where we'll show the text.
-			//txtPosRoom = glm::transpose(headPosRoom);
-			txtPosSpace  = glm::transpose(glm::translate(-carpetPosition) *
-				glm::rotate(-carpetDirection, carpetUp) *
-				glm::scale(carpetScale) * headPosRoom);
+			// This is the pose where we'll show the text.
+			txtPosSpace = glm::transpose(glm::rotate(-carpetDirection, carpetUp) * headPosRoom);
+			// I do not know why VTK refuses to honor the same transform as we use for the ray, so we just use
+			// txtPosSpace as a rotation matrix and move the text position directly.  Calculate it here.
+			txtPos = carpetPosition + glm::vec3(glm::inverse(txtPosSpace) * glm::vec4(1.0f, 0.0f, 5.0f, 1.0f));
 
 		} else if (eventName == "HTC_Controller_1_ApplicationMenuButton_Pressed" || 
 			       eventName == "HTC_Controller_2_ApplicationMenuButton_Pressed" || 
 			       eventName == "HTC_Controller_Right_ApplicationMenuButton_Pressed" || 
 			       eventName == "HTC_Controller_Left_ApplicationMenuButton_Pressed" ) {
 			// If you press the "B" or "Y" button on either of the controllers, that controller will become 
-			// the active one.
-			activeController = eventName.substr(15, 1);
+			// the active one.  If it's already the active one, it just clears the selection.
+			if (activeController == eventName.substr(15, 1)) {
+				// clear the selection
+				picked = true;
+				PickedActor = NULL;
+			} else {
+				activeController = eventName.substr(15, 1);
+			}
 		} else if (eventName == "HTC_HMD_1") {
 
 			// We track the head position, but use it elsewhere.
@@ -602,13 +590,11 @@ private:
 		// Undoing all this above, for testing.
 		//carpetDirection = 0.0f;
 
-		//textMat = wandPos;
-		//textMat = glm::translate(textMat, glm::vec3(0, 0, 1));
-
 		if (picked) {
 			if (PickedActor == NULL) {
-				textSource->SetText("");
-				textSource->Update();
+				txtActor->SetVisibility(false);
+			} else {
+				txtActor->SetVisibility(true);
 			}
 			// If we picked something before, reset its property
 			if (this->LastPickedActor) {
@@ -636,8 +622,8 @@ private:
 					}
 					else {
 						this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
-						textSource->SetText(annotations[i]);
-						textSource->Update();
+						txtSource->SetText(annotations[i]);
+						txtSource->Update();
 					}
 				}
 
@@ -648,13 +634,13 @@ private:
 			picked = false;
 		}
 
-		double textModel[16];
+		double txtModel[16];
 		for (int i = 0; i < 16; i++) {
-			textModel[i] = glm::value_ptr(txtPosSpace)[i];
+			txtModel[i] = glm::value_ptr(txtPosSpace)[i];
 		}
-		txtActorTransform->PreMultiply();
-		txtActorTransform->SetMatrix(textModel);
-
+		txtActorTransform->PostMultiply();
+		txtActorTransform->SetMatrix(txtModel);
+		txtActor->SetPosition(-txtPos.x, -txtPos.y, -txtPos.z);
 	}
 	
     /// This is the heart of any graphics program, the render function.
