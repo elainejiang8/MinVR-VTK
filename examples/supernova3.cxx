@@ -81,18 +81,14 @@ private:
 	vtkSmartPointer<vtkCellPicker>  picker;
 	vtkSmartPointer<vtkActor> rayActor;
 	vtkSmartPointer<vtkTransform> rayActorTransform;
-	double rayActorOrientation[4];
-	double rayActorPosition[3];
 	int NUM_ACTORS = 7;
   
-    // These functions from demo2.cpp are not needed here:
-    //
-    //    init()
-    //    makeWindow()
-    //    resizeWindow()
-    //    ... also most of the processKeys() methods.
-    //
-    // The functionality of these methods is assumed by the MinVR apparatus.
+	// The sensitivity numbers indicate the size of the increment to the carpetPosition and 
+	// direction when the joystick is operated (i.e. a joystick event is received). The threshold 
+	// indicates a minimum joystick position.  Smaller values will be ignored.
+	float joystickAngularSensitivity = 0.0360f;
+	float joystickLinearSensitivity = 0.1f;
+	float joystickThreshold = 0.1f;
 
     // This contains a bunch of sanity checks from the graphics
     // initialization of demo2.xx.  They are still useful with MinVR.
@@ -407,26 +403,27 @@ private:
                                      w[4], w[5], w[6], w[7],
                                      w[8], w[9], w[10],w[11],
                                      w[12], w[13], w[14],w[15]);
-			//ren->GetActors()->GetNextActor()->GetScale();
-			wandPosSpace = glm::transpose(glm::translate(-carpetPosition) * glm::rotate(-carpetDirection, carpetUp) * glm::scale(wandPosRoom, carpetScale));
+			wandPosSpace = glm::transpose(glm::translate(-carpetPosition) *
+				                          glm::rotate(-carpetDirection, carpetUp) * 
+				                          glm::scale(carpetScale) * wandPosRoom);
 
-			glm::vec3 wandScale, wandPos, wandSkew;
-			glm::vec4 wandPersp;
-			glm::quat wandQuat;
-			glm::decompose(wandPosRoom, wandScale, wandQuat, wandPos, wandSkew, wandPersp);
+//			glm::vec3 wandScale, wandPos, wandSkew;
+//			glm::vec4 wandPersp;
+//			glm::quat wandQuat;
+//			glm::decompose(wandPosRoom, wandScale, wandQuat, wandPos, wandSkew, wandPersp);
 
 			float *f = glm::value_ptr(wandPosSpace);
 			double wandPosSpaceArray[16];
 			for (int i = 0; i < 16; i++) wandPosSpaceArray[i] = f[i];
 
-			rayActorPosition[0] = f[12];
-			rayActorPosition[1] = f[13];
-			rayActorPosition[2] = f[14];
+//			rayActorPosition[0] = f[12];
+//			rayActorPosition[1] = f[13];
+//			rayActorPosition[2] = f[14];
 
 
 			std::ostringstream fss;
-			fss << "room:" << std::endl << printMat(wandPosRoom);
-			fss << "space:" << std::endl << printMat(wandPosSpace);
+//			fss << "room:" << std::endl << printMat(wandPosRoom);
+//			fss << "space:" << std::endl << printMat(wandPosSpace);
 
 			//glm::vec4 a = wandPosSpace * glm::vec4(1.0, 0.0, 0.0, 1.0);
 //			fss << "product: (" << a.x << ", " << a.y << ", " << a.z << ", " << a.w << ")" << std::endl;
@@ -434,26 +431,23 @@ private:
 //			fss << "product: (" << b.x << ", " << b.y << ", " << b.z << ", " << b.w << ")" << std::endl;
 
 //			fss << "rayActorPosition: (" << rayActorPosition[0] << "," << rayActorPosition[1] << "," << rayActorPosition[2] << ")" << std::endl;
-			fss << "carpetDirection:  " << carpetDirection << " (" << carpetUp.x << "," << carpetUp.y << "," << carpetUp.z << ")" << std::endl;
-			fss << "carpetPosition:   (" << carpetPosition.x << "," << carpetPosition.y << "," << carpetPosition.z << ")" << std::endl;
-			OutputDebugString(fss.str().c_str());
+//			fss << "carpetDirection:  " << carpetDirection << " (" << carpetUp.x << "," << carpetUp.y << "," << carpetUp.z << ")" << std::endl;
+//			fss << "carpetPosition:   (" << carpetPosition.x << "," << carpetPosition.y << "," << carpetPosition.z << ")" << std::endl;
+//			OutputDebugString(fss.str().c_str());
 
 
-			glm::quat qWandRot = glm::quat_cast(glm::inverse(wandPosSpace));
-
-			double scale = sqrt(1 - pow(qWandRot.w, 2));
-			rayActorOrientation[0] = (360.0f / 3.1415926f) * acos(qWandRot.w);
-			rayActorOrientation[0] = qWandRot.x / scale;
-			rayActorOrientation[0] = qWandRot.y / scale;
-			rayActorOrientation[0] = qWandRot.z / scale;
+//			glm::quat qWandRot = glm::quat_cast(glm::inverse(wandPosSpace));
+//
+//			double scale = sqrt(1 - pow(qWandRot.w, 2));
+//			rayActorOrientation[0] = (360.0f / 3.1415926f) * acos(qWandRot.w);
+//			rayActorOrientation[0] = qWandRot.x / scale;
+//			rayActorOrientation[0] = qWandRot.y / scale;
+//			rayActorOrientation[0] = qWandRot.z / scale;
 
 			if (rayActor != NULL) { // This is true before the screen is intialized.
-				rayActorTransform->PreMultiply();
-				wandQuat += glm::angleAxis(carpetDirection, carpetUp);
-				//rayActor->SetScale(wandScale.x, wandScale.y, wandScale.z);
-				//rayActor->SetOrientation(glm::pitch(wandQuat), glm::yaw(wandQuat), glm::roll(wandQuat));
+				rayActorTransform->PostMultiply();
+//				wandQuat += glm::angleAxis(carpetDirection, carpetUp);
 				rayActorTransform->SetMatrix(wandPosSpaceArray);
-				//rayActorTransform->Translate(wandPos.x + carpetPosition.x, wandPos.y + carpetPosition.y, wandPos.z + carpetPosition.z);
 			}
 
 			joystickX = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/XPos", 0.0f);
@@ -607,10 +601,13 @@ private:
           _initializeScene();
         }
 
-		if (fabs(joystickY) > 0.1)
-		  carpetPosition += glm::vec3(wandPosRoom * glm::vec4(0, 0, 0.1 * joystickY, 0));
-		if (fabs(joystickX) > 0.1)
-		  carpetDirection += joystickX * .0360f;
+		// Increment the carpet position in the z direction of whichever way the carpet and wand are pointed.
+		if (fabs(joystickY) > joystickThreshold) {
+			//carpetUp = glm::vec3(wandPosRoom * glm::vec4(carpetUp, 0));
+			carpetPosition += glm::vec3(glm::inverse(glm::rotate(carpetDirection, carpetUp) * glm::transpose(wandPosRoom)) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 0));
+		}
+		if (fabs(joystickX) > joystickThreshold)
+		  carpetDirection += joystickX * joystickAngularSensitivity;
 		if (carpetDirection >= 360.0f) carpetDirection -= 360.0f;
 		if (carpetDirection < 0.0f) carpetDirection += 360.0f;
 
@@ -660,7 +657,7 @@ private:
                                             vm[8],  vm[9],vm[10],vm[11],
                                             vm[12],vm[13],vm[14],vm[15]);
 
-			viewMatrix = glm::translate(glm::rotate(carpetDirection, carpetUp) * viewMatrix, carpetPosition);
+			viewMatrix = viewMatrix * glm::rotate(carpetDirection, carpetUp) * glm::translate(carpetPosition);
 
             camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
 
