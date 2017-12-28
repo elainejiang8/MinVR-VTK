@@ -8,6 +8,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 
 #include <api/MinVR.h>
 #include <main/VREventInternal.h>
@@ -86,9 +87,11 @@ private:
 	// The sensitivity numbers indicate the size of the increment to the carpetPosition and 
 	// direction when the joystick is operated (i.e. a joystick event is received). The threshold 
 	// indicates a minimum joystick position.  Smaller values will be ignored.
-	float joystickAngularSensitivity = 0.0360f;
+	float joystickAngularSensitivity = 0.03f;
 	float joystickLinearSensitivity = 0.1f;
 	float joystickThreshold = 0.1f;
+#define M_TWOPI 6.2831852f
+#define M_PI 3.1415926
 
     // This contains a bunch of sanity checks from the graphics
     // initialization of demo2.xx.  They are still useful with MinVR.
@@ -301,6 +304,7 @@ private:
 		rayActor = vtkSmartPointer<vtkActor>::New();
 		rayActor->SetMapper(rayMapper);
 		rayActor->GetProperty()->SetLineWidth(10.0f);
+		rayActor->GetProperty()->SetColor(1.0f, 1.0f, 0.0f);
 
 		ren->AddActor(rayActor);
 
@@ -407,46 +411,11 @@ private:
 				                          glm::rotate(-carpetDirection, carpetUp) * 
 				                          glm::scale(carpetScale) * wandPosRoom);
 
-//			glm::vec3 wandScale, wandPos, wandSkew;
-//			glm::vec4 wandPersp;
-//			glm::quat wandQuat;
-//			glm::decompose(wandPosRoom, wandScale, wandQuat, wandPos, wandSkew, wandPersp);
-
-			float *f = glm::value_ptr(wandPosSpace);
 			double wandPosSpaceArray[16];
-			for (int i = 0; i < 16; i++) wandPosSpaceArray[i] = f[i];
-
-//			rayActorPosition[0] = f[12];
-//			rayActorPosition[1] = f[13];
-//			rayActorPosition[2] = f[14];
-
-
-			std::ostringstream fss;
-//			fss << "room:" << std::endl << printMat(wandPosRoom);
-//			fss << "space:" << std::endl << printMat(wandPosSpace);
-
-			//glm::vec4 a = wandPosSpace * glm::vec4(1.0, 0.0, 0.0, 1.0);
-//			fss << "product: (" << a.x << ", " << a.y << ", " << a.z << ", " << a.w << ")" << std::endl;
-			//glm::vec4 b = wandPosSpace * glm::vec4(1.0, 0.0, 1.0, 1.0);
-//			fss << "product: (" << b.x << ", " << b.y << ", " << b.z << ", " << b.w << ")" << std::endl;
-
-//			fss << "rayActorPosition: (" << rayActorPosition[0] << "," << rayActorPosition[1] << "," << rayActorPosition[2] << ")" << std::endl;
-//			fss << "carpetDirection:  " << carpetDirection << " (" << carpetUp.x << "," << carpetUp.y << "," << carpetUp.z << ")" << std::endl;
-//			fss << "carpetPosition:   (" << carpetPosition.x << "," << carpetPosition.y << "," << carpetPosition.z << ")" << std::endl;
-//			OutputDebugString(fss.str().c_str());
-
-
-//			glm::quat qWandRot = glm::quat_cast(glm::inverse(wandPosSpace));
-//
-//			double scale = sqrt(1 - pow(qWandRot.w, 2));
-//			rayActorOrientation[0] = (360.0f / 3.1415926f) * acos(qWandRot.w);
-//			rayActorOrientation[0] = qWandRot.x / scale;
-//			rayActorOrientation[0] = qWandRot.y / scale;
-//			rayActorOrientation[0] = qWandRot.z / scale;
+			for (int i = 0; i < 16; i++) wandPosSpaceArray[i] = glm::value_ptr(wandPosSpace)[i];
 
 			if (rayActor != NULL) { // This is true before the screen is intialized.
 				rayActorTransform->PostMultiply();
-//				wandQuat += glm::angleAxis(carpetDirection, carpetUp);
 				rayActorTransform->SetMatrix(wandPosSpaceArray);
 			}
 
@@ -603,13 +572,20 @@ private:
 
 		// Increment the carpet position in the z direction of whichever way the carpet and wand are pointed.
 		if (fabs(joystickY) > joystickThreshold) {
-			//carpetUp = glm::vec3(wandPosRoom * glm::vec4(carpetUp, 0));
-			carpetPosition += glm::vec3(glm::inverse(glm::rotate(carpetDirection, carpetUp) * glm::transpose(wandPosRoom)) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 0));
+			carpetPosition += glm::vec3(glm::rotate(-carpetDirection, carpetUp) * glm::inverse(glm::transpose(wandPosRoom)) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 1.0));
+//			carpetPosition += glm::vec3(glm::transpose(glm::rotate(carpetDirection, carpetUp) * wandPosRoom) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 1.0));
 		}
 		if (fabs(joystickX) > joystickThreshold)
 		  carpetDirection += joystickX * joystickAngularSensitivity;
-		if (carpetDirection >= 360.0f) carpetDirection -= 360.0f;
-		if (carpetDirection < 0.0f) carpetDirection += 360.0f;
+		if (carpetDirection >= M_TWOPI) carpetDirection -= M_TWOPI;
+		if (carpetDirection < 0.0f) carpetDirection += M_TWOPI;
+
+
+		rayActor->GetProperty()->SetColor(0.5 + 0.5 * cos(carpetDirection), 0.5 + 0.5 * sin(carpetDirection), 0.0f);
+		std::ostringstream hss;
+		hss << "direction:" << carpetDirection << std::endl;
+		OutputDebugString(hss.str().c_str());
+
 
 		// Undoing all this above, for testing.
 		//carpetDirection = 0.0f;
