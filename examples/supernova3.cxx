@@ -58,6 +58,7 @@
 #include <vtkFollower.h>
 #include <vtkTextMapper.h>
 #include <vtkTextActor.h>
+#include <vtkLinearExtrusionFilter.h>
 
 using namespace std;
 
@@ -73,7 +74,10 @@ private:
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 	vtkSmartPointer<vtkFollower> textActor;
 	vtkSmartPointer<vtkVectorText> textSource;
-    vector <const char *> titles;
+	vtkSmartPointer<vtkTransform> txtActorTransform;
+	vtkSmartPointer<vtkVectorText> txtSource;
+	vtkSmartPointer<vtkActor> txtActor;
+	vector <const char *> titles;
     vector <const char *> annotations;
 	vtkSmartPointer<vtkActor> LastPickedActor;
 	vtkSmartPointer<vtkProperty> LastPickedProperty;
@@ -192,6 +196,8 @@ private:
         vtkNew<vtkExternalOpenGLRenderWindow> renWin;
         externalVTKWidget->SetRenderWindow(renWin.GetPointer());
         ren->SetActiveCamera(camera);
+		textActor->SetCamera(camera);
+
         renWin->AddRenderer(ren);
         externalVTKWidget->GetRenderWindow()->Render();
 
@@ -239,8 +245,7 @@ private:
             mapper->SetInputConnection(normals->GetOutputPort());
             mapper->ScalarVisibilityOff();
 
-            vtkSmartPointer<vtkActor> actor =
-            vtkSmartPointer<vtkActor>::New();
+            vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
             actor->SetMapper(mapper);
             actor->GetProperty()->SetInterpolationToFlat();
             actor->GetProperty()->SetOpacity(1);
@@ -282,6 +287,37 @@ private:
 		textActor->SetScale(0.1);	
 		ren->AddActor(textActor);
 
+		txtSource = vtkSmartPointer<vtkVectorText>::New();
+		txtSource->SetText("HELLO I AM HERE!!!!");
+
+		vtkSmartPointer<vtkLinearExtrusionFilter> extrude = vtkSmartPointer<vtkLinearExtrusionFilter>::New();
+		extrude->SetInputConnection(txtSource->GetOutputPort());
+		extrude->SetExtrusionTypeToNormalExtrusion();
+		extrude->SetVector(0.0f, 0.0f, 1.0f);
+		extrude->SetScaleFactor(0.5);
+
+		vtkSmartPointer<vtkTransformPolyDataFilter> txtTransformFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+		txtTransformFilter->SetInputConnection(extrude->GetOutputPort());
+
+		txtActorTransform = vtkSmartPointer<vtkTransform>::New();
+
+		glm::mat4 tmat = glm::mat4(1.0);
+		double td[16];
+		for (int i = 0; i < 16; i++) td[i] = glm::value_ptr(tmat)[i];
+
+		txtActorTransform->SetMatrix(td);
+		txtTransformFilter->SetTransform(txtActorTransform);
+
+		vtkSmartPointer<vtkPolyDataMapper> txtMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+		txtMapper->SetInputConnection(txtTransformFilter->GetOutputPort());
+
+		txtActor = vtkSmartPointer<vtkActor>::New();
+		txtActor->SetMapper(txtMapper);
+
+		ren->AddActor(txtActor);
+
+
+
 
 		/**********************************************************/
 	
@@ -291,6 +327,7 @@ private:
 		// Add a ray extending from the right touch controller.  Usually this will not be visible,
 		// but will be made visible when the A button is pressed.
 		double origin[3] = { 0.0, 0.0, -0.001 };
+		// The positive Z axis points out the back of the camera, so our ray has its far end at negative Z.
 		double point[3] = { 0.0, 0.0, -10.0 };
 		vtkSmartPointer<vtkLineSource> ray = vtkSmartPointer<vtkLineSource>::New();
 		ray->SetPoint1(origin);
@@ -334,7 +371,8 @@ private:
     glm::mat4 slideMat;
     glm::mat4 textMat;
     glm::mat4 wandPosRoom, wandPosSpace;
-    glm::mat4 headPosRoom, headPosSpace;
+    glm::mat4 headPosRoom, txtPosSpace;
+	glm::mat4 txtPosRoom;
 	std::vector<float> w;
 	int actorIndex;
 	vtkSmartPointer<vtkActor> PickedActor;
@@ -501,6 +539,11 @@ private:
 
 			picked = true;
 			rayActor->SetVisibility(false);
+			// This is the position where we'll show the text.
+			//txtPosRoom = glm::transpose(headPosRoom);
+			txtPosSpace  = glm::transpose(glm::translate(-carpetPosition) *
+				glm::rotate(-carpetDirection, carpetUp) *
+				glm::scale(carpetScale) * headPosRoom);
 
 		} else if (eventName == "HTC_Controller_1_ApplicationMenuButton_Pressed" || 
 			       eventName == "HTC_Controller_2_ApplicationMenuButton_Pressed" || 
@@ -510,25 +553,13 @@ private:
 			// the active one.
 			activeController = eventName.substr(15, 1);
 		} else if (eventName == "HTC_HMD_1") {
-			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
 
+			// We track the head position, but use it elsewhere.
+			std::vector<float> h = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
 			headPosRoom = glm::mat4(h[0], h[1], h[2], h[3],
 								h[4], h[5], h[6], h[7],
 								h[8], h[9], h[10], h[11],
 								h[12], h[13], h[14], h[15]);
-			headPosSpace = glm::transpose(glm::translate(-carpetPosition) *
-				glm::rotate(-carpetDirection, carpetUp) *
-				glm::scale(carpetScale) * headPosRoom);
-
-//			double headPosSpaceArray[16];
-//			for (int i = 0; i < 16; i++) headPosSpaceArray[i] = glm::value_ptr(headPosSpace)[i];
-
-//			if (rayActor != NULL) { // This is true before the screen is intialized.
-//				if (rayActor->GetVisibility()) {
-//					rayActorTransform->PostMultiply();
-//					rayActorTransform->SetMatrix(wandPosSpaceArray);
-//				}
-//			}
 
 		} else if (eventName == "Wand_Right_Btn_Down") {
             movingSlide = true;
@@ -555,7 +586,6 @@ private:
 		// Increment the carpet position in the z direction of whichever way the carpet and wand are pointed.
 		if (fabs(joystickY) > joystickThreshold) {
 			carpetPosition += glm::vec3(glm::rotate(-carpetDirection, carpetUp) * glm::inverse(glm::transpose(wandPosRoom)) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 1.0));
-//			carpetPosition += glm::vec3(glm::transpose(glm::rotate(carpetDirection, carpetUp) * wandPosRoom) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 1.0));
 		}
 		if (fabs(joystickX) > joystickThreshold)
 		  carpetDirection += joystickX * joystickAngularSensitivity;
@@ -574,7 +604,57 @@ private:
 
 		//textMat = wandPos;
 		//textMat = glm::translate(textMat, glm::vec3(0, 0, 1));
-	
+
+		if (picked) {
+			if (PickedActor == NULL) {
+				textSource->SetText("");
+				textSource->Update();
+			}
+			// If we picked something before, reset its property
+			if (this->LastPickedActor) {
+				this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+
+				for (int i = 0; i < NUM_ACTORS; i++) {
+					this->OtherActors[i]->GetProperty()->DeepCopy(this->OtherProperties[i]);
+				}
+			}
+
+			this->LastPickedActor = PickedActor;
+
+			if (this->LastPickedActor) {
+				// Save the property of the picked actor so that we can
+				// restore it next time
+				this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
+				for (int i = 0; i < NUM_ACTORS; i++) {
+					this->OtherProperties[i]->DeepCopy(this->OtherActors[i]->GetProperty());
+				}
+				// Highlight the picked actor by changing its properties
+				for (int i = 0; i < NUM_ACTORS; i++) {
+					if (actors[i] != LastPickedActor) {
+						// Set the unpicked actors to grey.
+						this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
+					}
+					else {
+						this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
+						textSource->SetText(annotations[i]);
+						textSource->Update();
+					}
+				}
+
+				this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
+				this->LastPickedActor->GetProperty()->SetSpecular(0.0);
+			}
+
+			picked = false;
+		}
+
+		double textModel[16];
+		for (int i = 0; i < 16; i++) {
+			textModel[i] = glm::value_ptr(txtPosSpace)[i];
+		}
+		txtActorTransform->PreMultiply();
+		txtActorTransform->SetMatrix(textModel);
+
 	}
 	
     /// This is the heart of any graphics program, the render function.
@@ -644,58 +724,6 @@ private:
             for(int i = 0; i < NUM_ACTORS; i++) {
                 actors[i]->SetUserMatrix(sm);
             }
-
-	   if(picked) {
-		   if (PickedActor == NULL) {
-			   textSource->SetText("");
-			   textSource->Update();
-		   }
-		 // If we picked something before, reset its property
-            	if (this->LastPickedActor) {
-                    this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
-
-                    for(int i = 0; i < NUM_ACTORS; i++) {
-                    	this->OtherActors[i]->GetProperty()->DeepCopy(this->OtherProperties[i]);
-                    }
-            	}
-
-            	this->LastPickedActor = PickedActor;
-
-            	if (this->LastPickedActor) {
-                    // Save the property of the picked actor so that we can
-                    // restore it next time
-                    this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
-                    for(int i = 0; i < NUM_ACTORS; i++) {
-                    	this->OtherProperties[i]->DeepCopy(this->OtherActors[i]->GetProperty());
-                    }
-                    // Highlight the picked actor by changing its properties
-                    for(int i = 0; i < NUM_ACTORS; i++) {
-                    	if(actors[i] != LastPickedActor) {
-							// Set the unpicked actors to grey.
-                            this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
-                    	} else {
-                            this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
-							textSource->SetText(annotations[i]);
-							textSource->Update();
-                    	} 
-                    }
-
-                    this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
-                    this->LastPickedActor->GetProperty()->SetSpecular(0.0);
-            	}
-
-					picked = false;
-			}
-
-			double textModel[16];
-			for(int i = 0; i < 16; i++) {
-				textModel[i] = glm::value_ptr(headPosSpace)[i];
-			}
-
-			vtkSmartPointer<vtkMatrix4x4> tm = vtkSmartPointer<vtkMatrix4x4>::New();
-			tm->DeepCopy(textModel);
-			tm->Transpose();
-			textActor->SetUserMatrix(tm);
 
             
             externalVTKWidget->GetRenderWindow()->Render();
