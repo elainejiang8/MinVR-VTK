@@ -299,7 +299,8 @@ private:
 
 		txtActor = vtkSmartPointer<vtkActor>::New();
 		txtActor->SetMapper(txtMapper);
-		txtActor->SetScale(0.1);
+		txtActor->SetScale(0.15);
+		txtActor->GetProperty()->SetColor(0.5f, 0.7f, 0.9f);
 
 		ren->AddActor(txtActor);
 
@@ -525,7 +526,7 @@ private:
 			txtPosSpace = glm::transpose(glm::rotate(-carpetDirection, carpetUp) * headPosRoom);
 			// I do not know why VTK refuses to honor the same transform as we use for the ray, so we just use
 			// txtPosSpace as a rotation matrix and move the text position directly.  Calculate it here.
-			txtPos = carpetPosition + glm::vec3(glm::inverse(txtPosSpace) * glm::vec4(1.0f, 0.0f, 5.0f, 1.0f));
+			txtPos = carpetPosition + glm::vec3(glm::inverse(txtPosSpace) * glm::vec4(2.5f, 0.0f, 5.0f, 1.0f));
 
 		} else if (eventName == "HTC_Controller_1_ApplicationMenuButton_Pressed" || 
 			       eventName == "HTC_Controller_2_ApplicationMenuButton_Pressed" || 
@@ -581,7 +582,7 @@ private:
 		if (carpetDirection < 0.0f) carpetDirection += M_TWOPI;
 
 
-		rayActor->GetProperty()->SetColor(0.5 + 0.5 * cos(carpetDirection), 0.5 + 0.5 * sin(carpetDirection), 0.0f);
+//		rayActor->GetProperty()->SetColor(0.5 + 0.5 * cos(carpetDirection), 0.5 + 0.5 * sin(carpetDirection), 0.0f);
 //		std::ostringstream hss;
 //		hss << "direction:" << carpetDirection << std::endl;
 //		OutputDebugString(hss.str().c_str());
