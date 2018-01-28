@@ -2,7 +2,7 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkStructuredPointsReader.h>
+#include <vtkRectilinearGridReader.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkVolumeProperty.h>
@@ -11,11 +11,43 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
 #include <vtkCamera.h>
+#include <vtkDataSetMapper.h>
+#include <vtkUnstructuredGrid.h>
+#include <vtkRectilinearGrid.h>
+#include <vtkDataArray.h>
+#include <vtkPointData.h>
+#include <vtkDataSetTriangleFilter.h>
+#include <vtkOpenGLProjectedTetrahedraMapper.h>
+#include <vtkUnstructuredGridVolumeMapper.h>
+#include <vtkAppendFilter.h>
+
+#include <vtkActor.h>
+#include <vtkContourFilter.h>
+#include <vtkCutter.h>
+#include <vtkExtractGrid.h>
+#include <vtkLookupTable.h>
+#include <vtkStripper.h>
+#include <vtkMultiBlockDataSet.h>
+#include <vtkMultiBlockPLOT3DReader.h>
+#include <vtkPlane.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkPolyDataNormals.h>
+#include <vtkProperty.h>
+#include <vtkCamera.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkStructuredGrid.h>
+#include <vtkStructuredGridOutlineFilter.h>
+#include <vtkTubeFilter.h>
+#include <vtkNamedColors.h>
 
 std::string filename;
 vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
 vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 int opacity = 20;
+int NUM_ACTORS = 4;
+std::vector <vtkSmartPointer<vtkActor>> actors;
 
 void draw(int opacity) {
     vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
@@ -63,12 +95,16 @@ vtkStandardNewMacro(KeyPressInteractorStyle);
 
 
 int main(int argc, char *argv[]) {
-    if(argc < 2) {
+    if(argc < 1) {
         std::cerr <<"Required arguments: vtkFile" << std::endl;
         return EXIT_FAILURE;
     }
     
-    filename = argv[1]; // "/Data/ironProt.vtk;
+    std::vector<std::string> files;
+    files.push_back(std::string("../data/dens_0012.vtk"));
+    files.push_back(std::string("../data/dens_0030.vtk"));
+    files.push_back(std::string("../data/dens_ism_0012.vtk"));
+    files.push_back(std::string("../data/dens_ism_0030.vtk"));
     
      // create the renderers, render window, and interactor
     vtkSmartPointer<vtkRenderer> ren = vtkSmartPointer<vtkRenderer>::New();
@@ -89,48 +125,51 @@ int main(int argc, char *argv[]) {
     vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
     iren->SetRenderWindow(renWin);
     
-    // read the data from a vtk file
-    vtkSmartPointer<vtkStructuredPointsReader> reader = vtkSmartPointer<vtkStructuredPointsReader>::New();
-    reader->SetFileName(filename.c_str());
-    reader->Update();
+    for(int i = 0; i < NUM_ACTORS; i++) {
     
-    // create transfer mapping scalar value to opacity
-    vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
-    opacityTransferFunction->AddPoint(20, 0.0);
-    opacityTransferFunction->AddPoint(255, 0.2);
-    
-    // create transfer mapping scalar value to color
-    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-    colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(64.0, 1.0, 0.0, 0.0);
-    colorTransferFunction->AddRGBPoint(128.0, 0.0, 0.0, 1.0);
-    colorTransferFunction->AddRGBPoint(192.0, 0.0, 1.0, 0.0);
-    colorTransferFunction->AddRGBPoint(255.0, 0.0, 0.2, 0.0);
-    
-    // the property describes how the data will look
-    
-    volumeProperty->SetColor(colorTransferFunction);
-    volumeProperty->SetScalarOpacity(opacityTransferFunction);
-    volumeProperty->ShadeOn();
-    volumeProperty->SetInterpolationTypeToLinear();
-    
-    // the mapper/ray cast function knows how to render the data
-    vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
-    volumeMapper->SetInputConnection(reader->GetOutputPort());
-    
-    // the volume holds the mapper and the property and can be used to position/orient the volume
-    vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
-    volume->SetMapper(volumeMapper);
-    volume->SetProperty(volumeProperty);
-    volume->SetOrigin(0, 0, 0);
-    volume->SetPosition(0, 0, 0);
+        // read the data from a vtk file
+        vtkSmartPointer<vtkRectilinearGridReader> reader = vtkSmartPointer<vtkRectilinearGridReader>::New();
+        reader->SetFileName(files[i].c_str());
+        reader->Update();
+
+        // create transfer mapping scalar value to opacity
+        vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
+        opacityTransferFunction->AddPoint(20, 0.0);
+        opacityTransferFunction->AddPoint(255, 0.2);
+
+        // create transfer mapping scalar value to color
+        vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
+        colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.0, 0.0);
+        colorTransferFunction->AddRGBPoint(64.0, 1.0, 0.0, 0.0);
+        colorTransferFunction->AddRGBPoint(128.0, 0.0, 0.0, 1.0);
+        colorTransferFunction->AddRGBPoint(192.0, 0.0, 1.0, 0.0);
+        colorTransferFunction->AddRGBPoint(255.0, 0.0, 0.2, 0.0);
+
+        // the property describes how the data will look
+
+        volumeProperty->SetColor(colorTransferFunction);
+        volumeProperty->SetScalarOpacity(opacityTransferFunction);
+        volumeProperty->ShadeOn();
+        volumeProperty->SetInterpolationTypeToLinear();
+
+        // the mapper/ray cast function knows how to render the data
+        vtkSmartPointer<vtkDataSetMapper> volumeMapper = vtkSmartPointer<vtkDataSetMapper>::New();
+        volumeMapper->SetInputConnection(reader->GetOutputPort());
+
+        // the volume holds the mapper and the property and can be used to position/orient the volume
+        vtkSmartPointer<vtkActor> volume = vtkSmartPointer<vtkActor>::New();
+        volume->SetMapper(volumeMapper);
+        //volume->SetProperty(volumeProperty);
+        volume->SetOrigin(0, 0, 0);
+        volume->SetPosition(0, 0, 0);
+
+        ren->AddVolume(volume);
+    }
     
     // a keypress interactor
     vtkSmartPointer<KeyPressInteractorStyle> style = vtkSmartPointer<KeyPressInteractorStyle>::New();
     iren->SetInteractorStyle(style);
     style->SetCurrentRenderer(ren);
-    
-    ren->AddVolume(volume);
     ren->SetActiveCamera(camera);
     ren->ResetCamera();
     
@@ -145,5 +184,96 @@ int main(int argc, char *argv[]) {
     
     
     return 0;
-    
+
+// Perform psuedo volume rendering in a structured grid by compositing
+// translucent cut planes. This same trick can be used for unstructured
+// grids. Note that for better results, more planes can be created. Also,
+// if your data is vtkImageData, there are much faster methods for volume
+// rendering.
+
+//int main (int argc, char *argv[])
+//{
+////  if (argc < 1)
+////  {
+////    std::cout << "Usage: " << argv[0] << " combxyz.bin combq.bin" << std::endl;
+////    return EXIT_FAILURE;
+////  }
+//    
+//    std::vector<std::string> files;
+//    files.push_back(std::string("../data/dens_0012.vtk"));
+//    files.push_back(std::string("../data/dens_0030.vtk"));
+//    files.push_back(std::string("../data/dens_ism_0012.vtk"));
+//    files.push_back(std::string("../data/dens_ism_0030.vtk"));
+//
+//    // Read the file.
+//    vtkSmartPointer<vtkRectilinearGridReader> vtrReader = vtkSmartPointer<vtkRectilinearGridReader>::New();
+//    vtrReader->SetFileName(files[1].c_str());
+//    vtrReader->Update();
+//    vtkSmartPointer<vtkRectilinearGrid> grid = vtrReader->GetOutput();
+//    //vtkSmartPointer<vtkDataArray> scalars = grid->GetPointData()->GetArray("temperatures");
+//
+//    // Convert the vtkRectilinearGrid to vtkUnstructuredGrid.
+//    vtkSmartPointer<vtkStructuredGrid> sgrid = vtkSmartPointer<vtkStructuredGrid>::New();
+//    vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+//    grid->GetPoints(points);
+//    sgrid->SetPoints(points);
+//    //sgrid->GetPointData()->SetScalars(scalars);
+//
+////    for (unsigned int i = 0; i < grid->GetNumberOfCells(); i++){
+////        vtkCell* cell = grid->GetCell(i);
+////        sgrid->InsertNextCell(cell->GetCellType(), cell->GetPointIds());
+////    }
+//
+//    // Make sure we have only tetrahedra. (may be slow for big data. tip: save the result to a file)
+//    //vtkSmartPointer<vtkDataSetTriangleFilter> trifilter = vtkSmartPointer<vtkDataSetTriangleFilter>::New();
+//    //trifilter->SetInputData(ugrid);
+//    
+//    vtkSmartPointer<vtkAppendFilter> appendFilter = vtkSmartPointer<vtkAppendFilter>::New();
+//    appendFilter->AddInputData(sgrid);
+//    appendFilter->Update();
+//
+//    // The mapper that renders the volume data.
+//    vtkSmartPointer<vtkFixedPointVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>::New();
+//    volumeMapper->SetInputConnection(appendFilter->GetOutputPort());
+//
+//    // Create transfer mapping scalar value to opacity.
+//    vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
+//    opacityTransferFunction->AddPoint(20, 0.05);
+//    opacityTransferFunction->AddPoint(255, 0.5);
+//
+//    // Create transfer mapping scalar value to color.
+//    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
+//    colorTransferFunction->AddRGBPoint(0, 0.0, 0.0, 1.0);
+//    colorTransferFunction->AddRGBPoint(64, 1.0, 0.0, 0.0);
+//
+//    // The property describes how the data will look.
+//    vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+//    volumeProperty->SetColor(colorTransferFunction);
+//    volumeProperty->SetScalarOpacity(opacityTransferFunction);
+//    volumeProperty->SetScalarOpacityUnitDistance(300);
+//    volumeProperty->ShadeOff();
+//
+//    // Creation of the volume.
+//    vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
+//    volume->SetMapper(volumeMapper);
+//    volume->SetProperty(volumeProperty);
+//
+//    // Usual visualization.
+//    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+//    //renderer->AddVolume(volume);
+//    vtkSmartPointer<vtkRenderWindow> window = vtkSmartPointer<vtkRenderWindow>::New();
+//    window->Render();
+//    
+//    vtkSmartPointer<vtkInteractorStyleTrackballCamera> style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+//    vtkSmartPointer<vtkRenderWindowInteractor> interactor = 
+//    
+//    vtkRenderWindowInteractor::New();
+//    interactor->SetRenderWindow(window);
+//    interactor->SetInteractorStyle(style);
+//    interactor->Initialize();
+//    interactor->Start();
+//
+//    return EXIT_SUCCESS;
 }
+
+    

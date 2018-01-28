@@ -45,19 +45,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/ejiang1/MinVR-VTK-8
+CMAKE_SOURCE_DIR = /Users/elaine/YURT/MinVR-VTK
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/ejiang1/MinVR-VTK-8/build
+CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
 
 #=============================================================================
 # Directory level rules for directory src
@@ -84,7 +84,7 @@ src/preinstall:
 src/CMakeFiles/minvr-vtk.dir/all:
 	$(MAKE) -f src/CMakeFiles/minvr-vtk.dir/build.make src/CMakeFiles/minvr-vtk.dir/depend
 	$(MAKE) -f src/CMakeFiles/minvr-vtk.dir/build.make src/CMakeFiles/minvr-vtk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=5,6,7 "Built target minvr-vtk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=5,6,7 "Built target minvr-vtk"
 .PHONY : src/CMakeFiles/minvr-vtk.dir/all
 
 # Include target in all.
@@ -94,9 +94,9 @@ all: src/CMakeFiles/minvr-vtk.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/minvr-vtk.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/minvr-vtk.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/minvr-vtk.dir/rule
 
 # Convenience name for target.
@@ -145,7 +145,7 @@ examples/preinstall:
 examples/CMakeFiles/demo3.dir/all: src/CMakeFiles/minvr-vtk.dir/all
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo3.dir/build.make examples/CMakeFiles/demo3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=3,4 "Built target demo3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=3,4 "Built target demo3"
 .PHONY : examples/CMakeFiles/demo3.dir/all
 
 # Include target in all.
@@ -155,9 +155,9 @@ all: examples/CMakeFiles/demo3.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/demo3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo3.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : examples/CMakeFiles/demo3.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ clean: examples/CMakeFiles/demo3.dir/clean
 examples/CMakeFiles/supernova3.dir/all: src/CMakeFiles/minvr-vtk.dir/all
 	$(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/depend
 	$(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=10,11 "Built target supernova3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=10,11 "Built target supernova3"
 .PHONY : examples/CMakeFiles/supernova3.dir/all
 
 # Include target in all.
@@ -192,9 +192,9 @@ all: examples/CMakeFiles/supernova3.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/supernova3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova3.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : examples/CMakeFiles/supernova3.dir/rule
 
 # Convenience name for target.
@@ -219,7 +219,7 @@ clean: examples/CMakeFiles/supernova3.dir/clean
 examples/CMakeFiles/supernova.dir/all:
 	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/depend
 	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=8,9 "Built target supernova"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=8,9 "Built target supernova"
 .PHONY : examples/CMakeFiles/supernova.dir/all
 
 # Include target in all.
@@ -229,9 +229,9 @@ all: examples/CMakeFiles/supernova.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/supernova.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/supernova.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : examples/CMakeFiles/supernova.dir/rule
 
 # Convenience name for target.
@@ -256,7 +256,7 @@ clean: examples/CMakeFiles/supernova.dir/clean
 examples/CMakeFiles/demo.dir/all:
 	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/depend
 	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=1,2 "Built target demo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=1,2 "Built target demo"
 .PHONY : examples/CMakeFiles/demo.dir/all
 
 # Include target in all.
@@ -266,9 +266,9 @@ all: examples/CMakeFiles/demo.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/demo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/demo.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/ejiang1/MinVR-VTK-8/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/elaine/YURT/MinVR-VTK/build/CMakeFiles 0
 .PHONY : examples/CMakeFiles/demo.dir/rule
 
 # Convenience name for target.

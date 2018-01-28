@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /gpfs/runtime/opt/cmake/3.8.1/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/ejiang1/MinVR-VTK-8
+CMAKE_SOURCE_DIR = /Users/elaine/YURT/MinVR-VTK
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/ejiang1/MinVR-VTK-8/build
+CMAKE_BINARY_DIR = /Users/elaine/YURT/MinVR-VTK/build
 
 # Include any dependencies generated for this target.
 include examples/CMakeFiles/demo3.dir/depend.make
@@ -59,16 +59,16 @@ include examples/CMakeFiles/demo3.dir/flags.make
 
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: examples/CMakeFiles/demo3.dir/flags.make
 examples/CMakeFiles/demo3.dir/demo3.cxx.o: ../examples/demo3.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object examples/CMakeFiles/demo3.dir/demo3.cxx.o"
-	cd /users/ejiang1/MinVR-VTK-8/build/examples && /gpfs/runtime/opt/gcc/5.2.0/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo3.dir/demo3.cxx.o -c /users/ejiang1/MinVR-VTK-8/examples/demo3.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object examples/CMakeFiles/demo3.dir/demo3.cxx.o"
+	cd /Users/elaine/YURT/MinVR-VTK/build/examples && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo3.dir/demo3.cxx.o -c /Users/elaine/YURT/MinVR-VTK/examples/demo3.cxx
 
 examples/CMakeFiles/demo3.dir/demo3.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/demo3.dir/demo3.cxx.i"
-	cd /users/ejiang1/MinVR-VTK-8/build/examples && /gpfs/runtime/opt/gcc/5.2.0/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/ejiang1/MinVR-VTK-8/examples/demo3.cxx > CMakeFiles/demo3.dir/demo3.cxx.i
+	cd /Users/elaine/YURT/MinVR-VTK/build/examples && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/elaine/YURT/MinVR-VTK/examples/demo3.cxx > CMakeFiles/demo3.dir/demo3.cxx.i
 
 examples/CMakeFiles/demo3.dir/demo3.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/demo3.dir/demo3.cxx.s"
-	cd /users/ejiang1/MinVR-VTK-8/build/examples && /gpfs/runtime/opt/gcc/5.2.0/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/ejiang1/MinVR-VTK-8/examples/demo3.cxx -o CMakeFiles/demo3.dir/demo3.cxx.s
+	cd /Users/elaine/YURT/MinVR-VTK/build/examples && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/elaine/YURT/MinVR-VTK/examples/demo3.cxx -o CMakeFiles/demo3.dir/demo3.cxx.s
 
 examples/CMakeFiles/demo3.dir/demo3.cxx.o.requires:
 
@@ -91,134 +91,131 @@ demo3_EXTERNAL_OBJECTS =
 bin/demo3: examples/CMakeFiles/demo3.dir/demo3.cxx.o
 bin/demo3: examples/CMakeFiles/demo3.dir/build.make
 bin/demo3: src/libminvr-vtk.a
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkDomainsChemistry-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersFlowPaths-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersGeneric-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersHyperTree-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersParallelImaging-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersPoints-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersProgrammable-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersSMP-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersSelection-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersTexture-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersTopology-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersVerdict-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkverdict-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkGeovisCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkproj4-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOAMR-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOEnSight-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOExodus-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOExportOpenGL-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOImport-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOInfovis-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtklibxml2-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOLSDyna-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOMINC-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOMovie-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkoggtheora-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOPLY-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOParallel-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkjsoncpp-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOParallelXML-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOSQL-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtksqlite-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOTecplotTable-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOVideo-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingMath-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingMorphological-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingStatistics-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingStencil-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkInteractionImage-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingExternal-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingImage-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingLIC-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingLOD-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingVolumeOpenGL-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkViewsContext2D-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkViewsInfovis-8.0.so.1
-bin/demo3: /gpfs/home/ejiang1/MinVR/build/lib/libMinVR.a
-bin/demo3: /usr/lib64/libGLU.so
-bin/demo3: /usr/lib64/libGL.so
-bin/demo3: /gpfs/runtime/opt/freeglut/2.8.1/lib/libglut.so
-bin/demo3: /gpfs/runtime/opt/glew/1.13.0/lib64/libGLEW.so
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersAMR-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOExport-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtklibharu-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingGL2PS-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingContextOpenGL-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkgl2ps-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersParallel-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkexoIIc-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOGeometry-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIONetCDF-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtknetcdf_c++.so.4.2.0
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkNetCDF-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkhdf5_hl-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkhdf5-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkParallelCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOLegacy-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingOpenGL-8.0.so.1
-bin/demo3: /usr/lib64/libSM.so
-bin/demo3: /usr/lib64/libICE.so
-bin/demo3: /usr/lib64/libX11.so
-bin/demo3: /usr/lib64/libXext.so
-bin/demo3: /usr/lib64/libXt.so
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkChartsCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingContext2D-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersImaging-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkInfovisLayout-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkInfovisCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkViewsCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkInteractionWidgets-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersHybrid-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingGeneral-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingSources-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersModeling-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingHybrid-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOImage-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkDICOMParser-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkmetaio-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkpng-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtktiff-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkjpeg-8.0.so.1
-bin/demo3: /usr/lib64/libm.so
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkInteractionStyle-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersExtraction-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersStatistics-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingFourier-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkalglib-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingAnnotation-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingColor-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingVolume-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkImagingCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOXML-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOXMLParser-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkIOCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtklz4-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkexpat-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingLabel-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingFreeType-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkRenderingCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonColor-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersGeometry-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersSources-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersGeneral-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonComputationalGeometry-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkFiltersCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonExecutionModel-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonDataModel-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonTransforms-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonMisc-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonMath-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonSystem-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkCommonCore-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtksys-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkfreetype-8.0.so.1
-bin/demo3: /gpfs/runtime/opt/vtk/8.0.0/lib/libvtkzlib-8.0.so.1
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkDomainsChemistry-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersFlowPaths-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersGeneric-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersHyperTree-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersParallelImaging-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersPoints-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersProgrammable-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersSMP-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersSelection-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersTexture-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersTopology-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersVerdict-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkverdict-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkGeovisCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkproj4-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOAMR-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOEnSight-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOExodus-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOExportOpenGL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOImport-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOInfovis-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtklibxml2-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOLSDyna-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOMINC-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOMovie-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkoggtheora-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOPLY-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOParallel-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkjsoncpp-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOParallelXML-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOSQL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtksqlite-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOTecplotTable-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOVideo-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingMath-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingMorphological-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingStatistics-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingStencil-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkInteractionImage-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkLocalExample-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingExternal-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingImage-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingLIC-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingLOD-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingVolumeOpenGL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkTestingGenericBridge-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkTestingIOSQL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkTestingRendering-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkViewsContext2D-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkViewsInfovis-8.1.1.dylib
+bin/demo3: /Users/elaine/YURT/MinVR/build/lib/libMinVR.a
+bin/demo3: /usr/local/lib/libglut.dylib
+bin/demo3: /usr/local/lib/libGLEW.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersAMR-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOExport-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtklibharu-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingGL2PS-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingContextOpenGL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkgl2ps-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersParallel-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkexoIIc-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOGeometry-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIONetCDF-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtknetcdf_c++.4.2.0.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkNetCDF-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkhdf5_hl-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkhdf5-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkParallelCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOLegacy-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingOpenGL-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkChartsCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingContext2D-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersImaging-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkInfovisLayout-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkInfovisCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkViewsCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkInteractionWidgets-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersHybrid-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingGeneral-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingSources-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersModeling-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingHybrid-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOImage-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkDICOMParser-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkmetaio-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkpng-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtktiff-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkjpeg-8.1.1.dylib
+bin/demo3: /usr/lib/libm.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkInteractionStyle-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersExtraction-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersStatistics-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingFourier-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkalglib-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingAnnotation-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingColor-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingVolume-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkImagingCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOXML-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOXMLParser-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkIOCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtklz4-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkexpat-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingLabel-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingFreeType-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkRenderingCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonColor-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersGeometry-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersSources-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersGeneral-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonComputationalGeometry-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkFiltersCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonExecutionModel-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonDataModel-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonTransforms-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonMisc-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonMath-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonSystem-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkCommonCore-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtksys-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkfreetype-8.1.1.dylib
+bin/demo3: /Users/elaine/VTK-build/lib/libvtkzlib-8.1.1.dylib
 bin/demo3: examples/CMakeFiles/demo3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/users/ejiang1/MinVR-VTK-8/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/demo3"
-	cd /users/ejiang1/MinVR-VTK-8/build/examples && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/demo3.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/elaine/YURT/MinVR-VTK/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/demo3"
+	cd /Users/elaine/YURT/MinVR-VTK/build/examples && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/demo3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 examples/CMakeFiles/demo3.dir/build: bin/demo3
@@ -230,10 +227,10 @@ examples/CMakeFiles/demo3.dir/requires: examples/CMakeFiles/demo3.dir/demo3.cxx.
 .PHONY : examples/CMakeFiles/demo3.dir/requires
 
 examples/CMakeFiles/demo3.dir/clean:
-	cd /users/ejiang1/MinVR-VTK-8/build/examples && $(CMAKE_COMMAND) -P CMakeFiles/demo3.dir/cmake_clean.cmake
+	cd /Users/elaine/YURT/MinVR-VTK/build/examples && $(CMAKE_COMMAND) -P CMakeFiles/demo3.dir/cmake_clean.cmake
 .PHONY : examples/CMakeFiles/demo3.dir/clean
 
 examples/CMakeFiles/demo3.dir/depend:
-	cd /users/ejiang1/MinVR-VTK-8/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/ejiang1/MinVR-VTK-8 /users/ejiang1/MinVR-VTK-8/examples /users/ejiang1/MinVR-VTK-8/build /users/ejiang1/MinVR-VTK-8/build/examples /users/ejiang1/MinVR-VTK-8/build/examples/CMakeFiles/demo3.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/elaine/YURT/MinVR-VTK/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/elaine/YURT/MinVR-VTK /Users/elaine/YURT/MinVR-VTK/examples /Users/elaine/YURT/MinVR-VTK/build /Users/elaine/YURT/MinVR-VTK/build/examples /Users/elaine/YURT/MinVR-VTK/build/examples/CMakeFiles/demo3.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : examples/CMakeFiles/demo3.dir/depend
 
