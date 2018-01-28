@@ -92,8 +92,8 @@ private:
 	float joystickAngularSensitivity = 0.03f;
 	float joystickLinearSensitivity = 0.1f;
 	float joystickThreshold = 0.1f;
-#define M_TWOPI 6.2831852f
-#define M_PI 3.1415926
+    #define M_TWOPI 6.2831852f
+    #define M_PI 3.1415926
 
 	// Keeps track of which controller we are listening to. Could be "L", "R", "1", "2".
 	// Use "X" for listening to nobody.
@@ -275,7 +275,6 @@ private:
 		// create a mapper and actor for the text legends
 		txtSource = vtkSmartPointer<vtkVectorText>::New();
 		txtSource->SetText("HELLO I AM HERE!!!!");
-<<<<<<< HEAD
 
 		vtkSmartPointer<vtkLinearExtrusionFilter> extrude = vtkSmartPointer<vtkLinearExtrusionFilter>::New();
 		extrude->SetInputConnection(txtSource->GetOutputPort());
@@ -288,20 +287,6 @@ private:
 
 		txtActorTransform = vtkSmartPointer<vtkTransform>::New();
 
-=======
-
-		vtkSmartPointer<vtkLinearExtrusionFilter> extrude = vtkSmartPointer<vtkLinearExtrusionFilter>::New();
-		extrude->SetInputConnection(txtSource->GetOutputPort());
-		extrude->SetExtrusionTypeToNormalExtrusion();
-		extrude->SetVector(0.0f, 0.0f, 1.0f);
-		extrude->SetScaleFactor(0.5);
-
-		vtkSmartPointer<vtkTransformPolyDataFilter> txtTransformFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
-		txtTransformFilter->SetInputConnection(extrude->GetOutputPort());
-
-		txtActorTransform = vtkSmartPointer<vtkTransform>::New();
-
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 		glm::mat4 tmat = glm::mat4(1.0);
 		double td[16];
 		for (int i = 0; i < 16; i++) td[i] = glm::value_ptr(tmat)[i];
@@ -376,10 +361,6 @@ private:
     glm::mat4 headPosRoom;
 	glm::mat4 txtPosSpace;
 	glm::vec3 txtPos;
-<<<<<<< HEAD
-=======
-	std::vector<float> w;
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 	int actorIndex;
 	vtkSmartPointer<vtkActor> PickedActor;
     
@@ -453,7 +434,7 @@ private:
 			eventName == "HTC_Controller_Left" ||
 			eventName == "HTC_Controller_2") {  //Set up for Wand Movement
 
-<<<<<<< HEAD
+
 			if (eventName.size() < 16) { //Wand0_Move
                 const float *w = event.getDataAsFloatArray("Transform");
                 wandPosRoom = glm::mat4( w[0],  w[1], w[2], w[3],
@@ -466,18 +447,12 @@ private:
             if (eventName.substr(15, 1) == activeController) {
 				//if (true) {
 				std::vector<float> w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
-=======
-			if (eventName.size() < 16) return; // We'll deal with Wand0_Move events another time.
-			if (eventName.substr(15, 1) == activeController) {
-				//if (true) {
-				w = event.getInternal()->getDataIndex()->getValue("/" + eventName + "/State/Pose");
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
+
 				wandPosRoom = glm::mat4(w[0], w[1], w[2], w[3],
 					w[4], w[5], w[6], w[7],
 					w[8], w[9], w[10], w[11],
 					w[12], w[13], w[14], w[15]);
-<<<<<<< HEAD
-=======
+
 				wandPosSpace = glm::transpose(glm::translate(-carpetPosition) *
 					glm::rotate(-carpetDirection, carpetUp) *
 					glm::scale(carpetScale) * wandPosRoom);
@@ -491,7 +466,6 @@ private:
 						rayActorTransform->SetMatrix(wandPosSpaceArray);
 					}
 				}
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 
 				joystickX = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/XPos", 0.0f);
 				joystickY = event.getInternal()->getDataIndex()->getValueWithDefault("/" + eventName + "/State/Axis0/YPos", 0.0f);
@@ -499,18 +473,14 @@ private:
 			} else {
 				// This just sets up the initial condition so that at least one controller is live.
 				if (activeController == "X") {
-<<<<<<< HEAD
 					//OutputDebugString((activeController + std::string(" not ignoring:") + eventName + "\n").c_str());
-=======
-					OutputDebugString((activeController + std::string(" not ignoring:") + eventName + "\n").c_str());
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
+
 					activeController = eventName.substr(15, 1);
 				}
 				else {
 				//	OutputDebugString((activeController + std::string(" ignoring:") + eventName + "\n").c_str());
 				}
 			}
-<<<<<<< HEAD
             
             wandPosSpace = glm::transpose(glm::translate(-carpetPosition) *
 					glm::rotate(-carpetDirection, carpetUp) *
@@ -526,8 +496,6 @@ private:
                 }
             }
 
-=======
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 
 			if (movingSlide) { //when slide moving
 				slideMat = (wandPosRoom / lastWandPos) * slideMat; //update the model matrix for slide
@@ -535,24 +503,16 @@ private:
 
 			lastWandPos = wandPosRoom;
 
-<<<<<<< HEAD
         } else if ( eventName == "B08_Down" ||
             eventName == "HTC_Controller_Right_AButton_Pressed" ||
-=======
-		} else if (eventName == "HTC_Controller_Right_AButton_Pressed" ||
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 			eventName == "HTC_Controller_1_AButton_Pressed" ||
 			eventName == "HTC_Controller_Left_AButton_Pressed" ||
 			eventName == "HTC_Controller_2_AButton_Pressed") {
 			// If the application button is pressed, make the actor visible.
 			rayActor->SetVisibility(true);
 
-<<<<<<< HEAD
 		} else if ( eventName == "B08_Up" ||
             eventName == "HTC_Controller_Right_AButton_Released" ||
-=======
-		} else if (eventName == "HTC_Controller_Right_AButton_Released" ||
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 			eventName == "HTC_Controller_1_AButton_Released" ||
 			eventName == "HTC_Controller_Left_AButton_Released" ||
 			eventName == "HTC_Controller_2_AButton_Released") {
@@ -580,20 +540,12 @@ private:
 			PickedActor = ac->GetNextActor();
 
 			if (PickedActor == NULL) {
-<<<<<<< HEAD
 				//OutputDebugString(std::string("NO ACTOR SELECTED\n").c_str());
-=======
-				OutputDebugString(std::string("NO ACTOR SELECTED\n").c_str());
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 
 			} else {
 				std:ostringstream acss;
 				acss << "PICKED: " << *PickedActor << std::endl;
-<<<<<<< HEAD
 				//OutputDebugString(acss.str().c_str());
-=======
-				OutputDebugString(acss.str().c_str());
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
 			}
 
 			picked = true;
@@ -626,7 +578,6 @@ private:
 								h[8], h[9], h[10], h[11],
 								h[12], h[13], h[14], h[15]);
 
-<<<<<<< HEAD
 		} else if(eventName == "Head_Move") {
             const float *h = event.getDataAsFloatArray("Transform");
             headPosRoom = glm::mat4(h[0], h[1], h[2], h[3],
@@ -636,9 +587,6 @@ private:
         }
         
         else if (eventName == "Wand_Right_Btn_Down") {
-=======
-		} else if (eventName == "Wand_Right_Btn_Down") {
->>>>>>> 527687036f6203b8bd1cd914d62427fcdc799428
             movingSlide = true;
         } else if (eventName == "Wand_Right_Btn_Up") {
             movingSlide = false;
