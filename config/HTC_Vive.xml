@@ -1,0 +1,51 @@
+
+<MinVR>
+	<PluginPath>C:\Users\Kim Kowal\Desktop\VR\MinVR\build\install\plugins</PluginPath>
+	<GLFWPlugin pluginType="MinVR_GLFW"/>
+	<OpenGLPlugin pluginType="MinVR_OpenGL"/>
+	<OpenVRPlugin pluginType="MinVR_OpenVR"/>
+
+  <VRSetups>
+		<Desktop hostType="VRStandAlone">
+		<RootNode displaynodeType="VRGraphicsWindowNode">
+			<GLFWToolkit windowtoolkitType="VRGLFWWindowToolkit"/>
+			<OpenGLToolkit graphicstoolkitType="VROpenGLGraphicsToolkit"/>
+			
+			<Visible>1</Visible>
+	   
+			<Border>1</Border>
+			<Caption>Desktop</Caption>
+			<QuadBuffered>0</QuadBuffered>
+			<GPUAffinity>None</GPUAffinity>
+			<XPos>0</XPos>
+			<YPos>0</YPos>
+			<Width>1920</Width>
+			<Height>1080</Height>
+			<SharedContextGroupID>-1</SharedContextGroupID>
+			<ContextVersionMajor>3</ContextVersionMajor>
+			<ContextVersionMinor>0</ContextVersionMinor>
+			<RGBBits>8</RGBBits>
+			<AlphaBits>8</AlphaBits>
+			<DepthBits>24</DepthBits>
+			<StencilBits>8</StencilBits>
+			<FullScreen>0</FullScreen>
+			<Resizable>1</Resizable>
+			<AllowMaximize>1</AllowMaximize>
+			<UseDebugContext>0</UseDebugContext>
+			<MSAASamples>0</MSAASamples>
+			<GPUAffinity>None</GPUAffinity>
+			<UseGPUAffinity>1</UseGPUAffinity>
+		
+			<HTC displaynodeType="VROpenVRNode">
+				<HideTracker>1</HideTracker>
+				<ReportStatePressed>1</ReportStatePressed>
+				<ReportStateTouched>0</ReportStateTouched>
+				<ReportStateAxis>1</ReportStateAxis>
+				<ReportStatePose>1</ReportStatePose>
+				<DrawHMDOnly>0</DrawHMDOnly>	
+				<MSAA_buffers>4</MSAA_buffers>	
+			</HTC>
+		</RootNode>
+		</Desktop>
+	</VRSetups>
+</MinVR>
