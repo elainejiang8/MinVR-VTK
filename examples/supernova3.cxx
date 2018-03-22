@@ -98,6 +98,7 @@ private:
 	// Keeps track of which controller we are listening to. Could be "L", "R", "1", "2".
 	// Use "X" for listening to nobody.
 	std::string activeController;
+	std::string activeLRController;
 
 	// This is true if we are in the process of selecting something to look at.  i.e. the
 	// user has pressed the trigger button on the controller, but hasn't let it go yet.
@@ -372,17 +373,6 @@ private:
 
 	float joystickX, joystickY;
 
-	//std::string printMat(const glm::mat4 m) {
-	/*	std::ostringstream mss;
-		const float* f = glm::value_ptr(m);
-		mss << "        [0]        [1]         [2]         [3]" << std::endl;
-		mss << " [0] " << f[0] << ", " << f[1] << ", " << f[2] << ", " << f[3] << std::endl;
-		mss << " [1] " << f[4] << ", " << f[5] << ", " << f[6] << ", " << f[7] << std::endl;
-		mss << " [2] " << f[8] << ", " << f[9] << ", " << f[10] << ", " << f[11] << std::endl;
-		mss << " [3] " << f[12] << ", " << f[13] << ", " << f[14] << ", " << f[15] << std::endl;
-		return mss.str();
-	}*/
-
 
 
 	 DemoVRVTKApp(int argc, char** argv):
@@ -404,6 +394,7 @@ private:
 		carpetScale = glm::vec3(1.0, 1.0, 1.0);
 		actorIndex = 7;
 		activeController = "X";
+		activeLRController = "X";
 		joystickX = 0; joystickY = 0;
     }
 
@@ -457,28 +448,22 @@ private:
 					OutputDebugString((activeController + std::string(" not ignoring:") + eventName + "\n").c_str());
 
 					activeController = eventName.substr(15, 1);
+
+					if (activeController == "L") {
+						activeLRController = "Left";
+					}
+					else if (activeController == "R") {
+						activeLRController = "Right";
+					}
 				} else {
 					OutputDebugString((activeController + std::string(" ignoring:") + eventName + "\n").c_str());
 				}
 			}
-			const float default = 0.0f;
-			if (eventName == "HTC_Controller_Right_Joystick0_X" || eventName == "HTC_Controller_1_Joystick0_X") {
-				OutputDebugString((std::string("HEEEERRRREEEEEE\n")).c_str());
-				joystickX = (float)event.getValue("AnalogValue");
-			}
-			else if (eventName == "HTC_Controller_Right_Joystick0_Y" || eventName == "HTC_Controller_1_Joystick0_Y") {
-				joystickY = (float)event.getValue("AnalogValue");
-			}
-			//joystickX = (float)event.getValue("AnalogValue");
-			//joystickY = (float)event.getValue("AnalogValue");
-			//char * x = "";
-			//sprintf(x, "joystickX is %f\n", joystickX);
-			//OutputDebugString(x);
 		}
-		glm::mat4 wandPosRoomT = glm::transpose(wandPosRoom);
+        glm::mat4 wandPosRoomT = glm::transpose(wandPosRoom);
 		wandPosSpace = glm::transpose(glm::translate(-carpetPosition) *
 						glm::rotate(-carpetDirection, carpetUp) *
-						glm::scale(carpetScale) * wandPosRoomT);
+						glm::scale(carpetScale) * wandPosRoom);
 
 		double wandPosSpaceArray[16];
 		for (int i = 0; i < 16; i++) 
@@ -496,33 +481,21 @@ private:
 		}
       
 		lastWandPos = wandPosRoom;
-		} else if ( eventName == "HTC_Controller_Right_Joystick0_X" || 
-			        eventName == "HTC_Controller_1_Joystick0_X" ||
-			        eventName == "HTC_Controller_Left_Joystick0_X" ||
-			        eventName == "HTC_Controller_2_Joystick0_X") {
+		} else if (eventName == "HTC_Controller_" + activeController + "_Joystick0_X" ||
+					eventName == "HTC_Controller_" + activeLRController + "_Joystick0_X") {
 			joystickX = 2.0 * (float)event.getValue("AnalogValue");
 
-		} else if (eventName== "HTC_Controller_Right_Joystick0_Y" || 
-			       eventName == "HTC_Controller_1_Joystick0_Y" ||
-			       eventName == "HTC_Controller_Left_Joystick0_Y" ||
-			       eventName == "HTC_Controller_2_Joystick0_Y") {
+		} else if (eventName == "HTC_Controller_" + activeController + "_Joystick0_Y" ||
+					eventName == "HTC_Controller_" + activeLRController + "_Joystick0_Y") {
 			joystickY = 2.0 * (float)event.getValue("AnalogValue");
 
-		} else if ( //eventName == "Wand_Left_Btn_Down" ||
-			eventName == "HTC_Controller_Right_AButton_Pressed" ||
-			eventName == "HTC_Controller_1_AButton_Pressed" ||
-			eventName == "HTC_Controller_Left_AButton_Pressed" ||
-			eventName == "HTC_Controller_2_AButton_Pressed") { // ||
-			//eventName == "HTC_Controller_Right_Trigger1") {
+		} else if (eventName == "HTC_Controller_" + activeController + "_AButton_Down" || 
+					eventName == "HTC_Controller_" + activeLRController + "_AButton_Down") {
 			// If the application button is pressed, make the actor visible.
-			//rayActor->SetVisibility(true);
+			rayActor->SetVisibility(true);
 
-		} else if ( //eventName == "Wand_Left_Btn_Up" ||
-			eventName == "HTC_Controller_Right_AButton_Released" ||
-			eventName == "HTC_Controller_1_AButton_Released" ||
-			eventName == "HTC_Controller_Left_AButton_Released" ||
-			eventName == "HTC_Controller_2_AButton_Released") {// ||
-			//eventName == "HTC_Controller_Right_Trigger2") {
+		} else if (eventName == "HTC_Controller_" + activeController + "_AButton_Up" ||
+					eventName == "HTC_Controller_" + activeLRController + "_AButton_Up") {
 			// If the A or X button is released, make a selection and make the actor invisible.
       
 			// First find the position of the wand in the data space. We already have that from
@@ -555,25 +528,32 @@ private:
 		}
 
 		picked = true;
-		rayActor->SetVisibility(false);
+		rayActor->SetVisibility(true);
 		// This is the pose where we'll show the text.
 		txtPosSpace = glm::transpose(glm::rotate(-carpetDirection, carpetUp) * headPosRoom);
 		// I do not know why VTK refuses to honor the same transform as we use for the ray, so we just use
 		// txtPosSpace as a rotation matrix and move the text position directly.  Calculate it here.
 		txtPos = carpetPosition + glm::vec3(glm::inverse(txtPosSpace) * glm::vec4(2.5f, 0.0f, 5.0f, 1.0f));
 
-		} else if (eventName == "HTC_Controller_1_ApplicationMenuButton_Pressed" || 
-	       eventName == "HTC_Controller_2_ApplicationMenuButton_Pressed" || 
-	       eventName == "HTC_Controller_Right_ApplicationMenuButton_Pressed" || 
-	       eventName == "HTC_Controller_Left_ApplicationMenuButton_Pressed" ) {
+		} else if (eventName == "HTC_Controller_1_ApplicationMenuButton_Down" || 
+	       eventName == "HTC_Controller_2_ApplicationMenuButton_Down" || 
+	       eventName == "HTC_Controller_Right_ApplicationMenuButton_Down" || 
+	       eventName == "HTC_Controller_Left_ApplicationMenuButton_Down" ) {
 			// If you press the "B" or "Y" button on either of the controllers, that controller will become 
 			// the active one.  If it's already the active one, it just clears the selection.
 			if (activeController == eventName.substr(15, 1)) {
 				// clear the selection
 				picked = true;
 				PickedActor = NULL;
+
 			} else {
 				activeController = eventName.substr(15, 1);
+				if (activeController == "L") {
+					activeLRController = "Left";
+				}
+				else if (activeController == "R") {
+					activeLRController = "Right";
+				}
 			}
 		} else if (eventName == "HTC_HMD_1") {
 
