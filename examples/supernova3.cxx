@@ -200,13 +200,13 @@ private:
 		/**********************************************************/
 
 		vector <std::string> files;
-		files.push_back(std::string("../../../data/cco-ascii.vtk"));
-		files.push_back(std::string("../../../data/newjets-ascii.vtk"));
-		files.push_back(std::string("../../../data/fekcorr-ascii.vtk"));
-		files.push_back(std::string("../../../data/newar-ascii.vtk"));
-		files.push_back(std::string("../../../data/newhetg-ascii.vtk"));
-		files.push_back(std::string("../../../data/newopt-ascii.vtk"));
-		files.push_back(std::string("../../../data/newsi-ascii.vtk"));
+		files.push_back(std::string("../data/cco-ascii.vtk"));
+		files.push_back(std::string("../data/newjets-ascii.vtk"));
+		files.push_back(std::string("../data/fekcorr-ascii.vtk"));
+		files.push_back(std::string("../data/newar-ascii.vtk"));
+		files.push_back(std::string("../data/newhetg-ascii.vtk"));
+		files.push_back(std::string("../data/newopt-ascii.vtk"));
+		files.push_back(std::string("../data/newsi-ascii.vtk"));
 
 		for(int i = 0; i < NUM_ACTORS; i++) {
 			vtkSmartPointer<vtkPolyDataReader> reader = vtkSmartPointer<vtkPolyDataReader>::New();
@@ -408,7 +408,7 @@ private:
 		//  std::cout << std::string("hearing event:") << eventName << std::endl;
 			std::string newLine = "\n";
 			std::string d = event.printStructure();
-			OutputDebugString((std::string("IN EVENT METHOD, hearing event: ") + eventName + newLine + d + "\n").c_str());
+			//OutputDebugString((std::string("IN EVENT METHOD, hearing event: ") + eventName + newLine + d + "\n").c_str());
 		}
 
 
@@ -445,7 +445,7 @@ private:
 				// This just sets up the initial condition so that at least
 				// one controller is live.
 				if (activeController == "X") {
-					OutputDebugString((activeController + std::string(" not ignoring:") + eventName + "\n").c_str());
+					//OutputDebugString((activeController + std::string(" not ignoring:") + eventName + "\n").c_str());
 
 					activeController = eventName.substr(15, 1);
 
@@ -456,7 +456,7 @@ private:
 						activeLRController = "Right";
 					}
 				} else {
-					OutputDebugString((activeController + std::string(" ignoring:") + eventName + "\n").c_str());
+					//OutputDebugString((activeController + std::string(" ignoring:") + eventName + "\n").c_str());
 				}
 			}
 		}
@@ -591,7 +591,6 @@ private:
 			_initializeScene();
 		}
 
-		std::cout << "render context..." << std::endl;
 		// Increment the carpet position in the z direction of whichever way the carpet and wand are pointed.
 		if (fabs(joystickY) > joystickThreshold) {
 			carpetPosition += glm::vec3(glm::rotate(-carpetDirection, carpetUp) * glm::inverse(glm::transpose(wandPosRoom)) * glm::vec4(0, 0, joystickLinearSensitivity * joystickY, 1.0));
