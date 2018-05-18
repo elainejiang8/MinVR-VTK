@@ -10,7 +10,7 @@ include_directories(
   ${VTK_INCLUDE_DIRS}
   )
 
-set(headers ActorWrapper.h)
+set(headers ActorWrapper.h MVRDemo.h)
 set(sources ActorWrapper.cxx)
 set(files ${sources})
 
