@@ -17,7 +17,6 @@
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkVolumeProperty.h>
-#include <vtkVolumeRayCastCompositeFunction.h>
 #include <vtkFixedPointVolumeRayCastMapper.h>
 #include <vtkVolume.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -32,7 +31,7 @@
 #include <vtkCallbackCommand.h>
 #include <vtkTransform.h>
 #include <vtkPerspectiveTransform.h>
-#include <vtkCustomExternalOpenGLCamera.h>
+#include <vtkExternalOpenGLCamera.h>
 
 class DemoVRVTKApp: public MinVR::VRApp {
   // Data values that were global in the demo2.cxx file are defined as
@@ -42,7 +41,7 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
     std::string filename;
     vtkSmartPointer<vtkRenderer> ren; 
-    vtkSmartPointer<vtkCustomExternalOpenGLCamera> camera;
+    vtkSmartPointer<vtkExternalOpenGLCamera> camera;
     vtkNew<vtkActor> actor;
     vtkNew<vtkVolume> volume;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
@@ -230,7 +229,7 @@ private:
                                         vm[12],vm[13],vm[14],vm[15]);
             
 
-            camera = (vtkCustomExternalOpenGLCamera *)ren->GetActiveCamera();
+            camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
             
             double view[16];
             for(int i = 0; i < 16; i++) {

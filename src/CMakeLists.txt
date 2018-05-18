@@ -1,3 +1,5 @@
+set (CMAKE_CXX_STANDARD 11)
+
 project(minvr-vtk)
 
 include_directories(
@@ -5,11 +7,12 @@ include_directories(
   ${FREEGLUT_INCLUDE_DIR}
   ${GLM_INCLUDE_DIR}
   ${GLEW_INCLUDE_DIRS}
+  ${VTK_INCLUDE_DIRS}
   )
 
-set(headers vtkCustomExternalOpenGLCamera.h vtkCustomPropPicker.h)
-set(sources vtkCustomExternalOpenGLCamera.cxx vtkCustomPropPicker.cxx)
-set(files ${headers} ${sources})
+set(headers ActorWrapper.h)
+set(sources ActorWrapper.cxx)
+set(files ${sources})
 
 add_library(minvr-vtk ${files})
 
@@ -20,4 +23,3 @@ install(TARGETS minvr-vtk
 
 install(FILES ${headers}
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
-

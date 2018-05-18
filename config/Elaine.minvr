@@ -48,7 +48,7 @@
               <FieldOfViewY>45</FieldOfViewY>
 			      </ProjectionNode>
         </LookAtNode>
-        <FakeHTDevice inputdeviceType="VRFakeTrackerDeviceRelative">
+        <FakeHTDevice inputdeviceType="VRFakeTrackerDevice">
           <TrackerName type="string">Head</TrackerName>
           <ToggleOnOffEvent type="string">Kbdt_Down</ToggleOnOffEvent>
           <XYTranslationScale>5</XYTranslationScale>
@@ -60,7 +60,7 @@
           <TranslateZEvent type="string">Kbdz</TranslateZEvent>
           <TranslateSticky>1</TranslateSticky>
         </FakeHTDevice>
-	      <FakeWTDevice inputdeviceType="VRFakeTrackerDeviceRelative">
+	      <FakeWTDevice inputdeviceType="VRFakeTrackerDevice">
           <TrackerName type="string">Wand</TrackerName>
           <ToggleOnOffEvent type="string">Kbdy</ToggleOnOffEvent>
           <XYTranslationScale>5</XYTranslationScale>
