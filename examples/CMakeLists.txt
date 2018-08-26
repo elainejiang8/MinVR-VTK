@@ -34,6 +34,16 @@ target_link_libraries(supernova minvr-vtk
 	${VTK_LIBRARIES}
 )
 
+add_executable(objimporter2 objimporter2.cxx)
+
+target_link_libraries(objimporter2
+	${VTK_LIBRARIES} 
+	${MINVR_LIBRARY}
+	${OPENGL_LIBRARY}
+	${FREEGLUT_LIBRARY}
+	${GLEW_LIBRARY}
+)
+
 #add_executable(demo3 demo3.cxx)
 
 #target_link_libraries(demo3

@@ -170,6 +170,19 @@ minvr-vtk/fast:
 .PHONY : minvr-vtk/fast
 
 #=============================================================================
+# Target rules for targets named objimporter2
+
+# Build rule for target.
+objimporter2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 objimporter2
+.PHONY : objimporter2
+
+# fast build rule for target.
+objimporter2/fast:
+	$(MAKE) -f examples/CMakeFiles/objimporter2.dir/build.make examples/CMakeFiles/objimporter2.dir/build
+.PHONY : objimporter2/fast
+
+#=============================================================================
 # Target rules for targets named objimporter
 
 # Build rule for target.
@@ -181,6 +194,32 @@ objimporter: cmake_check_build_system
 objimporter/fast:
 	$(MAKE) -f examples/CMakeFiles/objimporter.dir/build.make examples/CMakeFiles/objimporter.dir/build
 .PHONY : objimporter/fast
+
+#=============================================================================
+# Target rules for targets named supernova
+
+# Build rule for target.
+supernova: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 supernova
+.PHONY : supernova
+
+# fast build rule for target.
+supernova/fast:
+	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
+.PHONY : supernova/fast
+
+#=============================================================================
+# Target rules for targets named supernova3
+
+# Build rule for target.
+supernova3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 supernova3
+.PHONY : supernova3
+
+# fast build rule for target.
+supernova3/fast:
+	$(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
+.PHONY : supernova3/fast
 
 #=============================================================================
 # Target rules for targets named density
@@ -208,32 +247,6 @@ demo/fast:
 	$(MAKE) -f examples/CMakeFiles/demo.dir/build.make examples/CMakeFiles/demo.dir/build
 .PHONY : demo/fast
 
-#=============================================================================
-# Target rules for targets named supernova3
-
-# Build rule for target.
-supernova3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 supernova3
-.PHONY : supernova3
-
-# fast build rule for target.
-supernova3/fast:
-	$(MAKE) -f examples/CMakeFiles/supernova3.dir/build.make examples/CMakeFiles/supernova3.dir/build
-.PHONY : supernova3/fast
-
-#=============================================================================
-# Target rules for targets named supernova
-
-# Build rule for target.
-supernova: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 supernova
-.PHONY : supernova
-
-# fast build rule for target.
-supernova/fast:
-	$(MAKE) -f examples/CMakeFiles/supernova.dir/build.make examples/CMakeFiles/supernova.dir/build
-.PHONY : supernova/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -247,11 +260,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... minvr-vtk"
+	@echo "... objimporter2"
 	@echo "... objimporter"
+	@echo "... supernova"
+	@echo "... supernova3"
 	@echo "... density"
 	@echo "... demo"
-	@echo "... supernova3"
-	@echo "... supernova"
 .PHONY : help
 
 

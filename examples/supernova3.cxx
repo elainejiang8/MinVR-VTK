@@ -47,6 +47,7 @@
 #include <vtkExternalOpenGLRenderer.h>
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkLineSource.h>
+#include "ActorWrapper.h"
 
 //annotation stuff
 #include <vtkConeSource.h>
@@ -69,7 +70,6 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
 	vtkSmartPointer<vtkRenderer> ren;
     vtkSmartPointer<vtkExternalOpenGLCamera> camera;
-    vector <vtkSmartPointer<vtkActor> > actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
 	vtkSmartPointer<vtkTransform> txtActorTransform;
 	vtkSmartPointer<vtkVectorText> txtSource;
@@ -83,6 +83,7 @@ private:
 	vtkSmartPointer<vtkCellPicker>  picker;
 	vtkSmartPointer<vtkActor> rayActor;
 	vtkSmartPointer<vtkTransform> rayActorTransform;
+    vector <ActorWrapper *> actorWrappers;
 	int NUM_ACTORS = 7;
   
 	// The sensitivity numbers indicate the size of the increment to the carpetPosition and 
@@ -157,30 +158,38 @@ private:
     void initializePickers() {
         this->LastPickedActor = NULL;
         for(int i = 0; i < NUM_ACTORS; i++) {
-            OtherActors.push_back(actors[i]);
+            OtherActors.push_back(actorWrappers[i]->GetActor());
         }
         for(int i = 0; i < NUM_ACTORS; i++) {
             OtherProperties.push_back(vtkProperty::New());
         }
     }
     
-    // hard code Kim's annotations
-    void initializeAnnotations() {
-        annotations.push_back("Neutron Star: \nAt the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova."); // sill (purple)
-        annotations.push_back("Fiducial Jets: \nIn green, two jets of material are seen. \nThese jets funnel material and energy \nduring and after the explosion."); // jets (green)
-        annotations.push_back("FeK (Chandra Telescope): \nThe light blue portions of this model \nrepresent radiation from the element \niron as seen in X-ray light from Chandra. \nIron is forged in the very core of the \nstar but ends up on the outside \nof the expanding ring of debris."); // fek (blue)
-        annotations.push_back("ArII (Spitzer Telescope): \nThe yellow portions of the model represent \ninfrared data from the Spitzer Space Telescope. \nThis is cooler debris that has yet to \nbe superheated by a passing shock wave"); // arll (yellow)
-        annotations.push_back("Si (Chandra Telescope): \nThe dark blue colored elements of the model \nrepresent the outer blast wave of the \nexplosion as seen in X-rays by Chandra as well \nas optical and infrared light, much of which is silicon."); // (dark blue)
-        annotations.push_back("Outer Knots: \nThe red colored elements of the model represent \nthe outer blast wave of the explosion as seen in \nX-rays by Chandra as well as optical and infrared \nlight, much of which is silicon."); // outer knots (red)
-        annotations.push_back("Reverse Shock Sphere: \nThe Cas A supernova remnant acts like a \nrelativistic pinball machine by accelerating \nelectrons to enormous energies. This \narea shows where the acceleration is taking \nplace in an expanding shock wave generated \nby the explosion."); // reverse shock sphere (pink)
+    // create actors
+    void createActorWrappers() {
+        float sillColor[3] = {0.97,0.45,0.91};
+        float jetsColor[3] = {0.6,0.99,0.73};
+        float fekColor[3] = {0.49,0.94,0.89};
+        float arColor[3] = {0.95,0.95,0.33};
+        float siColor[3] = {0.26,0.59,0.94};
+        float outerKnotsColor[3] = {0.94,0.32,0.4};
+        float sphereColor[3] = {0.96,0.70,0.93};
 
-        titles.push_back("Neutron Star"); // purple
-        titles.push_back("Fiducial Jets"); // green
-        titles.push_back("FeK (Chandra Telescope)"); // blue
-        titles.push_back("ArII (Spitzer Telescope)"); // yellow
-        titles.push_back("Si (Chandra Telescope, HETG)"); // dark blue
-        titles.push_back("Outer Knots"); // red
-        titles.push_back("Reverse Shock Sphere"); // pink
+        ActorWrapper * sill = new ActorWrapper("../data/cco-ascii.vtk", "Neutron Star", "At the center of Cas A is a neutron star, a small \nultra-dense star created by the supernova.", sillColor); // sill (purple)
+        ActorWrapper * jets = new ActorWrapper("../data/newjets-ascii.vtk", "Fiducial Jets", "In green, two jets of material are seen. \nThese jets funnel material and energy \nduring and after the explosion.", jetsColor); // jets (green)
+        ActorWrapper * fek = new ActorWrapper("../data/fekcorr-ascii.vtk", "FeK (Chandra Telescope)", "The light blue portions of this model \nrepresent radiation from the element \niron as seen in X-ray light from Chandra. \nIron is forged in the very core of the \nstar but ends up on the outside \nof the expanding ring of debris.", fekColor); // fek (blue)
+        ActorWrapper * ar = new ActorWrapper("../data/newar-ascii.vtk", "ArII (Spitzer Telescope)", "The yellow portions of the model represent \ninfrared data from the Spitzer Space Telescope. \nThis is cooler debris that has yet to \nbe superheated by a passing shock wave", arColor); // arII (yellow)
+        ActorWrapper * si = new ActorWrapper("../data/newhetg-ascii.vtk", "Si (Chandra Telescope, HETG)", "The dark blue colored elements of the model \nrepresent the outer blast wave of the \nexplosion as seen in X-rays by Chandra as well \nas optical and infrared light, much of which is silicon.", siColor); // (dark blue)
+        ActorWrapper * outerKnots = new ActorWrapper("../data/newopt-ascii.vtk", "Outer Knots", "The red colored elements of the model represent \nthe outer blast wave of the explosion as seen in \nX-rays by Chandra as well as optical and infrared \nlight, much of which is silicon.", outerKnotsColor); // outer knots (red)
+        ActorWrapper * sphere = new ActorWrapper("../data/newsi-ascii.vtk", "Reverse Shock Sphere", "The Cas A supernova remnant acts like a \nrelativistic pinball machine by accelerating \nelectrons to enormous energies. This \narea shows where the acceleration is taking \nplace in an expanding shock wave generated \nby the explosion.", sphereColor); // reverse shock sphere (pink)
+
+        actorWrappers.push_back(sill);
+        actorWrappers.push_back(jets);
+        actorWrappers.push_back(fek);
+        actorWrappers.push_back(ar);
+        actorWrappers.push_back(si);
+        actorWrappers.push_back(outerKnots);
+        actorWrappers.push_back(sphere);
     }
 
 
@@ -199,14 +208,9 @@ private:
 
 		/**********************************************************/
 
-		vector <std::string> files;
-		files.push_back(std::string("../data/cco-ascii.vtk"));
-		files.push_back(std::string("../data/newjets-ascii.vtk"));
-		files.push_back(std::string("../data/fekcorr-ascii.vtk"));
-		files.push_back(std::string("../data/newar-ascii.vtk"));
-		files.push_back(std::string("../data/newhetg-ascii.vtk"));
-		files.push_back(std::string("../data/newopt-ascii.vtk"));
-		files.push_back(std::string("../data/newsi-ascii.vtk"));
+        createActorWrappers();
+
+		std::string files[7] = {actorWrappers[0]->GetFile(), actorWrappers[1]->GetFile(), actorWrappers[2]->GetFile(), actorWrappers[3]->GetFile(), actorWrappers[4]->GetFile(), actorWrappers[5]->GetFile(), actorWrappers[6]->GetFile()};
 
 		for(int i = 0; i < NUM_ACTORS; i++) {
 			vtkSmartPointer<vtkPolyDataReader> reader = vtkSmartPointer<vtkPolyDataReader>::New();
@@ -237,25 +241,13 @@ private:
 			mapper->SetInputConnection(normals->GetOutputPort());
 			mapper->ScalarVisibilityOff();
 
-			vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-			actor->SetMapper(mapper);
-			actor->GetProperty()->SetInterpolationToFlat();
-			actor->GetProperty()->SetOpacity(1);
+			vtkSmartPointer<vtkActor> actor = actorWrappers[i]->GetActor();
+            actor->SetMapper(mapper);
+            actor->GetProperty()->SetInterpolationToFlat();
+            actor->GetProperty()->SetOpacity(1);
 
-			ren->AddActor(actor);
-			actors.push_back(actor);
-		}
-
-		// color actors
-		actors[0]->GetProperty()->SetColor(0.97,0.45,0.91); // sill (purple)
-		actors[1]->GetProperty()->SetColor(0.6,0.99,0.73); // jets (green)
-		actors[2]->GetProperty()->SetColor(0.49,0.94,0.89); // fek (blue)
-		actors[3]->GetProperty()->SetColor(0.95,0.95,0.33); // arll (yellow)
-		actors[4]->GetProperty()->SetColor(0.26,0.59,0.94); // (dark blue)
-		actors[5]->GetProperty()->SetColor(0.94,0.32,0.4); // outer knots (red)
-		actors[6]->GetProperty()->SetColor(0.96,0.70,0.93); // reverse shock sphere (pink)
-
-      
+            ren->AddActor(actor);
+		}   
 		/**********************************************************/
         
 		//Create a cone
@@ -271,7 +263,7 @@ private:
 
 		// create a mapper and actor for the text legends
 		txtSource = vtkSmartPointer<vtkVectorText>::New();
-		txtSource->SetText("HELLO I AM HERE!!!!");
+        txtSource->SetText("Welcome!");
 
 		vtkSmartPointer<vtkLinearExtrusionFilter> extrude = vtkSmartPointer<vtkLinearExtrusionFilter>::New();
 		extrude->SetInputConnection(txtSource->GetOutputPort());
@@ -303,7 +295,6 @@ private:
 
 		/**********************************************************/
 	
-		initializeAnnotations();
 		initializePickers();
 
 		// Add a ray extending from the right touch controller.  Usually
@@ -626,7 +617,7 @@ private:
 				}
 				// Highlight the picked actor by changing its properties
 				for (int i = 0; i < NUM_ACTORS; i++) {
-					if (actors[i] != LastPickedActor) {
+					if (actorWrappers[i]->GetActor() != LastPickedActor) {
 						// Set the unpicked actors to grey.
 						this->OtherActors[i]->GetProperty()->SetColor(0.87, 0.88, 0.91);
 					} else {
@@ -716,7 +707,7 @@ private:
         sm->DeepCopy(supernovaModel);
         sm->Transpose();
         for(int i = 0; i < NUM_ACTORS; i++) {
-            actors[i]->SetUserMatrix(sm);
+            actorWrappers[i]->GetActor()->SetUserMatrix(sm);
         }
 
             

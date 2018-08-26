@@ -14,11 +14,7 @@
 #include <main/VREventHandler.h>
 #include <math/VRMath.h>
 
-#include <vtkPolyData.h>
-#include <vtkCleanPolyData.h>
-#include <vtkPolyDataNormals.h>
 #include <vtkDataSetAttributes.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkLookupTable.h>
 #include <vtkObjectFactory.h>
@@ -37,10 +33,6 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkPolyDataNormals.h>
-#include <vtkCleanPolyData.h>
-#include <vtkPolyData.h>
 #include <vtkTexture.h>
 #include <vtkNamedColors.h>
 
@@ -54,114 +46,79 @@ private:
     vtkNew<ExternalVTKWidget> externalVTKWidget;
 	vtkSmartPointer<vtkRenderer> ren;
     vtkSmartPointer<vtkExternalOpenGLCamera> camera;
-    vector <vtkSmartPointer<vtkActor> > actors;
+    vtkSmartPointer<vtkActorCollection> actors;
     vtkNew<vtkExternalOpenGLRenderWindow> renWin;
-
-	int NUM_ACTORS = 7;
-  
-	// The sensitivity numbers indicate the size of the increment to the carpetPosition and 
-	// direction when the joystick is operated (i.e. a joystick event is received). The threshold 
-	// indicates a minimum joystick position.  Smaller values will be ignored.
-	float joystickAngularSensitivity = 0.03f;
-	float joystickLinearSensitivity = 0.1f;
-	float joystickThreshold = 0.1f;
-	#define M_TWOPI 6.2831852f
-	#ifdef WIN32
-	#define M_PI 3.1415926
-	#endif
-	// Keeps track of which controller we are listening to. Could be "L", "R", "1", "2".
-	// Use "X" for listening to nobody.
-	std::string activeController;
-	std::string activeLRController;
-
-	// This is true if we are in the process of selecting something to look at.  i.e. the
-	// user has pressed the trigger button on the controller, but hasn't let it go yet.
-	bool selectButtonPressed;
-
-	// Use this to display the legends for a little bit and then make them go away.
-	int textTimer;
+    vtkSmartPointer<vtkOBJImporter> importer;
 
 
     // This contains a bunch of sanity checks from the graphics
     // initialization of demo2.xx.  They are still useful with MinVR.
     void _checkContext() {
 
-    // There is one more graphics library used here, called GLEW.  This
-    // library sorts through the various OpenGL updates and changes and
-    // allows a user to pretend that it's all a consistent and simple
-    // system.  The 'core profile' refers to some modern OpenGL
-    // enhancements that are not so modern as of 2017.  Set this to true
-    // to get those enhancements.
-    glewExperimental = true; // Needed for core profile
-    if (glewInit() != GLEW_OK) {
-		throw std::runtime_error("Failed to initialize GLEW");
-    }
+        glewExperimental = true; // Needed for core profile
+        if (glewInit() != GLEW_OK) {
+            throw std::runtime_error("Failed to initialize GLEW");
+        }
 
-    // Now that we have a graphics context, let's look at what's inside.
-    std::cout << "Hardware check: "
-              << glGetString(GL_RENDERER)  // e.g. Intel 3000 OpenGL Engine
-              << " / "
-              << glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
-              << std::endl;
+        // Now that we have a graphics context, let's look at what's inside.
+        std::cout << "Hardware check: "
+                  << glGetString(GL_RENDERER)  // e.g. Intel 3000 OpenGL Engine
+                  << " / "
+                  << glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
+                  << std::endl;
 
-    if (glewIsSupported("GL_VERSION_2_1")) {
-		std::cout << "Software check: Ready for OpenGL 2.1." << std::endl;
-    } else {
-		throw std::runtime_error("Software check: OpenGL 2.1 not supported.");
-    }
+        if (glewIsSupported("GL_VERSION_3_2")) {
+            std::cout << "Software check: Ready for OpenGL 3.2." << std::endl;
+        } else {
+            throw std::runtime_error("Software check: OpenGL 3.2 not supported.");
+        }
 
-    // This is the background color of the viewport.
-    glClearColor(0.1 , 0.0, 0.4, 1.0);
+        // This is the background color of the viewport.
+        glClearColor(0.1 , 0.0, 0.4, 1.0);
 
-    // Now we're ready to start issuing OpenGL calls.  Start by enabling
-    // the modes we want.  The DEPTH_TEST is how you get hidden faces.
-    glEnable(GL_DEPTH_TEST);
+        // Now we're ready to start issuing OpenGL calls.  Start by enabling
+        // the modes we want.  The DEPTH_TEST is how you get hidden faces.
+        glEnable(GL_DEPTH_TEST);
 
-    if (glIsEnabled(GL_DEPTH_TEST)) {
-		std::cout << "Depth test enabled" << std::endl;
-    } else {
-		std::cout << "No depth test enabled" << std::endl;
-    }
+        if (glIsEnabled(GL_DEPTH_TEST)) {
+            std::cout << "Depth test enabled" << std::endl;
+        } else {
+            std::cout << "No depth test enabled" << std::endl;
+        }
 
-    // This is just a performance enhancement that allows OpenGL to
-    // ignore faces that are facing away from the camera.
-    glEnable(GL_CULL_FACE);
+        // This is just a performance enhancement that allows OpenGL to
+        // ignore faces that are facing away from the camera.
+        glEnable(GL_CULL_FACE);
     }
 
 
-    void _initializeScene() {
-      vtkSmartPointer<vtkOBJImporter> importer = vtkSmartPointer<vtkOBJImporter>::New();
+    void _initializeScene(char** argv) {
+      importer = vtkSmartPointer<vtkOBJImporter>::New();
       importer->SetFileName(argv[1]);
       importer->SetFileNameMTL(argv[2]);
-      //importer->SetTexturePath(argv[3]);
-
       vtkSmartPointer<vtkNamedColors> colors =
         vtkSmartPointer<vtkNamedColors>::New();
+        
+      ren = vtkSmartPointer<vtkRenderer>::New();
+      renWin->AddRenderer(ren);
+      ren->SetBackground (colors->GetColor3d("Black").GetData());
+      ren->GradientBackgroundOn();
 
-      vtkSmartPointer<vtkRenderer> renderer =
-        vtkSmartPointer<vtkRenderer>::New();
-      vtkSmartPointer<vtkRenderWindow> renWin =
-        vtkSmartPointer<vtkRenderWindow>::New();
-      vtkSmartPointer<vtkRenderWindowInteractor> iren =
-        vtkSmartPointer<vtkRenderWindowInteractor>::New();
+      externalVTKWidget->SetRenderWindow(renWin.GetPointer());
+      ren->SetActiveCamera(camera);
+      renWin->AddRenderer(ren);
 
-      renWin->AddRenderer(renderer);
-      renderer->SetBackground (colors->GetColor3d("Black").GetData());
-      renderer->GradientBackgroundOn();
-
-      iren->SetRenderWindow(renWin);
       importer->SetRenderWindow(renWin);
       importer->Update();
-
-      vtkSmartPointer<vtkActorCollection> actors =
-        vtkSmartPointer<vtkActorCollection>::New();
-      actors = renderer->GetActors();
+    
+      actors = vtkSmartPointer<vtkActorCollection>::New();
+      actors = ren->GetActors();
       actors->InitTraversal();
       std::cout << "There are " << actors->GetNumberOfItems() << " actors" << std::endl;
 
       for (vtkIdType a = 0; a < actors->GetNumberOfItems(); ++a)
       {
-        std::cout << importer->GetOutputDescription(a) << std::endl;
+        //std::cout << importer->GetOutputDescription(a) << std::endl;
 
         vtkActor * actor = actors->GetNextActor();
 
@@ -170,53 +127,19 @@ private:
         {
           actor->GetTexture()->InterpolateOn();
         }
-
-        vtkPolyData *pd = vtkPolyData::SafeDownCast(actor->GetMapper()->GetInput());
-        vtkSmartPointer<vtkCleanPolyData> clean =
-          vtkSmartPointer<vtkCleanPolyData>::New();
-        clean->SetInputData(pd);
-        clean->Update();
-
-        vtkSmartPointer<vtkPolyDataNormals> normals =
-          vtkSmartPointer<vtkPolyDataNormals>::New();
-        normals->SetInputConnection(clean->GetOutputPort());
-        normals->SetInputData(pd);
-        normals->SplittingOff();
-        normals->Update();
-        vtkPolyDataMapper *mapper = vtkPolyDataMapper::SafeDownCast(actor->GetMapper());
-        mapper->SetInputData(normals->GetOutput());
       }
-      renWin->Render();
-      iren->Start();
-
+        
+      externalVTKWidget->GetRenderWindow()->Render();
     }
 
 
     public:
     bool movingSlide;
-    bool picked;
     glm::mat4 lastWandPos;
     glm::mat4 slideMat;
     glm::mat4 wandPosRoom, wandPosSpace;
     glm::mat4 headPosRoom;
-	glm::mat4 txtPosSpace;
-	glm::vec3 txtPos;
-	int actorIndex;
-	vtkSmartPointer<vtkActor> PickedActor;
-    
-	// There is an extra coordinate transformation we insert here. The concept is that
-	// the room coordinates returned by the Oculus for the head and wand locations is to
-	// be considered relative to the center of a magic carpet that we fly around with
-	// the wand controls.  The carpet has a position, a *normalized* "up" vector, and an
-	// angle defined relative to the z direction.  The carpetTransform() method returns a
-	// rotation matrix for the current state of the carpet.
-	// Use glm::rotate(carpetDirection, carpetUp.x, carpetUp.y, carpetUp.z) to get a rotation matrix.
-	glm::vec3 carpetPosition, carpetUp, carpetScale;
-	float carpetDirection; // (expressed in radians)
-
-	float joystickX, joystickY;
-
-
+    char** argv;
 
 	 DemoVRVTKApp(int argc, char** argv):
     
@@ -231,6 +154,7 @@ private:
 											mm[4],  mm[5], mm[6], mm[7],
 											mm[8],  mm[9],mm[10],mm[11],
 											mm[12],mm[13],mm[14],mm[15]);
+        this->argv = argv;
     }
 
 	// The MinVR apparatus invokes this method whenever there is a new
@@ -262,6 +186,7 @@ private:
 	
             if (movingSlide) { //when slide moving
 			     slideMat = (wandPosRoom / lastWandPos) * slideMat; //update the model matrix for slide
+                //std::cout << std::string("here") << std::endl;
             }
       
 		lastWandPos = wandPosRoom;
@@ -289,7 +214,7 @@ private:
 		// Check if this is the first call.  If so, do some initialization. 
 		if ((int)renderState.getValue("InitRender") == 1) {
 			_checkContext();
-			_initializeScene();
+			_initializeScene(this->argv);
 		}
 
 	}
@@ -331,7 +256,6 @@ private:
                                         vm[8],  vm[9],vm[10],vm[11],
                                         vm[12],vm[13],vm[14],vm[15]);
 
-		viewMatrix = viewMatrix * glm::rotate(carpetDirection, carpetUp) * glm::translate(carpetPosition);
 
         camera = (vtkExternalOpenGLCamera *)ren->GetActiveCamera();
 
@@ -349,19 +273,19 @@ private:
 
         camera->SetProjectionTransformMatrix(proj);           
 
-        double supernovaModel[16];
+        double model[16];
         for(int i = 0; i < 16; i++) {
-            supernovaModel[i] = glm::value_ptr(slideMat)[i];
+            model[i] = glm::value_ptr(slideMat)[i];
         }
             
         vtkSmartPointer<vtkMatrix4x4> sm = vtkSmartPointer<vtkMatrix4x4>::New();
-        sm->DeepCopy(supernovaModel);
+        sm->DeepCopy(model);
         sm->Transpose();
-        for(int i = 0; i < NUM_ACTORS; i++) {
-            actors[i]->SetUserMatrix(sm);
+        actors->InitTraversal();
+        for(int i = 0; i < actors->GetNumberOfItems(); i++) {
+            actors->GetNextActor()->SetUserMatrix(sm);
         }
 
-            
         externalVTKWidget->GetRenderWindow()->Render();
         // We let MinVR swap the graphics buffers.
         // glutSwapBuffers();
@@ -383,9 +307,13 @@ private:
 		// If there weren't enough args, throw an error and explain what the
 		// user should have done.
 
-		if (argc < 2) {
-			throw std::runtime_error("\nNeed a config file.\nTry 'bin/supernova3 -c ../config/desktop-freeglut.xml'");
-		}
+		if (argc < 4)
+          {
+            std::cout << "Try: " << argv[0]
+                      << "bin/objimporter2 ../data/yurt_2.obj ../data/yurt_2.mtl -c ../config/desktop-freeglut.xml"
+                      << std::endl;
+            return EXIT_FAILURE;
+          }
 
 		// Is the MINVR_ROOT variable set?  MinVR usually needs this to find
 		// some important things.
@@ -395,6 +323,7 @@ private:
 					  << std::endl << "Try 'export MINVR_ROOT=/my/path/to/MinVR'."
 					  << std::endl;
 		}
+        
 
 		// Initialize the app
 		DemoVRVTKApp app(argc, argv);
