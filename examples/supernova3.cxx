@@ -707,6 +707,12 @@ private:
         for(int i = 0; i < NUM_ACTORS; i++) {
             actorWrappers[i]->GetActor()->SetUserMatrix(sm);
 
+        camera->SetProjectionTransformMatrix(proj);           
+
+        double supernovaModel[16];
+        for(int i = 0; i < 16; i++) {
+            supernovaModel[i] = glm::value_ptr(slideMat)[i];
+        }
             
         externalVTKWidget->GetRenderWindow()->Render();
         // We let MinVR swap the graphics buffers.

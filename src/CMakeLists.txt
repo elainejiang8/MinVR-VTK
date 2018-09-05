@@ -23,3 +23,4 @@ install(TARGETS minvr-vtk
 
 install(FILES ${headers}
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+
