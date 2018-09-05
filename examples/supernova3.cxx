@@ -364,8 +364,6 @@ private:
 
 	float joystickX, joystickY;
 
-
-
 	 DemoVRVTKApp(int argc, char** argv):
     
      MVRDemo(argc, argv) {
@@ -696,8 +694,8 @@ private:
             proj[i] = glm::value_ptr(projMatrix)[i];
         }
 
-        camera->SetProjectionTransformMatrix(proj);           
-
+        camera->SetProjectionTransformMatrix(proj);       
+        
         double supernovaModel[16];
         for(int i = 0; i < 16; i++) {
             supernovaModel[i] = glm::value_ptr(slideMat)[i];
@@ -708,7 +706,6 @@ private:
         sm->Transpose();
         for(int i = 0; i < NUM_ACTORS; i++) {
             actorWrappers[i]->GetActor()->SetUserMatrix(sm);
-        }
 
             
         externalVTKWidget->GetRenderWindow()->Render();
